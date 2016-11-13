@@ -1,5 +1,6 @@
 package com.cazen.iti.web.rest;
 
+import com.cazen.iti.security.AuthoritiesConstants;
 import com.codahale.metrics.annotation.Timed;
 import com.cazen.iti.domain.RightAnswer;
 import com.cazen.iti.service.RightAnswerService;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -28,7 +30,7 @@ import java.util.Optional;
 public class RightAnswerResource {
 
     private final Logger log = LoggerFactory.getLogger(RightAnswerResource.class);
-        
+
     @Inject
     private RightAnswerService rightAnswerService;
 
@@ -117,6 +119,7 @@ public class RightAnswerResource {
      */
     @DeleteMapping("/right-answers/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteRightAnswer(@PathVariable Long id) {
         log.debug("REST request to delete RightAnswer : {}", id);
         rightAnswerService.delete(id);
