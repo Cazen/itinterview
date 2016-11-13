@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity WrongAnswer.
+    -->
+    <changeSet id="20161112173915-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="status_id"
+                                 baseTableName="wrong_answer"
+                                 constraintName="fk_wrong_answer_status_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="common_code"/>
+
+        <addForeignKeyConstraint baseColumnNames="question_master_id"
+                                 baseTableName="wrong_answer"
+                                 constraintName="fk_wrong_answer_question_master_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="question_master"/>
+
+    </changeSet>
+</databaseChangeLog>
