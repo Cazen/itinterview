@@ -15,7 +15,6 @@
     <include file="classpath:config/liquibase/changelog/20161112173919_added_entity_UpWrongAnswer.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173920_added_entity_UpQuestionVote.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="classpath:config/liquiase/changelog/20161112173725_added_entity_constraints_UpQuestionVote.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173913_added_entity_constraints_QuestionMaster.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173914_added_entity_constraints_RightAnswer.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173915_added_entity_constraints_WrongAnswer.xml" relativeToChangelogFile="false"/>
