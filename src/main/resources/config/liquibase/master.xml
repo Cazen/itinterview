@@ -5,15 +5,6 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173717_added_entity_CommonCode.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173718_added_entity_QuestionMaster.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173719_added_entity_RightAnswer.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173720_added_entity_WrongAnswer.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173721_added_entity_QuestionVote.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173722_added_entity_UpQuestionMaster.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173723_added_entity_UpRightAnswer.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173724_added_entity_UpWrongAnswer.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173725_added_entity_UpQuestionVote.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173912_added_entity_CommonCode.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173913_added_entity_QuestionMaster.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173914_added_entity_RightAnswer.xml" relativeToChangelogFile="false"/>
@@ -24,14 +15,7 @@
     <include file="classpath:config/liquibase/changelog/20161112173919_added_entity_UpWrongAnswer.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173920_added_entity_UpQuestionVote.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="classpath:config/liquibase/changelog/20161112173718_added_entity_constraints_QuestionMaster.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173719_added_entity_constraints_RightAnswer.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173720_added_entity_constraints_WrongAnswer.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173721_added_entity_constraints_QuestionVote.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173722_added_entity_constraints_UpQuestionMaster.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173723_added_entity_constraints_UpRightAnswer.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173724_added_entity_constraints_UpWrongAnswer.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173725_added_entity_constraints_UpQuestionVote.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquiase/changelog/20161112173725_added_entity_constraints_UpQuestionVote.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173913_added_entity_constraints_QuestionMaster.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173914_added_entity_constraints_RightAnswer.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173915_added_entity_constraints_WrongAnswer.xml" relativeToChangelogFile="false"/>
