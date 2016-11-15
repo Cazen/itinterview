@@ -6,7 +6,7 @@ services:
         # volumes:
         #     - ~/volumes/jhipster/itinterview/postgresql/:/var/lib/postgresql/
         environment:
-            - POSTGRES_USER=itinterview
-            - POSTGRES_PASSWORD=
+            - POSTGRES_USER=cazendb
+            - POSTGRES_PASSWORD=magic12#
         ports:
             - 5432:5432
