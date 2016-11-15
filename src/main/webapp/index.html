@@ -3,76 +3,110 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ItInterview에 오신것을 환영합니</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="author" content="Cazen Lee" />
+    <title>ItInterview에 오신것을 환영합니다</title>
+    <meta name="description" content="ItInterview Pages">
+
+    <!--Mobile Specific Meta Tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="keywords" content="it, 인터뷰, 면접, 경력, 문제, 자바, 빅데이터, itinterview" />
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css content/css/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+
+
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
     <!-- endinject -->
     <!-- endbuild -->
     <!-- build:css content/css/main.css -->
     <link rel="stylesheet" href="content/css/main.css">
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
+    <!-- build:css content/css/vendor/material-icons.min.css -->
+    <link href="content/css/vendor/material-icons.min.css" rel="stylesheet" media="screen">
+    <!-- build:css content/css/vendor/socicon.min.css -->
+    <link href="content/css/vendor/socicon.min.css" rel="stylesheet" media="screen">
+    <!-- build:css content/css/theme.min.css -->
+    <link href="content/css/theme.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <!-- build:js content/js/vendor/page-preloading.js -->
+    <script src="content/js/vendor/page-preloading.js"></script>
+
+    <!-- build:js content/js/vendor/modernizr.custom.js -->
+    <script src="content/js/vendor/modernizr.custom.js"></script>
+
     <!-- endbuild -->
 
 
 
-
     <!-- add custom bootstrap theme on it -->
-    <!-- Bootstrap Core CSS -->
-    <link href="content/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="content/css/landing-page.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="content/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
-
-
-
 
 </head>
-<body ng-app="itinterviewApp" ng-strict-di>
+<body ng-app="itinterviewApp" ng-strict-di class="page-preloading">
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+
+    <!-- Page Pre-Loader -->
+    <div class="page-preloader">
+        <div class="preloader">
+            <img src="content/images/preloader.gif" alt="Preloader">
+        </div>
+    </div><!-- .page-preloader -->
+
     <page-ribbon></page-ribbon>
-    <div ui-view="navbar" ng-cloak></div>
+    <div class="page-wrapper" ui-view="navbar" ng-cloak></div>
     <div class="container2">
         <div class="well" ui-view="content">
             <!-- Angular views -->
         </div>
 
-        <div class="footer" ng-cloak>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <ul class="list-inline">
-                            <li>
-                                <a href="#">Home</a>
-                            </li>
-                            <li class="footer-menu-divider">&sdot;</li>
-                            <li>
-                                <a href="#about">About</a>
-                            </li>
-                            <li class="footer-menu-divider">&sdot;</li>
-                            <li>
-                                <a href="#services">Services</a>
-                            </li>
-                            <li class="footer-menu-divider">&sdot;</li>
-                            <li>
-                                <a href="#contact">Contact</a>
-                            </li>
-                        </ul>
-                        <p class="copyright text-muted small">Copyright &copy; ItInterview 2016. All Rights Reserved</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="column">
+                <p class="text-sm">도움이 필요하세요? <span class="text-primary">082 (02) 6200-4836</span></p>
+                <div class="social-bar text-center space-bottom">
+                    <a href="#" class="sb-skype" data-toggle="tooltip" data-placement="top" title="Skype">
+                        <i class="socicon-skype"></i>
+                    </a>
+                    <a href="#" class="sb-facebook" data-toggle="tooltip" data-placement="top" title="Facebook">
+                        <i class="socicon-facebook"></i>
+                    </a>
+                    <a href="#" class="sb-google-plus" data-toggle="tooltip" data-placement="top" title="" data-original-title="Google+">
+                        <i class="socicon-googleplus"></i>
+                    </a>
+                    <a href="#" class="sb-twitter" data-toggle="tooltip" data-placement="top" title="Twitter">
+                        <i class="socicon-twitter"></i>
+                    </a>
+                    <a href="#" class="sb-instagram" data-toggle="tooltip" data-placement="top" title="" data-original-title="Instagram">
+                        <i class="socicon-instagram"></i>
+                    </a>
+                </div><!-- .social-bar -->
+                <p class="copyright">&copy; 2016. IT Interview <i class="text-danger material-icons favorite"></i> All right reversed.</p>
+            </div><!-- .column -->
+            <div class="column">
+                <h3 class="widget-title">
+                    Subscription
+                    <small>이메일을 등록하고 새로운 문제를 받아보세요</small>
+                </h3>
+                <form action="//rokaux.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;id=1194bb7544" method="post" target="_blank" class="subscribe-form" novalidate>
+                    <input type="email" class="form-control" name="EMAIL" placeholder="Your e-mail">
+                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_c7103e2c981361a6639545bd5_1194bb7544" tabindex="-1" value=""></div>
+                    <button type="submit"><i class="material-icons send"></i></button>
+                </form>
+            </div><!-- .column -->
+            <div class="column">
+                <h3 class="widget-title">
+                    Friendly Sites
+                    <small>추천해 드리는 사이트들이에요</small>
+                </h3>
+                <!-- Scroll To Top Button -->
+                <div class="scroll-to-top-btn"><i class="material-icons trending_flat"></i></div>
+            </div><!-- .column -->
+        </footer><!-- .footer -->
     </div>
 
     <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
@@ -90,6 +124,7 @@
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/json3/lib/json3.js"></script>
     <script src="bower_components/messageformat/messageformat.js"></script>
+    <script src="bower_components/jquery-infinite-scroll/jquery.infinitescroll.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>

@@ -14,9 +14,9 @@ services:
             - itinterview-postgresql:postgresql
         environment:
             - SPRING_PROFILES_ACTIVE=prod,swagger
-            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/itinterview
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://10.146.0.5:5432/itinterview
             - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
-            - VIRTUAL_HOST=itinterview.co.kr
+            - VIRTUAL_HOST=itinterview.co.kr,www.itinterview.co.kr
         ports:
             - 8080:8080
     itinterview-postgresql:

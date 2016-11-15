@@ -19,9 +19,9 @@ spring:
             enabled: false
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:postgresql://10.146.0.3:5432/itinterview
+        url: jdbc:postgresql://10.146.0.5:5432/itinterview
         name:
-        username: cazen
+        username: cazendb
         password: magic12#
     jpa:
         database-platform: com.cazen.iti.domain.util.FixedPostgreSQL82Dialect
