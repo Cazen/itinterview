@@ -36,28 +36,6 @@ input, button, select, textarea {
     font-size: inherit;
     line-height: inherit;
 }
-a {
-    color: #77cde3;
-    text-decoration: underline;
-    -webkit-transition: color .3s;
-    -o-transition: color .3s;
-    transition: color .3s;
-}
-a:hover {
-    color: #77cde3;
-    text-decoration: none;
-}
-a:focus {
-    color: #77cde3;
-    outline: none;
-}
-a.link-title {
-    color: #606060;
-    text-decoration: none;
-}
-a.link-title:hover {
-    color: #999;
-}
 img {
     vertical-align: middle;
     display: block;
