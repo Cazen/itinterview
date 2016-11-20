@@ -30,11 +30,13 @@ gulp.task('clean', function () {
     return del([config.dist], { dot: true });
 });
 
-gulp.task('copy', ['copy:fonts', 'copy:common']);
+gulp.task('copy', ['copy:fonts', 'copy:common', 'copy:javascript']);
 
 gulp.task('copy:fonts', copy.fonts);
 
 gulp.task('copy:common', copy.common);
+
+gulp.task('copy:javascript', copy.javascript);
 
 gulp.task('copy:swagger', copy.swagger);
 
@@ -44,7 +46,7 @@ gulp.task('images', function () {
     return gulp.src(config.app + 'content/images/**')
         .pipe(plumber({errorHandler: handleErrors}))
         .pipe(changed(config.dist + 'content/images'))
-        .pipe(imagemin({optimizationLevel: 5, progressive: true, interlaced: true}))
+        //.pipe(imagemin({optimizationLevel: 5, progressive: true, interlaced: true}))
         .pipe(rev())
         .pipe(gulp.dest(config.dist + 'content/images'))
         .pipe(rev.manifest(config.revManifest, {

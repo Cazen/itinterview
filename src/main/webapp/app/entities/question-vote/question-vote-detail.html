@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span>Question Vote</span> {{vm.questionVote.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>C Time</span></dt>
+        <dd>
+            <span>{{vm.questionVote.cTime | date:'medium'}}</span>
+        </dd>
+        <dt><span>Question Master</span></dt>
+        <dd>
+            <a ui-sref="question-master-detail({id:vm.questionVote.questionMaster.id})">{{vm.questionVote.questionMaster.id}}</a>
+        </dd>
+        <dt><span>Voter</span></dt>
+        <dd>
+            {{vm.questionVote.voter.id}}
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+            <a ui-sref="common-code-detail({id:vm.questionVote.status.id})">{{vm.questionVote.status.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="question-vote-detail.edit({id:vm.questionVote.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>

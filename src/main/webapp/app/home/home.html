@@ -1,41 +1,116 @@
-<div ng-cloak>
-    <div class="row">
-        <div class="col-md-4">
-            <span class="hipster img-responsive img-rounded"></span>
-        </div>
-        <div class="col-md-8">
-            <h1>Welcome, Java Hipster!</h1>
-            <p class="lead">This is your homepage</p>
-
-            <div ng-switch="vm.isAuthenticated()">
-                <div class="alert alert-success" ng-switch-when="true">
-                    You are logged in as user "{{vm.account.login}}".
-                </div>
-
-                <div class="alert alert-warning" ng-switch-when="false">
-                    If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
-                </div>
-
-                <div class="alert alert-warning" ng-switch-when="false">
-                    You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
-                </div>
+<!-- Header --> <a name="about"></a> <div class="intro-header">
+    <!-- Featured Image -->
+    <div class="featured-image" style="background-image: url(content/images/macbook-keyboard.jpg);"></div>
+    <!-- Content -->
+    <section class="container padding-top-3x padding-bottom-3x">
+      <h1>문제를 풀고 친구들과 공유하세요</h1>
+      <div class="row padding-top">
+        <div class="col-md-5 col-sm-6 padding-bottom">
+          <h3>문제를 풀어보세요</h3>
+          <p class=" space-top">각 영역의 실무자가 직접 출제한 문제를 풀고 내 위치가 어디쯤인지 확인해 보세요. 10분간 10문제가 출제됩니다</p>
+        </div><!-- .col-md-5.col-sm-6 -->
+        <div class="col-sm-6 col-md-offset-1 padding-bottom">
+          <h3>문제를 업로드 하세요</h3>
+          <div class="quotation padding-top">
+            <div class="quotation-author">
+              <div class="quotation-author-ava">
+                <img src="content/images/logo-itinterview.png" alt="It Inverview Logos">
+              </div>
             </div>
+            <blockquote>
+              <p>각 섹션에 해당하는 문제를 직접 출제해 주세요. 평소에 내 팀원이라면 이정도는 꼭 알아야 한다고 생각한 문제들을 업로드 해주세요</p>
+              <cite>Cazen Lee</cite>
+            </blockquote>
+          </div><!-- .quotation -->
+        </div><!-- .col-md-6.col-sm-6.col-md-offset-1 -->
+      </div><!-- .row -->
+      <hr class="padding-bottom">
+      <h3>친구를 초대해 주세요</h3>
+      <div class="row padding-top">
+        <!-- Teammate -->
+        <div class="col-xs-6 col-md-3">
+          <div class="teammate">
+            <div class="teammate-thumb">
+              <div class="social-bar text-center space-bottom">
+                <a href="#" class="sb-skype" data-toggle="tooltip" data-placement="top" title="Skype">
+                  <i class="socicon-skype"></i>
+                </a>
+                <a href="#" class="sb-facebook" data-toggle="tooltip" data-placement="top" title="Facebook">
+                  <i class="socicon-facebook"></i>
+                </a>
+                <a href="#" class="sb-google-plus" data-toggle="tooltip" data-placement="top" title="" data-original-title="Google+">
+                  <i class="socicon-googleplus"></i>
+                </a>
+              </div><!-- .social-bar -->
+              <img src="content/images/logo-itinterview.png" alt="Teammate">
+            </div>
+            <h4 class="teammate-name">문구1</h4>
+            <span class="teammate-position">Sub문구1</span>
+          </div><!-- .teammate -->
+        </div><!-- .col-xs-6.col-md-3 -->
+        <!-- Teammate -->
+        <div class="col-xs-6 col-md-3">
+          <div class="teammate">
+            <div class="teammate-thumb">
+              <div class="social-bar text-center space-bottom">
+                <a href="#" class="sb-twitter" data-toggle="tooltip" data-placement="top" title="Twitter">
+                  <i class="socicon-twitter"></i>
+                </a>
+                <a href="#" class="sb-facebook" data-toggle="tooltip" data-placement="top" title="Facebook">
+                  <i class="socicon-facebook"></i>
+                </a>
+                <a href="#" class="sb-instagram" data-toggle="tooltip" data-placement="top" title="" data-original-title="Instagram">
+                  <i class="socicon-instagram"></i>
+                </a>
+              </div><!-- .social-bar -->
+              <img src="content/images/logo-itinterview.png" alt="Teammate">
+            </div>
+            <h4 class="teammate-name">문구2</h4>
+            <span class="teammate-position">Sub문구2</span>
+          </div><!-- .teammate -->
+        </div><!-- .col-xs-6.col-md-3 -->
+        <!-- Teammate -->
+        <div class="col-xs-6 col-md-3">
+          <div class="teammate">
+            <div class="teammate-thumb">
+              <div class="social-bar text-center space-bottom">
+                <a href="#" class="sb-twitter" data-toggle="tooltip" data-placement="top" title="Twitter">
+                  <i class="socicon-twitter"></i>
+                </a>
+                <a href="#" class="sb-linkedin" data-toggle="tooltip" data-placement="top" title="LinkedIn">
+                  <i class="socicon-linkedin"></i>
+                </a>
+                <a href="#" class="sb-dribbble" data-toggle="tooltip" data-placement="top" title="" data-original-title="Dribbble">
+                  <i class="socicon-dribbble"></i>
+                </a>
+              </div><!-- .social-bar -->
+              <img src="content/images/logo-itinterview.png" alt="Teammate">
+            </div>
+            <h4 class="teammate-name">문구3</h4>
+            <span class="teammate-position">Sub문구3</span>
+          </div><!-- .teammate -->
+        </div><!-- .col-xs-6.col-md-3 -->
+        <!-- Teammate -->
+        <div class="col-xs-6 col-md-3">
+          <div class="teammate">
+            <div class="teammate-thumb">
+              <div class="social-bar text-center space-bottom">
+                <a href="#" class="sb-skype" data-toggle="tooltip" data-placement="top" title="Skype">
+                  <i class="socicon-skype"></i>
+                </a>
+                <a href="#" class="sb-facebook" data-toggle="tooltip" data-placement="top" title="Facebook">
+                  <i class="socicon-facebook"></i>
+                </a>
+                <a href="#" class="sb-google-plus" data-toggle="tooltip" data-placement="top" title="" data-original-title="Google+">
+                  <i class="socicon-googleplus"></i>
+                </a>
+              </div><!-- .social-bar -->
+              <img src="content/images/logo-itinterview.png" alt="Teammate">
+            </div>
+            <h4 class="teammate-name">문구4</h4>
+            <span class="teammate-position">Sub문구4</span>
+          </div><!-- .teammate -->
+        </div><!-- .col-xs-6.col-md-3 -->
+      </div><!-- .row -->
+    </section><!-- .container -->
 
-            <p>
-                If you have any question on JHipster:
-            </p>
-
-            <ul>
-                <li><a href="http://jhipster.github.io/" target="_blank">JHipster homepage</a></li>
-                <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank">JHipster on Stack Overflow</a></li>
-                <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank">JHipster bug tracker</a></li>
-                <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank">JHipster public chat room</a></li>
-                <li><a href="https://twitter.com/java_hipster" target="_blank" >follow @java_hipster on Twitter</a></li>
-            </ul>
-
-            <p>
-             <span>If you like JHipster, don't forget to give us a star on </span>&nbsp;<a href="https://github.com/jhipster/generator-jhipster" target="_blank">Github</a>!
-            </p>
-        </div>
-    </div>
-</div>

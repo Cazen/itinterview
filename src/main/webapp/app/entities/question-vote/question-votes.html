@@ -1,0 +1,68 @@
+<div>
+    <h2>Question Votes</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="question-vote.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Question Vote
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                    <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="cTime"><span>C Time</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="questionMaster.id"><span>Question Master</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="voter.id"><span>Voter</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="status.id"><span>Status</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <tr ng-repeat="questionVote in vm.questionVotes track by questionVote.id">
+                    <td><a ui-sref="question-vote-detail({id:questionVote.id})">{{questionVote.id}}</a></td>
+                    <td>{{questionVote.cTime | date:'medium'}}</td>
+                    <td>
+                        <a ui-sref="question-master-detail({id:questionVote.questionMaster.id})">{{questionVote.questionMaster.id}}</a>
+                    </td>
+                    <td>
+                        {{questionVote.voter.id}}
+                    </td>
+                    <td>
+                        <a ui-sref="common-code-detail({id:questionVote.status.id})">{{questionVote.status.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="question-vote-detail({id:questionVote.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="question-vote.edit({id:questionVote.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="question-vote.delete({id:questionVote.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

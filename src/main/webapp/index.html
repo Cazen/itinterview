@@ -3,34 +3,130 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>itinterview</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="author" content="Cazen Lee" />
+    <title>ItInterview에 오신것을 환영합니다</title>
+    <meta name="description" content="ItInterview Pages">
+
+    <!--Mobile Specific Meta Tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="keywords" content="it, 인터뷰, 면접, 경력, 문제, 자바, 빅데이터, itinterview" />
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css content/css/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
+
+
+
     <!-- endinject -->
-    <!-- endbuild -->
+    <!-- endbuild
+
+
+    <!-- build:css content/js/vendor/material-icons.min.css -->
+    <link href="content/css/vendor/material-icons.min.css" rel="stylesheet" media="screen">
+
+    <!-- build:css content/css/vendor/socicon.min.css -->
+    <link href="content/css/vendor/socicon.min.css" rel="stylesheet" media="screen">
+
+    <!-- build:css bower_components/bootstrap/dist/css/bootstrap.min.css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- build:css content/css/theme.min.css -->
+    <link href="content/css/theme.min.css" rel="stylesheet" media="screen">
+
+    <!-- build:js content/js/vendor/page-preloading.js -->
+    <script src="content/js/vendor/page-preloading.js"></script>
+
+    <!-- build:js content/js/vendor/modernizr.custom.js -->
+    <script src="content/js/vendor/modernizr.custom.js"></script>
+
+
+
     <!-- build:css content/css/main.css -->
     <link rel="stylesheet" href="content/css/main.css">
+
+
+
+
+
+
     <!-- endbuild -->
+
+
+
+    <!-- add custom bootstrap theme on it -->
+
 </head>
-<body ng-app="itinterviewApp" ng-strict-di>
+<body ng-app="itinterviewApp" ng-strict-di class="page-preloading">
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+
+    <!-- Page Pre-Loader -->
+    <div class="page-preloader">
+        <div class="preloader">
+            <img src="content/images/preloader.gif" alt="Preloader">
+        </div>
+    </div><!-- .page-preloader -->
+
     <page-ribbon></page-ribbon>
-    <div ui-view="navbar" ng-cloak></div>
-    <div class="container">
+    <div class="page-wrapper" ui-view="navbar" ng-cloak></div>
+    <div class="intro-header">
         <div class="well" ui-view="content">
             <!-- Angular views -->
         </div>
 
-        <div class="footer" ng-cloak>
-            <p>This is your footer</p>
-        </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="column">
+                <h3 class="widget-title">
+                    Need Help?
+                    <small>궁금한 점이 있으면 문의해 주세요</small>
+                </h3>
+                <div class="cards">
+                    <a href="mailTo:postmaster@itinterview.co.kr" class="email" data-toggle="tooltip" data-placement="top" title="Email">
+                    <i class="material-icons email"></i>
+                    </a>
+                </div>
+            </div><!-- .column -->
+            <div class="column">
+                <h3 class="widget-title">
+                    Subscription
+                    <small>이메일을 등록하고 새로운 문제를 받아보세요</small>
+                </h3>
+                <form action="//rokaux.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;id=1194bb7544" method="post" target="_blank" class="subscribe-form" novalidate>
+                    <input type="email" class="form-control" name="EMAIL" placeholder="Your e-mail">
+                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_c7103e2c981361a6639545bd5_1194bb7544" tabindex="-1" value=""></div>
+                    <button type="submit"><i class="material-icons send"></i></button>
+                </form>
+            </div><!-- .column -->
+
+            <div class="column">
+                <p class="text-sm">Social Networks</p>
+                <div class="social-bar text-center space-bottom">
+                    <a href="#" class="sb-skype" data-toggle="tooltip" data-placement="top" title="Skype">
+                        <i class="socicon-skype"></i>
+                    </a>
+                    <a href="#" class="sb-facebook" data-toggle="tooltip" data-placement="top" title="Facebook">
+                        <i class="socicon-facebook"></i>
+                    </a>
+                    <a href="#" class="sb-google-plus" data-toggle="tooltip" data-placement="top" title="" data-original-title="Google+">
+                        <i class="socicon-googleplus"></i>
+                    </a>
+                    <a href="#" class="sb-twitter" data-toggle="tooltip" data-placement="top" title="Twitter">
+                        <i class="socicon-twitter"></i>
+                    </a>
+                    <a href="#" class="sb-instagram" data-toggle="tooltip" data-placement="top" title="" data-original-title="Instagram">
+                        <i class="socicon-instagram"></i>
+                    </a>
+                    <!-- Scroll To Top Button -->
+                    <div class="scroll-to-top-btn"><i class="material-icons trending_flat"></i></div>
+                </div><!-- .social-bar -->
+                <p class="copyright">&copy; 2016. IT Interview <i class="text-danger material-icons favorite"></i> All right reserved.</p>
+            </div><!-- .column -->
+
+
+        </footer><!-- .footer -->
     </div>
 
     <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
@@ -48,6 +144,7 @@
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/json3/lib/json3.js"></script>
     <script src="bower_components/messageformat/messageformat.js"></script>
+    <script src="bower_components/jquery-infinite-scroll/jquery.infinitescroll.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
@@ -87,7 +184,61 @@
     <script src="app/layouts/error/error.state.js"></script>
     <script src="app/home/home.state.js"></script>
     <script src="app/home/home.controller.js"></script>
+    <script src="app/entities/wrong-answer/wrong-answer-dialog.controller.js"></script>
+    <script src="app/entities/wrong-answer/wrong-answer-detail.controller.js"></script>
+    <script src="app/entities/wrong-answer/wrong-answer-delete-dialog.controller.js"></script>
+    <script src="app/entities/wrong-answer/wrong-answer.state.js"></script>
+    <script src="app/entities/wrong-answer/wrong-answer.service.js"></script>
+    <script src="app/entities/wrong-answer/wrong-answer.controller.js"></script>
+    <script src="app/entities/up-wrong-answer/up-wrong-answer-dialog.controller.js"></script>
+    <script src="app/entities/up-wrong-answer/up-wrong-answer-detail.controller.js"></script>
+    <script src="app/entities/up-wrong-answer/up-wrong-answer-delete-dialog.controller.js"></script>
+    <script src="app/entities/up-wrong-answer/up-wrong-answer.state.js"></script>
+    <script src="app/entities/up-wrong-answer/up-wrong-answer.service.js"></script>
+    <script src="app/entities/up-wrong-answer/up-wrong-answer.controller.js"></script>
+    <script src="app/entities/up-right-answer/up-right-answer-dialog.controller.js"></script>
+    <script src="app/entities/up-right-answer/up-right-answer-detail.controller.js"></script>
+    <script src="app/entities/up-right-answer/up-right-answer-delete-dialog.controller.js"></script>
+    <script src="app/entities/up-right-answer/up-right-answer.state.js"></script>
+    <script src="app/entities/up-right-answer/up-right-answer.service.js"></script>
+    <script src="app/entities/up-right-answer/up-right-answer.controller.js"></script>
+    <script src="app/entities/up-question-vote/up-question-vote-dialog.controller.js"></script>
+    <script src="app/entities/up-question-vote/up-question-vote-detail.controller.js"></script>
+    <script src="app/entities/up-question-vote/up-question-vote-delete-dialog.controller.js"></script>
+    <script src="app/entities/up-question-vote/up-question-vote.state.js"></script>
+    <script src="app/entities/up-question-vote/up-question-vote.service.js"></script>
+    <script src="app/entities/up-question-vote/up-question-vote.controller.js"></script>
+    <script src="app/entities/up-question-master/up-question-master-dialog.controller.js"></script>
+    <script src="app/entities/up-question-master/up-question-master-detail.controller.js"></script>
+    <script src="app/entities/up-question-master/up-question-master-delete-dialog.controller.js"></script>
+    <script src="app/entities/up-question-master/up-question-master.state.js"></script>
+    <script src="app/entities/up-question-master/up-question-master.service.js"></script>
+    <script src="app/entities/up-question-master/up-question-master.controller.js"></script>
+    <script src="app/entities/right-answer/right-answer-dialog.controller.js"></script>
+    <script src="app/entities/right-answer/right-answer-detail.controller.js"></script>
+    <script src="app/entities/right-answer/right-answer-delete-dialog.controller.js"></script>
+    <script src="app/entities/right-answer/right-answer.state.js"></script>
+    <script src="app/entities/right-answer/right-answer.service.js"></script>
+    <script src="app/entities/right-answer/right-answer.controller.js"></script>
+    <script src="app/entities/question-vote/question-vote-dialog.controller.js"></script>
+    <script src="app/entities/question-vote/question-vote-detail.controller.js"></script>
+    <script src="app/entities/question-vote/question-vote-delete-dialog.controller.js"></script>
+    <script src="app/entities/question-vote/question-vote.state.js"></script>
+    <script src="app/entities/question-vote/question-vote.service.js"></script>
+    <script src="app/entities/question-vote/question-vote.controller.js"></script>
+    <script src="app/entities/question-master/question-master-dialog.controller.js"></script>
+    <script src="app/entities/question-master/question-master-detail.controller.js"></script>
+    <script src="app/entities/question-master/question-master-delete-dialog.controller.js"></script>
+    <script src="app/entities/question-master/question-master.state.js"></script>
+    <script src="app/entities/question-master/question-master.service.js"></script>
+    <script src="app/entities/question-master/question-master.controller.js"></script>
     <script src="app/entities/entity.state.js"></script>
+    <script src="app/entities/common-code/common-code-dialog.controller.js"></script>
+    <script src="app/entities/common-code/common-code-detail.controller.js"></script>
+    <script src="app/entities/common-code/common-code-delete-dialog.controller.js"></script>
+    <script src="app/entities/common-code/common-code.state.js"></script>
+    <script src="app/entities/common-code/common-code.service.js"></script>
+    <script src="app/entities/common-code/common-code.controller.js"></script>
     <script src="app/components/util/truncate-words.filter.js"></script>
     <script src="app/components/util/truncate-characters.filter.js"></script>
     <script src="app/components/util/sort-by.directive.js"></script>

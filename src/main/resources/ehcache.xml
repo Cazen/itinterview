@@ -42,5 +42,57 @@
            timeToLiveSeconds="3600">
     </cache>
 
+    <cache name="com.cazen.iti.domain.CommonCode"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.cazen.iti.domain.QuestionMaster"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.cazen.iti.domain.QuestionMaster.rightAnswers"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.cazen.iti.domain.QuestionMaster.wrongAnswers"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.cazen.iti.domain.RightAnswer"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.cazen.iti.domain.WrongAnswer"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.cazen.iti.domain.QuestionVote"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.cazen.iti.domain.UpQuestionMaster"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.cazen.iti.domain.UpQuestionMaster.uprightAnswers"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.cazen.iti.domain.UpQuestionMaster.upwrongAnswers"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.cazen.iti.domain.UpRightAnswer"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.cazen.iti.domain.UpWrongAnswer"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.cazen.iti.domain.UpQuestionVote"
+        timeToLiveSeconds="3600">
+    </cache>
+
     <!-- jhipster-needle-ehcache-add-entry -->
 </ehcache>

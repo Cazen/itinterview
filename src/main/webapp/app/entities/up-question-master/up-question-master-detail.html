@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span>Up Question Master</span> {{vm.upQuestionMaster.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Title</span></dt>
+        <dd>
+            <span>{{vm.upQuestionMaster.title}}</span>
+        </dd>
+        <dt><span>Del Yn</span></dt>
+        <dd>
+            <span>{{vm.upQuestionMaster.delYn}}</span>
+        </dd>
+        <dt><span>C Time</span></dt>
+        <dd>
+            <span>{{vm.upQuestionMaster.cTime | date:'medium'}}</span>
+        </dd>
+        <dt><span>Author</span></dt>
+        <dd>
+            {{vm.upQuestionMaster.author.id}}
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+            <a ui-sref="common-code-detail({id:vm.upQuestionMaster.status.id})">{{vm.upQuestionMaster.status.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="up-question-master-detail.edit({id:vm.upQuestionMaster.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>

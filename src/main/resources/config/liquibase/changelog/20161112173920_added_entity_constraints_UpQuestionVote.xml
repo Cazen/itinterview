@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity UpQuestionVote.
+    -->
+    <changeSet id="20161112173920-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="upquestion_master_id"
+                                 baseTableName="up_question_vote"
+                                 constraintName="fk_up_question_vote_upquestion_master_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="up_question_master"/>
+
+        <addForeignKeyConstraint baseColumnNames="voter_id"
+                                 baseTableName="up_question_vote"
+                                 constraintName="fk_up_question_vote_voter_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="status_id"
+                                 baseTableName="up_question_vote"
+                                 constraintName="fk_up_question_vote_status_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="common_code"/>
+
+    </changeSet>
+</databaseChangeLog>
