@@ -9,7 +9,7 @@
 
     function stateConfig($stateProvider) {
         $stateProvider.state('menu', {
-            //parent: 'admin',
+            parent: 'admin',
             url: '#menu',
             data: {
                 authorities: ['ROLE_ANONYMOUS'],
