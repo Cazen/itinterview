@@ -16,7 +16,7 @@ sudo yum -y install git
 
 Install npm
 ```
-rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum -y install npm
 ```
 
@@ -58,8 +58,11 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 sudo groupadd docker
 sudo gpasswd -a ${USER} docker
+
+vi ~/.bashrc
 export DOCKER_HOST=tcp://127.0.0.1:2375
-vi /usr/lib/systemd/system/docker.service
+
+sudo vi /usr/lib/systemd/system/docker.service
 And edit this rule to expose the API :
 ExecStart=/usr/bin/docker daemon -H unix:// -H tcp://localhost:2375
 sudo service docker restart
@@ -77,6 +80,10 @@ sudo npm install -g yo &
 sudo npm install -g bower &
 sudo npm install -g gulp-cli &
 sudo npm install -g generator-jhipster &
+bower install ngInfiniteScroll
+sudo npm install --save ng-infinite-scroll
+bower update
+
 ```
 
 clone the git repo
