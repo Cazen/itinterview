@@ -21,7 +21,7 @@
                     </a>
                 </li>
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-                <li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
+                <li ng-class="{active: vm.$state.includes('entity') and vm.$state.includes('admin')}" ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
@@ -32,6 +32,60 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
+                        <li ui-sref-active="active">
+                            <a ui-sref="common-code" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span >Common Code</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="question-master" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span >Question Master</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="right-answer" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span >Right Answer</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="wrong-answer" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span >Wrong Answer</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="question-vote" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span >Question Vote</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="up-question-master" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span >Up Question Master</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="up-right-answer" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span >Up Right Answer</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="up-wrong-answer" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span >Up Wrong Answer</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="up-question-vote" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span >Up Question Vote</span>
+                            </a>
+                        </li>
                         <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                     </ul>
                 </li>
