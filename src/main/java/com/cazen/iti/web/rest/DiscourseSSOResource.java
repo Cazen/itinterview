@@ -51,7 +51,7 @@ public class DiscourseSSOResource {
         log.debug("REST request getting SSO Information : {}", request);
 
         String secretKey = "cazen_discourse_SSO_ScretKey!@#";
-        String discourseURL = "https://discourse.itinterview.co.kr";
+        String discourseURL = "http://discourse.itinterview.co.kr";
         if (secretKey == null || secretKey.isEmpty() || discourseURL == null || discourseURL.isEmpty()) {
             return null;
         }
