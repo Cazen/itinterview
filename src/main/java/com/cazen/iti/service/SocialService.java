@@ -73,7 +73,7 @@ public class SocialService {
             ex.printStackTrace();
         }
     }
-    
+
     public void deleteUserSocialConnection(String login) {
         ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(login);
         connectionRepository.findAllConnections().keySet().stream()
