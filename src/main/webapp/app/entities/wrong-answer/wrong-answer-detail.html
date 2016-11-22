@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span>Wrong Answer</span> {{vm.wrongAnswer.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Option Text</span></dt>
+        <dd>
+            <span>{{vm.wrongAnswer.optionText}}</span>
+        </dd>
+        <dt><span>Del Yn</span></dt>
+        <dd>
+            <span>{{vm.wrongAnswer.delYn}}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+            <a ui-sref="common-code-detail({id:vm.wrongAnswer.status.id})">{{vm.wrongAnswer.status.id}}</a>
+        </dd>
+        <dt><span>Question Master</span></dt>
+        <dd>
+            <a ui-sref="question-master-detail({id:vm.wrongAnswer.questionMaster.id})">{{vm.wrongAnswer.questionMaster.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="wrong-answer-detail.edit({id:vm.wrongAnswer.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>
