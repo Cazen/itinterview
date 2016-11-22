@@ -72,7 +72,7 @@ public class DiscourseSSOResource {
         String nonce = new String(Base64.decodeBase64(urlDecode));
         User signedInUser = userService.getUserWithAuthorities();
         String urlEncode = nonce
-            + "&name=" + URLEncoder.encode(signedInUser.getEmail(), "UTF-8")
+            + "&name=" + URLEncoder.encode(signedInUser.getFirstName(), "UTF-8")
             + "&username=" + URLEncoder.encode(signedInUser.getFirstName(), "UTF-8")
             + "&email=" + URLEncoder.encode(signedInUser.getEmail(), "UTF-8")
             + "&external_id=" + URLEncoder.encode(signedInUser.getId() + "", "UTF-8");
