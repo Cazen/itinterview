@@ -19,9 +19,8 @@ import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
-import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.linkedin.connect.LinkedInConnectionFactory;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
-import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 // jhipster-needle-add-social-connection-factory-import-package
 
 import javax.inject.Inject;
@@ -42,20 +41,7 @@ public class SocialConfiguration implements SocialConfigurer {
 
     @Override
     public void addConnectionFactories(ConnectionFactoryConfigurer connectionFactoryConfigurer, Environment environment) {
-        // Google configuration
-        String googleClientId = environment.getProperty("spring.social.google.clientId");
-        String googleClientSecret = environment.getProperty("spring.social.google.clientSecret");
-        if (googleClientId != null && googleClientSecret != null) {
-            log.debug("Configuring GoogleConnectionFactory");
-            connectionFactoryConfigurer.addConnectionFactory(
-                new GoogleConnectionFactory(
-                    googleClientId,
-                    googleClientSecret
-                )
-            );
-        } else {
-            log.error("Cannot configure GoogleConnectionFactory id or secret null");
-        }
+
 
         // Facebook configuration
         String facebookClientId = environment.getProperty("spring.social.facebook.clientId");
@@ -72,20 +58,35 @@ public class SocialConfiguration implements SocialConfigurer {
             log.error("Cannot configure FacebookConnectionFactory id or secret null");
         }
 
-        // Twitter configuration
-        String twitterClientId = environment.getProperty("spring.social.twitter.clientId");
-        String twitterClientSecret = environment.getProperty("spring.social.twitter.clientSecret");
-        if (twitterClientId != null && twitterClientSecret != null) {
-            log.debug("Configuring TwitterConnectionFactory");
+        // LinkedIn configuration
+        String linkedInClientId = environment.getProperty("spring.social.linkedin.clientId");
+        String linkedInClientSecret = environment.getProperty("spring.social.linkedin.clientSecret");
+        if (linkedInClientId != null && linkedInClientSecret != null) {
+            log.debug("Configuring LinkedInConnectionFactory");
             connectionFactoryConfigurer.addConnectionFactory(
-                new TwitterConnectionFactory(
-                    twitterClientId,
-                    twitterClientSecret
+                new LinkedInConnectionFactory(
+                    linkedInClientId,
+                    linkedInClientSecret
                 )
             );
         } else {
-            log.error("Cannot configure TwitterConnectionFactory id or secret null");
+            log.error("Cannot configure LinkedInConnectionFactory id or secret null");
         }
+
+/*        // GitHub configuration
+        String githubClientId = environment.getProperty("spring.social.github.clientId");
+        String githubClientSecret = environment.getProperty("spring.social.github.clientSecret");
+        if (githubClientId != null && githubClientSecret != null) {
+            log.debug("Configuring GitHubConnectionFactory");
+            connectionFactoryConfigurer.addConnectionFactory(
+                new GitHubConnectionFactory(
+                    githubClientId,
+                    githubClientSecret
+                )
+            );
+        } else {
+            log.error("Cannot configure GitHubConnectionFactory id or secret null");
+        }*/
 
         // jhipster-needle-add-social-connection-factory
     }
