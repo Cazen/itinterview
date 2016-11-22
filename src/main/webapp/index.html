@@ -2,6 +2,7 @@
 <html class="no-js">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="Cazen Lee" />
     <title>ItInterview에 오신것을 환영합니다</title>
@@ -16,34 +17,19 @@
     <!-- bower:css -->
 
 
-
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900' rel='stylesheet' type='text/css'>
 
 
 
     <!-- endinject -->
     <!-- endbuild
 
-
-    <!-- build:css content/js/vendor/material-icons.min.css -->
-    <link href="content/css/vendor/material-icons.min.css" rel="stylesheet" media="screen">
-
-    <!-- build:css content/css/vendor/socicon.min.css -->
-    <link href="content/css/vendor/socicon.min.css" rel="stylesheet" media="screen">
-
+\
     <!-- build:css bower_components/bootstrap/dist/css/bootstrap.min.css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 
-    <!-- build:css content/css/theme.min.css -->
-    <link href="content/css/theme.min.css" rel="stylesheet" media="screen">
-
-    <!-- build:js content/js/vendor/page-preloading.js -->
-    <script src="content/js/vendor/page-preloading.js"></script>
-
-    <!-- build:js content/js/vendor/modernizr.custom.js -->
-    <script src="content/js/vendor/modernizr.custom.js"></script>
-
-
+    <!-- build:css content/css/sourse/main.css -->
+    <link rel="stylesheet" href="content/css/source/main.css">
 
     <!-- build:css content/css/main.css -->
     <link rel="stylesheet" href="content/css/main.css">
@@ -52,23 +38,21 @@
     <!-- endbuild -->
 
 
+    <!-- HTML5 shim and Respond.js for < IE9 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9] -->
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <!--[endif]-->
 
     <!-- add custom bootstrap theme on it -->
 
 </head>
-<body ng-app="itinterviewApp" ng-strict-di class="page-preloading">
+<body ng-app="itinterviewApp" ng-strict-di>
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Page Pre-Loader -->
-    <div class="page-preloader">
-        <div class="preloader">
-            <img src="content/images/preloader.gif" alt="Preloader">
-        </div>
-    </div><!-- .page-preloader -->
 
-    <page-ribbon></page-ribbon>
     <div class="page-wrapper" ui-view="navbar" ng-cloak></div>
     <div class="intro-header">
         <div class="well" ui-view="content">
