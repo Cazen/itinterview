@@ -73,6 +73,8 @@ public class DiscourseSSOResource {
             response.getWriter().println("no user founded");
             return new RedirectView("http://itinterview.co.kr/#/register");
         }
+
+        log.debug("SSO Called with signedInUser: " + signedInUser.toString());
         String urlEncode = nonce
             + "&name=" + URLEncoder.encode(signedInUser.getFirstName(), "UTF-8")
             + "&username=" + URLEncoder.encode(signedInUser.getFirstName(), "UTF-8")
