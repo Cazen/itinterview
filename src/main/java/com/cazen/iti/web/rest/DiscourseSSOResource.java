@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.crypto.Mac;
@@ -46,7 +45,7 @@ public class DiscourseSSOResource {
      */
     @GetMapping("/sso")
     @Timed
-    protected ModelAndView returnSSOInformation(HttpServletRequest request,
+    protected RedirectView returnSSOInformation(HttpServletRequest request,
                                                 HttpServletResponse response) throws Exception {
         log.debug("REST request getting SSO Information : {}", request);
 
@@ -62,11 +61,11 @@ public class DiscourseSSOResource {
 
         if (payload == null || sig == null) {
             response.getWriter().println("error parameter");
-            return null;
+            return new RedirectView(discourseSSOLoginURL);
         }
         if (!checksum(secretKey, payload).equals(sig)) {
             response.getWriter().println("checksum failed");
-            return null;
+            return new RedirectView(discourseSSOLoginURL);
         }
         String urlDecode = URLDecoder.decode(payload, "UTF-8");
         String nonce = new String(Base64.decodeBase64(urlDecode));
@@ -86,7 +85,7 @@ public class DiscourseSSOResource {
             length += STEP;
         }
         RedirectView redirectView = new RedirectView(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode));
-        return new ModelAndView(redirectView);
+        return redirectView;
 
 
     }
