@@ -3,7 +3,8 @@ package com.cazen.iti.web.rest;
 import com.cazen.iti.domain.User;
 import com.cazen.iti.service.UserService;
 import com.codahale.metrics.annotation.Timed;
-import org.postgresql.util.Base64;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -37,7 +39,7 @@ public class DiscourseSSOResource {
     /**
      * GET  /sso : Return SSO Information.
      *
-     * @param request the HttpServletRequest
+     * @param request  the HttpServletRequest
      * @param response the HttpServletResponse
      * @return ModelAndView with SSO information
      * @throws Exception fucking exception
@@ -53,40 +55,40 @@ public class DiscourseSSOResource {
         if (secretKey == null || secretKey.isEmpty() || discourseURL == null || discourseURL.isEmpty()) {
             return null;
         }
-        String discourseSSOLoginURL = discourseURL + "/session/sso_login";
+        String discourseSSOLoginURL = discourseURL + "/session/sso_login?sso=";
 
-        String base64EncodedSSOParam = request.getParameter("sso");   // "sso" contains Base64-encoded query string, e.g. "nonce=ABCD"
-        String base64DecodedSSOParam = new String(Base64.decode(base64EncodedSSOParam), "UTF-8");
-        if (!base64DecodedSSOParam.startsWith("nonce=")) {
+        String payload = request.getParameter("sso");
+        String sig = request.getParameter("sig");
+
+        if (payload == null || sig == null) {
+            response.getWriter().println("error parameter");
             return null;
         }
-        String nonce = base64DecodedSSOParam.substring(6);
-
-        // check validity of message using the agreed secret key
-        String algorithm = "HmacSHA256";
-        String hMACSHA256Message = hmacDigest(base64EncodedSSOParam, secretKey, algorithm);
-        String sigParam = request.getParameter("sig");   // "sig" contains HMAC-signed (payload,secret key)
-        if (!hMACSHA256Message.equals(sigParam)) {
-            return null;  // signature is not valid. It was not signed with the agreed-upon secret key.
+        if (!checksum(secretKey, payload).equals(sig)) {
+            response.getWriter().println("checksum failed");
+            return null;
         }
-
-        // At this point, the signature is valid. Now, we redirect back to Discourse with info that it needs about the logged-in user.
-
-        // create a new payload with nonce, external_id=WISE_USER_ID, username=WISE_USERNAME, name=First name + Last name, email=WISE_USER_EMAIL)
+        String urlDecode = URLDecoder.decode(payload, "UTF-8");
+        String nonce = new String(Base64.decodeBase64(urlDecode));
         User signedInUser = userService.getUserWithAuthorities();
-        String externalId = URLEncoder.encode(signedInUser.getId().toString(), "UTF-8");
-        String username = URLEncoder.encode(signedInUser.getEmail(), "UTF-8");
-        String name = URLEncoder.encode(signedInUser.getFirstName() + " " + signedInUser.getLastName(), "UTF-8");
-        String email = URLEncoder.encode(signedInUser.getEmail(), "UTF-8");
-        String payLoadString = "nonce="+nonce+"&name="+name+"&username="+username+"&email="+email+"&external_id="+externalId;
-
-        String payLoadStringBase64Encoded = Base64.encodeBytes(payLoadString.getBytes()); // base64-encode the payload.
-        String payLoadStringBase64EncodedURLEncoded = URLEncoder.encode(payLoadStringBase64Encoded, "UTF-8");  // url-encode it to send over http(s).
-        String payLoadStringBase64EncodedHMACSHA256Signed = hmacDigest(payLoadStringBase64Encoded, secretKey, algorithm);  // sign the base64-encoded payload
-        discourseSSOLoginURL += "?sso="+payLoadStringBase64EncodedURLEncoded + "&sig="+payLoadStringBase64EncodedHMACSHA256Signed;  // append params to redirect URL
-
-        RedirectView redirectView = new RedirectView(discourseSSOLoginURL);
+        String urlEncode = nonce
+            + "&name=" + URLEncoder.encode(signedInUser.getEmail(), "UTF-8")
+            + "&username=" + URLEncoder.encode(signedInUser.getFirstName() + " " + signedInUser.getLastName(), "UTF-8")
+            + "&email=" + URLEncoder.encode(signedInUser.getEmail(), "UTF-8")
+            + "&external_id=" + URLEncoder.encode(signedInUser.getId() + "", "UTF-8");
+        String urlBase64 = new String(Base64.encodeBase64(urlEncode.getBytes("UTF-8")));
+        int length = 0;
+        int maxLength = urlBase64.length();
+        final int STEP = 60;
+        String urlBase64Encode = "";
+        while (length < maxLength) {
+            urlBase64Encode += urlBase64.substring(length, length + STEP < maxLength ? length + STEP : maxLength) + "\n";
+            length += STEP;
+        }
+        RedirectView redirectView = new RedirectView(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode));
         return new ModelAndView(redirectView);
+
+
     }
 
     /**
@@ -121,4 +123,16 @@ public class DiscourseSSOResource {
         }
         return digest;
     }
+
+    String checksum(String macKey, String macData) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        byte[] keyBytes = macKey.getBytes("UTF-8");
+        byte[] dataBytes = macData.getBytes("UTF-8");
+        SecretKeySpec secretKey = new SecretKeySpec(keyBytes, "HmacSHA256");
+        mac.init(secretKey);
+        byte[] doFinal = mac.doFinal(dataBytes);
+        byte[] hexBytes = new Hex().encode(doFinal);
+        return new String(hexBytes);
+    }
+
 }
