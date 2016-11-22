@@ -91,39 +91,6 @@ public class DiscourseSSOResource {
 
     }
 
-    /**
-     * Given message, key, and algorithm, returns Hashed Message Authentication Code (HMAC) digest
-     *
-     * @param msg
-     * @param secretKey
-     * @param algorithm
-     * @return
-     */
-    public static String hmacDigest(String msg, String secretKey, String algorithm) {
-        String digest = null;
-        try {
-            SecretKeySpec key = new SecretKeySpec((secretKey).getBytes("UTF-8"), algorithm);
-            Mac mac = Mac.getInstance(algorithm);
-            mac.init(key);
-
-            byte[] bytes = mac.doFinal(msg.getBytes("ASCII"));
-
-            StringBuffer hash = new StringBuffer();
-            for (int i = 0; i < bytes.length; i++) {
-                String hex = Integer.toHexString(0xFF & bytes[i]);
-                if (hex.length() == 1) {
-                    hash.append('0');
-                }
-                hash.append(hex);
-            }
-            digest = hash.toString();
-        } catch (UnsupportedEncodingException e) {
-        } catch (InvalidKeyException e) {
-        } catch (NoSuchAlgorithmException e) {
-        }
-        return digest;
-    }
-
     String checksum(String macKey, String macData) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
         Mac mac = Mac.getInstance("HmacSHA256");
         byte[] keyBytes = macKey.getBytes("UTF-8");
