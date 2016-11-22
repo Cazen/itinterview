@@ -1,6 +1,5 @@
 package com.cazen.iti.web.rest;
 
-import com.cazen.iti.security.AuthoritiesConstants;
 import com.codahale.metrics.annotation.Timed;
 import com.cazen.iti.domain.QuestionVote;
 import com.cazen.iti.service.QuestionVoteService;
@@ -13,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -30,7 +28,7 @@ import java.util.Optional;
 public class QuestionVoteResource {
 
     private final Logger log = LoggerFactory.getLogger(QuestionVoteResource.class);
-
+        
     @Inject
     private QuestionVoteService questionVoteService;
 
@@ -119,7 +117,6 @@ public class QuestionVoteResource {
      */
     @DeleteMapping("/question-votes/{id}")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteQuestionVote(@PathVariable Long id) {
         log.debug("REST request to delete QuestionVote : {}", id);
         questionVoteService.delete(id);
