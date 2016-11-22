@@ -1,6 +1,5 @@
 package com.cazen.iti.web.rest;
 
-import com.cazen.iti.security.AuthoritiesConstants;
 import com.codahale.metrics.annotation.Timed;
 import com.cazen.iti.domain.UpQuestionVote;
 import com.cazen.iti.service.UpQuestionVoteService;
@@ -13,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -30,7 +28,7 @@ import java.util.Optional;
 public class UpQuestionVoteResource {
 
     private final Logger log = LoggerFactory.getLogger(UpQuestionVoteResource.class);
-
+        
     @Inject
     private UpQuestionVoteService upQuestionVoteService;
 
@@ -119,7 +117,6 @@ public class UpQuestionVoteResource {
      */
     @DeleteMapping("/up-question-votes/{id}")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteUpQuestionVote(@PathVariable Long id) {
         log.debug("REST request to delete UpQuestionVote : {}", id);
         upQuestionVoteService.delete(id);

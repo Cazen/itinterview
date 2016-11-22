@@ -1,6 +1,5 @@
 package com.cazen.iti.web.rest;
 
-import com.cazen.iti.security.AuthoritiesConstants;
 import com.codahale.metrics.annotation.Timed;
 import com.cazen.iti.domain.QuestionMaster;
 import com.cazen.iti.service.QuestionMasterService;
@@ -13,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -30,7 +28,7 @@ import java.util.Optional;
 public class QuestionMasterResource {
 
     private final Logger log = LoggerFactory.getLogger(QuestionMasterResource.class);
-
+        
     @Inject
     private QuestionMasterService questionMasterService;
 
@@ -119,7 +117,6 @@ public class QuestionMasterResource {
      */
     @DeleteMapping("/question-masters/{id}")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteQuestionMaster(@PathVariable Long id) {
         log.debug("REST request to delete QuestionMaster : {}", id);
         questionMasterService.delete(id);
