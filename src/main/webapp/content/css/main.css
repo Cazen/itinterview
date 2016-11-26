@@ -373,4 +373,34 @@ Social Buttons
     color: #fff;
 }
 
+/* Cazen Style */
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a:hover
+{
+    color:#00A0C6;
+    text-decoration:none;
+    cursor:pointer;
+}
+
+.pull-md-right {
+    float: right !important;
+}
+
+.navbar-default {
+    background-color: #f8f8f8;
+    padding: 0.625rem 0 0;
+    background: rgba(9, 15, 37, 0.9);
+    position: fixed;
+    z-index: 10;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    border: none;
+}
+
+
 /* jhipster-needle-css-add-main JHipster will add new css style */
