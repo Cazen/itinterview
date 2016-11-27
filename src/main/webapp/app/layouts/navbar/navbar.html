@@ -23,9 +23,35 @@
                 </li>
                 <li ui-sref-active="active" has-authority="ROLE_USER">
                     <a href="http://discourse.itinterview.co.kr/session/sso" ng-click="vm.collapseNavbar()">
-                        <span class="glyphicons glyphicons-list-numbered"></span>
+                        <span class="glyphicon glyphicon-comment"></span>
                         <span class="hidden-sm">게시판</span>
                     </a>
+                </li>
+                <li ng-class="{active: vm.$state.includes('question')}" ng-switch-when="true" has-authority="ROLE_USER" uib-dropdown class="dropdown pointer">
+                    <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">
+                        <span>
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            <span class="hidden-sm">
+                                문제
+                            </span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                        <li ui-sref-active="active">
+                            <a ui-sref="uploadQuestion" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-open-file"></span>&nbsp;
+                                <span >문제 업로드</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="tryQuestion" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-education"></span>&nbsp;
+                                <span >문제 풀기</span>
+                            </a>
+                        </li>
+                        <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+                    </ul>
                 </li>
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
                 <li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">

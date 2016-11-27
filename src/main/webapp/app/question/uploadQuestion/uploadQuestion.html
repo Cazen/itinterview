@@ -1,0 +1,133 @@
+<div class="row">></div><div class="row">></div><div class="row">></div><div class="row">></div><div class="row">></div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="margin-bottom-50">
+            <div class="panel panel-with-borders">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <!-- Example State Default -->
+                            <div class="step-block step-success">
+                                <span class="step-digit">1</span>
+                                <div class="step-desc">
+                                    <span class="step-title">Start :)</span>
+                                    <p>이곳에서 문제를 업로드 해주세요</p>
+                                </div>
+                            </div>
+                            <!-- End Example State Default -->
+                        </div>
+                        <div class="col-lg-3">
+                            <!-- Example State Error -->
+
+                            <div class="step-block step-primary">
+                                <span class="step-digit">2</span>
+                                <div class="step-desc">
+                                    <span class="step-title">심사 대기중</span>
+                                    <p>문제가 업로드 되었고 반영을 기다리는 상태입니다</p>
+                                </div>
+                            </div>
+                            <!-- End Example State Error -->
+                        </div>
+                        <div class="col-lg-3">
+                            <!-- Example State Current -->
+                            <div class="step-block step-danger">
+                                <span class="step-digit">3</span>
+                                <div class="step-desc">
+                                    <span class="step-title">반영중</span>
+                                    <p>실제 문제가 제공되고 있는 상태입니다</p>
+                                </div>
+                            </div>
+                            <!-- End Example State Current -->
+                        </div>
+                        <div class="col-lg-3">
+                            <!-- Example State Disabled -->
+                            <div class="step-block step-default step-disabled">
+                                <span class="step-digit">X</span>
+                                <div class="step-desc">
+                                    <span class="step-title">삭제상태</span>
+                                    <p>삭제된 항목은 출력되지 않습니다</p>
+                                </div>
+                            </div>
+                            <!-- End Example State Disabled -->
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            ITInterview는 지엽적인 문제를 지양합니다 Topic에 대해 반드시 알고 있어야 하는 문제만 출제해 주세요
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="uploadQuestion.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        문제 출제하기
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                    <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="title"><span>Title</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="delYn"><span>Del Yn</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="cTime"><span>C Time</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="author.id"><span>Author</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="status.id"><span>Status</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <tr ng-repeat="uploadQuestion in vm.uploadQuestions track by uploadQuestion.id">
+                    <td><a ui-sref="uploadQuestion-detail({id:uploadQuestion.id})">{{uploadQuestion.id}}</a></td>
+                    <td>{{uploadQuestion.title}}</td>
+                    <td>{{uploadQuestion.delYn}}</td>
+                    <td>{{uploadQuestion.cTime | date:'medium'}}</td>
+                    <td>
+                        {{uploadQuestion.author.id}}
+                    </td>
+                    <td>
+                        <a ui-sref="common-code-detail({id:uploadQuestion.status.id})">{{uploadQuestion.status.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="uploadQuestion-detail({id:uploadQuestion.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="uploadQuestion.edit({id:uploadQuestion.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="uploadQuestion.delete({id:uploadQuestion.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
