@@ -10,15 +10,15 @@
     function stateConfig($stateProvider) {
         $stateProvider
         .state('uploadQuestion', {
-            parent: 'entity',
+            parent: 'question',
             url: '/uploadQuestion',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'UpQuestion'
+                pageTitle: 'UploadQuestion'
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/question/uploadquestion/uploadQuestion.html',
+                    templateUrl: 'app/question/upload-question/uploadQuestion.html',
                     controller: 'UploadQuestionController',
                     controllerAs: 'vm'
                 }
@@ -26,23 +26,23 @@
             resolve: {
             }
         })
-        .state('UploadQuestion-detail', {
-            parent: 'entity',
+        .state('uploadQuestion-detail', {
+            parent: 'uploadQuestion',
             url: '/uploadQuestion/{id}',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'UpQuestion'
+                pageTitle: 'UploadQuestion'
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/question/uploadquestion/uploadQuestion-detail.html',
-                    controller: 'UpQuestionDetailController',
+                    templateUrl: 'app/question/upload-question/uploadQuestion-detail.html',
+                    controller: 'UploadQuestionDetailController',
                     controllerAs: 'vm'
                 }
             },
             resolve: {
-                entity: ['$stateParams', 'UpQuestion', function($stateParams, UpQuestion) {
-                    return UpQuestion.get({id : $stateParams.id}).$promise;
+                question: ['$stateParams', 'UploadQuestion', function($stateParams, UploadQuestion) {
+                    return UploadQuestion.get({id : $stateParams.id}).$promise;
                 }],
                 previousState: ["$state", function ($state) {
                     var currentStateData = {
@@ -62,14 +62,14 @@
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/question/uploadquestion/uploadQuestion-dialog.html',
+                    templateUrl: 'app/question/upload-question/uploadQuestion-dialog.html',
                     controller: 'UploadQuestionDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: ['UpQuestion', function(UpQuestion) {
-                            return UpQuestion.get({id : $stateParams.id}).$promise;
+                        question: ['UploadQuestion', function(UploadQuestion) {
+                            return UploadQuestion.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -87,13 +87,13 @@
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/question/uploadquestion/uploadQuestion-dialog.html',
+                    templateUrl: 'app/question/upload-question/uploadQuestion-dialog.html',
                     controller: 'UploadQuestionDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: function () {
+                        question: function () {
                             return {
                                 title: null,
                                 delYn: null,
@@ -117,14 +117,14 @@
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/question/uploadquestion/uploadQuestion-dialog.html',
-                    controller: 'UpQuestionDialogController',
+                    templateUrl: 'app/question/upload-question/uploadQuestion-dialog.html',
+                    controller: 'UploadQuestionDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: ['UpQuestion', function(UpQuestion) {
-                            return UpQuestion.get({id : $stateParams.id}).$promise;
+                        question: ['UploadQuestion', function(UploadQuestion) {
+                            return UploadQuestion.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -142,13 +142,13 @@
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/question/uploadquestion/uploadQuestion-delete-dialog.html',
-                    controller: 'UpQuestionDeleteController',
+                    templateUrl: 'app/question/upload-question/uploadQuestion-delete-dialog.html',
+                    controller: 'UploadQuestionDeleteController',
                     controllerAs: 'vm',
                     size: 'md',
                     resolve: {
-                        entity: ['UpQuestion', function(UpQuestion) {
-                            return UpQuestion.get({id : $stateParams.id}).$promise;
+                        question: ['UploadQuestion', function(UploadQuestion) {
+                            return UploadQuestion.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

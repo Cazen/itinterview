@@ -1,7 +1,10 @@
 package com.cazen.iti.web.rest;
 
 import com.cazen.iti.domain.UpQuestionMaster;
+import com.cazen.iti.security.SecurityUtils;
+import com.cazen.iti.security.UserDetailsService;
 import com.cazen.iti.service.UploadQustionService;
+import com.cazen.iti.service.UserService;
 import com.cazen.iti.web.rest.util.HeaderUtil;
 import com.cazen.iti.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
@@ -24,7 +27,7 @@ import java.util.Optional;
  * REST controller for managing UploadQuestionMaster.
  */
 @RestController
-@RequestMapping("/app/question")
+@RequestMapping("/api/question")
 public class UploadQuestionResource {
 
     private final Logger log = LoggerFactory.getLogger(UploadQuestionResource.class);
@@ -32,6 +35,8 @@ public class UploadQuestionResource {
     @Inject
     private UploadQustionService uploadQuestionService;
 
+    @Inject
+    private UserDetailsService userDetailsService;
     /**
      * POST  /uploadQuestion : Create a new uploadQuestion.
      *
@@ -39,15 +44,18 @@ public class UploadQuestionResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new upQuestionMaster, or with status 400 (Bad Request) if the upQuestionMaster has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/uploadQuestion")
+    @PostMapping("/uploadquestion")
     @Timed
     public ResponseEntity<UpQuestionMaster> createUpQuestionMaster(@RequestBody UpQuestionMaster upQuestionMaster) throws URISyntaxException {
         log.debug("REST request to save UpQuestionMaster : {}", upQuestionMaster);
-        if (upQuestionMaster.getId() != null) {
+        /*if (upQuestionMaster.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("upQuestionMaster", "idexists", "A new upQuestionMaster cannot already have an ID")).body(null);
-        }
+        }*/
+
+        upQuestionMaster.setAuthor(userDetailsService.loadUserByUsername(SecurityUtils.getCurrentUserLogin()));
+
         UpQuestionMaster result = uploadQuestionService.save(upQuestionMaster);
-        return ResponseEntity.created(new URI("/api/uploadQuestion/" + result.getId()))
+        return ResponseEntity.created(new URI("/app/uploadquestion/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("upQuestionMaster", result.getId().toString()))
             .body(result);
     }
@@ -61,7 +69,7 @@ public class UploadQuestionResource {
      * or with status 500 (Internal Server Error) if the upQuestionMaster couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/uploadQuestion")
+    @PutMapping("/uploadquestion")
     @Timed
     public ResponseEntity<UpQuestionMaster> updateUpQuestionMaster(@RequestBody UpQuestionMaster upQuestionMaster) throws URISyntaxException {
         log.debug("REST request to update UpQuestionMaster : {}", upQuestionMaster);
@@ -81,13 +89,13 @@ public class UploadQuestionResource {
      * @return the ResponseEntity with status 200 (OK) and the list of upQuestionMasters in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
-    @GetMapping("/uploadQuestion")
+    @GetMapping("/uploadquestion")
     @Timed
     public ResponseEntity<List<UpQuestionMaster>> getAllUpQuestionMasters(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of UpQuestionMasters");
         Page<UpQuestionMaster> page = uploadQuestionService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/uploadQuestion");
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/app/uploadquestion");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -97,7 +105,7 @@ public class UploadQuestionResource {
      * @param id the id of the upQuestionMaster to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the upQuestionMaster, or with status 404 (Not Found)
      */
-    @GetMapping("/uploadQuestion/{id}")
+    @GetMapping("/uploadquestion/{id}")
     @Timed
     public ResponseEntity<UpQuestionMaster> getUpQuestionMaster(@PathVariable Long id) {
         log.debug("REST request to get UpQuestionMaster : {}", id);
@@ -115,7 +123,7 @@ public class UploadQuestionResource {
      * @param id the id of the upQuestionMaster to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/uploadQuestion/{id}")
+    @DeleteMapping("/uploadquestion/{id}")
     @Timed
     public ResponseEntity<Void> deleteUpQuestionMaster(@PathVariable Long id) {
         log.debug("REST request to delete UpQuestionMaster : {}", id);

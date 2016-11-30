@@ -83,24 +83,24 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-                    <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="title"><span>Title</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="delYn"><span>Del Yn</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="cTime"><span>C Time</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="author.id"><span>Author</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="status.id"><span>Status</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <!--<th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <th jh-sort-by="title"><span>문제 제목</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <!--<th jh-sort-by="delYn"><span>Del Yn</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="cTime"><span>C Time</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="author.id"><span>Author</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <th jh-sort-by="status.id"><span>상태</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
                 <tr ng-repeat="uploadQuestion in vm.uploadQuestions track by uploadQuestion.id">
-                    <td><a ui-sref="uploadQuestion-detail({id:uploadQuestion.id})">{{uploadQuestion.id}}</a></td>
+                    <!--<td><a ui-sref="uploadQuestion-detail({id:uploadQuestion.id})">{{uploadQuestion.id}}</a></td>-->
                     <td>{{uploadQuestion.title}}</td>
-                    <td>{{uploadQuestion.delYn}}</td>
-                    <td>{{uploadQuestion.cTime | date:'medium'}}</td>
-                    <td>
-                        {{uploadQuestion.author.id}}
-                    </td>
+                    <!--<td>{{uploadQuestion.delYn}}</td>-->
+                    <!--<td>{{uploadQuestion.cTime | date:'medium'}}</td>-->
+                    <!--<td>-->
+                        <!--{{uploadQuestion.author.id}}-->
+                    <!--</td>-->
                     <td>
                         <a ui-sref="common-code-detail({id:uploadQuestion.status.id})">{{uploadQuestion.status.id}}</a>
                     </td>

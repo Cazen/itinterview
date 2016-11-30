@@ -7,7 +7,7 @@
     UploadQuestion.$inject = ['$resource', 'DateUtils'];
 
     function UploadQuestion ($resource, DateUtils) {
-        var resourceUrl =  'app/question/uploadquestion/:id';
+        var resourceUrl =  'api/question/uploadquestion/:id';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},

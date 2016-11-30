@@ -10,7 +10,7 @@
     function UploadQuestionController ($scope, $state, UploadQuestion, ParseLinks, AlertService) {
         var vm = this;
 
-        vm.uploadQuestion = [];
+        vm.uploadQuestions = [];
         vm.loadPage = loadPage;
         vm.page = 0;
         vm.links = {
@@ -40,7 +40,7 @@
                 vm.links = ParseLinks.parse(headers('link'));
                 vm.totalItems = headers('X-Total-Count');
                 for (var i = 0; i < data.length; i++) {
-                    vm.uploadQuestion.push(data[i]);
+                    vm.uploadQuestions.push(data[i]);
                 }
             }
 
@@ -51,7 +51,7 @@
 
         function reset () {
             vm.page = 0;
-            vm.uploadQuestionMasters = [];
+            vm.uploadQuestions = [];
             loadAll();
         }
 

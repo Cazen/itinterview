@@ -5,12 +5,12 @@
         .module('itinterviewApp')
         .controller('UploadQuestionDialogController', UploadQuestionDialogController);
 
-    UploadQuestionDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'UploadQuestion', 'UpRightAnswer', 'UpWrongAnswer', 'User', 'CommonCode'];
+    UploadQuestionDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'question', 'UploadQuestion', 'UpRightAnswer', 'UpWrongAnswer', 'User', 'CommonCode'];
 
-    function UploadQuestionDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, UploadQuestion, UpRightAnswer, UpWrongAnswer, User, CommonCode) {
+    function UploadQuestionDialogController ($timeout, $scope, $stateParams, $uibModalInstance, question, UploadQuestion, UpRightAnswer, UpWrongAnswer, User, CommonCode) {
         var vm = this;
 
-        vm.uploadQuestion = entity;
+        vm.uploadQuestion = question;
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;

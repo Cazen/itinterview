@@ -3,23 +3,23 @@
 
     angular
         .module('itinterviewApp')
-        .controller('UpQuestionDeleteController',UpQuestionDeleteController);
+        .controller('UploadQuestionDeleteController',UploadQuestionDeleteController);
 
-    UpQuestionDeleteController.$inject = ['$uibModalInstance', 'entity', 'UpQuestion'];
+    UploadQuestionDeleteController.$inject = ['$uibModalInstance', 'question', 'UploadQuestion'];
 
-    function UpQuestionDeleteController($uibModalInstance, entity, UpQuestion) {
+    function UploadQuestionDeleteController($uibModalInstance, question, UploadQuestion) {
         var vm = this;
 
-        vm.uploadQuestion = entity;
+        vm.uploadQuestion = question;
         vm.clear = clear;
         vm.confirmDelete = confirmDelete;
-        
+
         function clear () {
             $uibModalInstance.dismiss('cancel');
         }
 
         function confirmDelete (id) {
-            UpQuestion.delete({id: id},
+            UploadQuestion.delete({id: id},
                 function () {
                     $uibModalInstance.close(true);
                 });
