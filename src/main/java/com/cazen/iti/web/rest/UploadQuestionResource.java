@@ -48,11 +48,11 @@ public class UploadQuestionResource {
     @Timed
     public ResponseEntity<UpQuestionMaster> createUpQuestionMaster(@RequestBody UpQuestionMaster upQuestionMaster) throws URISyntaxException {
         log.debug("REST request to save UpQuestionMaster : {}", upQuestionMaster);
-        /*if (upQuestionMaster.getId() != null) {
+        if (upQuestionMaster.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("upQuestionMaster", "idexists", "A new upQuestionMaster cannot already have an ID")).body(null);
-        }*/
+        }
 
-        upQuestionMaster.setAuthor(userDetailsService.loadUserByUsername(SecurityUtils.getCurrentUserLogin()));
+        upQuestionMaster.setAuthor(SecurityUtils.getCurrentUserLogin());
 
         UpQuestionMaster result = uploadQuestionService.save(upQuestionMaster);
         return ResponseEntity.created(new URI("/app/uploadquestion/" + result.getId()))
