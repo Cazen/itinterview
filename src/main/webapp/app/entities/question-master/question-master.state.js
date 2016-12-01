@@ -97,6 +97,7 @@
                             return {
                                 title: null,
                                 delYn: null,
+                                author: null,
                                 cTime: null,
                                 id: null
                             };

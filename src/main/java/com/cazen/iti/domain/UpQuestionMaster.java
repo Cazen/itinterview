@@ -45,9 +45,6 @@ public class UpQuestionMaster implements Serializable {
     private Set<UpWrongAnswer> upwrongAnswers = new HashSet<>();
 
     @ManyToOne
-    private User author;
-
-    @ManyToOne
     private CommonCode status;
 
     public Long getId() {
@@ -145,19 +142,6 @@ public class UpQuestionMaster implements Serializable {
 
     public void setUpwrongAnswers(Set<UpWrongAnswer> upWrongAnswers) {
         this.upwrongAnswers = upWrongAnswers;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public UpQuestionMaster author(User user) {
-        this.author = user;
-        return this;
-    }
-
-    public void setAuthor(User user) {
-        this.author = user;
     }
 
     public CommonCode getStatus() {

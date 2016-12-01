@@ -5,9 +5,9 @@
         .module('itinterviewApp')
         .controller('QuestionMasterDialogController', QuestionMasterDialogController);
 
-    QuestionMasterDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'QuestionMaster', 'RightAnswer', 'WrongAnswer', 'User', 'CommonCode'];
+    QuestionMasterDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'QuestionMaster', 'RightAnswer', 'WrongAnswer', 'CommonCode'];
 
-    function QuestionMasterDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, QuestionMaster, RightAnswer, WrongAnswer, User, CommonCode) {
+    function QuestionMasterDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, QuestionMaster, RightAnswer, WrongAnswer, CommonCode) {
         var vm = this;
 
         vm.questionMaster = entity;
@@ -17,7 +17,6 @@
         vm.save = save;
         vm.rightanswers = RightAnswer.query();
         vm.wronganswers = WrongAnswer.query();
-        vm.users = User.query();
         vm.commoncodes = CommonCode.query();
 
         $timeout(function (){

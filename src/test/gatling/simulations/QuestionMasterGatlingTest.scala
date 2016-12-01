@@ -67,7 +67,7 @@ class QuestionMasterGatlingTest extends Simulation {
             .exec(http("Create new questionMaster")
             .post("/api/question-masters")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "title":"SAMPLE_TEXT", "delYn":"SAMPLE_TEXT", "cTime":"2020-01-01T00:00:00.000Z"}""")).asJSON
+            .body(StringBody("""{"id":null, "title":"SAMPLE_TEXT", "delYn":"SAMPLE_TEXT", "author":"SAMPLE_TEXT", "cTime":"2020-01-01T00:00:00.000Z"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_questionMaster_url"))).exitHereIfFailed
             .pause(10)

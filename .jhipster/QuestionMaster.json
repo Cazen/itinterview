@@ -15,12 +15,6 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "author",
-            "otherEntityName": "user",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
             "relationshipName": "status",
             "otherEntityName": "commonCode",
             "otherEntityField": "id"
@@ -33,6 +27,10 @@
         },
         {
             "fieldName": "delYn",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "author",
             "fieldType": "String"
         },
         {
