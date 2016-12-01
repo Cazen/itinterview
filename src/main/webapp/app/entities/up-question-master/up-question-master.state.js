@@ -98,6 +98,7 @@
                                 title: null,
                                 delYn: null,
                                 cTime: null,
+                                author: null,
                                 id: null
                             };
                         }

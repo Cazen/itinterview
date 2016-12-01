@@ -34,6 +34,9 @@ public class UpQuestionMaster implements Serializable {
     @Column(name = "c_time")
     private ZonedDateTime cTime;
 
+    @Column(name = "author")
+    private String author;
+
     @OneToMany(mappedBy = "upquestionMaster")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -92,6 +95,19 @@ public class UpQuestionMaster implements Serializable {
 
     public void setcTime(ZonedDateTime cTime) {
         this.cTime = cTime;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public UpQuestionMaster author(String author) {
+        this.author = author;
+        return this;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public Set<UpRightAnswer> getUprightAnswers() {
@@ -184,6 +200,7 @@ public class UpQuestionMaster implements Serializable {
             ", title='" + title + "'" +
             ", delYn='" + delYn + "'" +
             ", cTime='" + cTime + "'" +
+            ", author='" + author + "'" +
             '}';
     }
 }
