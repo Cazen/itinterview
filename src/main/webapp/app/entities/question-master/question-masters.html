@@ -21,8 +21,8 @@
                     <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="title"><span>Title</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="delYn"><span>Del Yn</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="author"><span>Author</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="cTime"><span>C Time</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="author"><span>Author</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="status.id"><span>Status</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
@@ -32,8 +32,8 @@
                     <td><a ui-sref="question-master-detail({id:questionMaster.id})">{{questionMaster.id}}</a></td>
                     <td>{{questionMaster.title}}</td>
                     <td>{{questionMaster.delYn}}</td>
-                    <td>{{questionMaster.author}}</td>
                     <td>{{questionMaster.cTime | date:'medium'}}</td>
+                    <td>{{questionMaster.author}}</td>
                     <td>
                         <a ui-sref="common-code-detail({id:questionMaster.status.id})">{{questionMaster.status.id}}</a>
                     </td>

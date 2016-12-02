@@ -5,9 +5,9 @@
         .module('itinterviewApp')
         .controller('UpQuestionMasterDialogController', UpQuestionMasterDialogController);
 
-    UpQuestionMasterDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'UpQuestionMaster', 'UpRightAnswer', 'UpWrongAnswer', 'CommonCode'];
+    UpQuestionMasterDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'UpQuestionMaster', 'UpRightAnswer', 'UpWrongAnswer'];
 
-    function UpQuestionMasterDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, UpQuestionMaster, UpRightAnswer, UpWrongAnswer, CommonCode) {
+    function UpQuestionMasterDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, UpQuestionMaster, UpRightAnswer, UpWrongAnswer) {
         var vm = this;
 
         vm.upQuestionMaster = entity;
@@ -17,7 +17,6 @@
         vm.save = save;
         vm.uprightanswers = UpRightAnswer.query();
         vm.upwronganswers = UpWrongAnswer.query();
-        vm.commoncodes = CommonCode.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

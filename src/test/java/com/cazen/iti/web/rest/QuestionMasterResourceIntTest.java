@@ -49,12 +49,12 @@ public class QuestionMasterResourceIntTest {
     private static final String DEFAULT_DEL_YN = "AAAAA";
     private static final String UPDATED_DEL_YN = "BBBBB";
 
-    private static final String DEFAULT_AUTHOR = "AAAAA";
-    private static final String UPDATED_AUTHOR = "BBBBB";
-
     private static final ZonedDateTime DEFAULT_C_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
     private static final ZonedDateTime UPDATED_C_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
     private static final String DEFAULT_C_TIME_STR = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(DEFAULT_C_TIME);
+
+    private static final String DEFAULT_AUTHOR = "AAAAA";
+    private static final String UPDATED_AUTHOR = "BBBBB";
 
     @Inject
     private QuestionMasterRepository questionMasterRepository;
@@ -95,8 +95,8 @@ public class QuestionMasterResourceIntTest {
         QuestionMaster questionMaster = new QuestionMaster()
                 .title(DEFAULT_TITLE)
                 .delYn(DEFAULT_DEL_YN)
-                .author(DEFAULT_AUTHOR)
-                .cTime(DEFAULT_C_TIME);
+                .cTime(DEFAULT_C_TIME)
+                .author(DEFAULT_AUTHOR);
         return questionMaster;
     }
 
@@ -123,8 +123,8 @@ public class QuestionMasterResourceIntTest {
         QuestionMaster testQuestionMaster = questionMasters.get(questionMasters.size() - 1);
         assertThat(testQuestionMaster.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testQuestionMaster.getDelYn()).isEqualTo(DEFAULT_DEL_YN);
-        assertThat(testQuestionMaster.getAuthor()).isEqualTo(DEFAULT_AUTHOR);
         assertThat(testQuestionMaster.getcTime()).isEqualTo(DEFAULT_C_TIME);
+        assertThat(testQuestionMaster.getAuthor()).isEqualTo(DEFAULT_AUTHOR);
     }
 
     @Test
@@ -140,8 +140,8 @@ public class QuestionMasterResourceIntTest {
                 .andExpect(jsonPath("$.[*].id").value(hasItem(questionMaster.getId().intValue())))
                 .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
                 .andExpect(jsonPath("$.[*].delYn").value(hasItem(DEFAULT_DEL_YN.toString())))
-                .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR.toString())))
-                .andExpect(jsonPath("$.[*].cTime").value(hasItem(DEFAULT_C_TIME_STR)));
+                .andExpect(jsonPath("$.[*].cTime").value(hasItem(DEFAULT_C_TIME_STR)))
+                .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR.toString())));
     }
 
     @Test
@@ -157,8 +157,8 @@ public class QuestionMasterResourceIntTest {
             .andExpect(jsonPath("$.id").value(questionMaster.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
             .andExpect(jsonPath("$.delYn").value(DEFAULT_DEL_YN.toString()))
-            .andExpect(jsonPath("$.author").value(DEFAULT_AUTHOR.toString()))
-            .andExpect(jsonPath("$.cTime").value(DEFAULT_C_TIME_STR));
+            .andExpect(jsonPath("$.cTime").value(DEFAULT_C_TIME_STR))
+            .andExpect(jsonPath("$.author").value(DEFAULT_AUTHOR.toString()));
     }
 
     @Test
@@ -182,8 +182,8 @@ public class QuestionMasterResourceIntTest {
         updatedQuestionMaster
                 .title(UPDATED_TITLE)
                 .delYn(UPDATED_DEL_YN)
-                .author(UPDATED_AUTHOR)
-                .cTime(UPDATED_C_TIME);
+                .cTime(UPDATED_C_TIME)
+                .author(UPDATED_AUTHOR);
 
         restQuestionMasterMockMvc.perform(put("/api/question-masters")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -196,8 +196,8 @@ public class QuestionMasterResourceIntTest {
         QuestionMaster testQuestionMaster = questionMasters.get(questionMasters.size() - 1);
         assertThat(testQuestionMaster.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testQuestionMaster.getDelYn()).isEqualTo(UPDATED_DEL_YN);
-        assertThat(testQuestionMaster.getAuthor()).isEqualTo(UPDATED_AUTHOR);
         assertThat(testQuestionMaster.getcTime()).isEqualTo(UPDATED_C_TIME);
+        assertThat(testQuestionMaster.getAuthor()).isEqualTo(UPDATED_AUTHOR);
     }
 
     @Test

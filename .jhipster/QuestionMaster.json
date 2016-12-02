@@ -30,17 +30,17 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "author",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "cTime",
             "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "author",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20161112173913",
-    "entityTableName": "question_master",
     "dto": "no",
-    "pagination": "infinite-scroll",
-    "service": "serviceImpl"
+    "service": "serviceImpl",
+    "entityTableName": "question_master",
+    "pagination": "infinite-scroll"
 }

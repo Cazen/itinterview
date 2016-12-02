@@ -13,11 +13,19 @@
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="vm.uploadQuestion.id" readonly />
         </div>-->
-        <div class="form-group">
-            <label class="control-label" for="field_title">문제 제목</label>
-            <input type="text" class="form-control" name="title" id="field_title"
-                    ng-model="vm.uploadQuestion.title"
-                     />
+        <div class="form-group row">
+            <label class="form-control-label" for="field_title">문제 제목</label>
+            <textarea style="resize:none" type="text" class="form-control" name="title" id="field_title"
+                      rows="5" ng-model="vm.uploadQuestion.title" />
+        </div>
+
+        <div class="form-group row">
+            <label class="form-control-label" for="field_title">정답</label>
+            <div>
+            <textarea style="resize:none" type="text" class="form-control" name="optionText"
+                      rows="3" ng-model="vm.uprightanswers.optionText" />
+            </div>
+
         </div>
 <!--        <div class="form-group">
             <label class="control-label" for="field_delYn">Del Yn</label>

@@ -19,7 +19,7 @@ import java.util.List;
 public class CommonCodeServiceImpl implements CommonCodeService{
 
     private final Logger log = LoggerFactory.getLogger(CommonCodeServiceImpl.class);
-    
+
     @Inject
     private CommonCodeRepository commonCodeRepository;
 
@@ -37,10 +37,10 @@ public class CommonCodeServiceImpl implements CommonCodeService{
 
     /**
      *  Get all the commonCodes.
-     *  
+     *
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<CommonCode> findAll() {
         log.debug("Request to get all CommonCodes");
         List<CommonCode> result = commonCodeRepository.findAll();
@@ -54,10 +54,23 @@ public class CommonCodeServiceImpl implements CommonCodeService{
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public CommonCode findOne(Long id) {
         log.debug("Request to get CommonCode : {}", id);
         CommonCode commonCode = commonCodeRepository.findOne(id);
+        return commonCode;
+    }
+
+    /**
+     *  Get one commonCode by unique codeId.
+     *
+     *  @param codeId the id of the entity
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public CommonCode findByCd_Id(String codeId) {
+        log.debug("Request to get CommonCode from codeId : {}", codeId);
+        CommonCode commonCode = commonCodeRepository.findByCd_Id(codeId);
         return commonCode;
     }
 

@@ -12,12 +12,6 @@
             "relationshipName": "upwrongAnswer",
             "otherEntityName": "upWrongAnswer",
             "otherEntityRelationshipName": "upquestionMaster"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "status",
-            "otherEntityName": "commonCode",
-            "otherEntityField": "id"
         }
     ],
     "fields": [
@@ -35,6 +29,10 @@
         },
         {
             "fieldName": "author",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
             "fieldType": "String"
         }
     ],

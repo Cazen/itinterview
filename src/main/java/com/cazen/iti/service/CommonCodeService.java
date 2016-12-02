@@ -19,7 +19,7 @@ public interface CommonCodeService {
 
     /**
      *  Get all the commonCodes.
-     *  
+     *
      *  @return the list of entities
      */
     List<CommonCode> findAll();
@@ -31,6 +31,14 @@ public interface CommonCodeService {
      *  @return the entity
      */
     CommonCode findOne(Long id);
+
+    /**
+     *  Get the commonCode from unique CD_ID.
+     *
+     *  @param codeId the id of the entity
+     *  @return the entity
+     */
+    CommonCode findByCd_Id(String codeId);
 
     /**
      *  Delete the "id" commonCode.

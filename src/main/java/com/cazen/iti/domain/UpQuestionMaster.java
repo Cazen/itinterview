@@ -37,18 +37,17 @@ public class UpQuestionMaster implements Serializable {
     @Column(name = "author")
     private String author;
 
+    @Column(name = "status")
+    private String status;
+
     @OneToMany(mappedBy = "upquestionMaster")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<UpRightAnswer> uprightAnswers = new HashSet<>();
 
     @OneToMany(mappedBy = "upquestionMaster")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<UpWrongAnswer> upwrongAnswers = new HashSet<>();
-
-    @ManyToOne
-    private CommonCode status;
 
     public Long getId() {
         return id;
@@ -110,6 +109,19 @@ public class UpQuestionMaster implements Serializable {
         this.author = author;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public UpQuestionMaster status(String status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Set<UpRightAnswer> getUprightAnswers() {
         return uprightAnswers;
     }
@@ -160,19 +172,6 @@ public class UpQuestionMaster implements Serializable {
         this.upwrongAnswers = upWrongAnswers;
     }
 
-    public CommonCode getStatus() {
-        return status;
-    }
-
-    public UpQuestionMaster status(CommonCode commonCode) {
-        this.status = commonCode;
-        return this;
-    }
-
-    public void setStatus(CommonCode commonCode) {
-        this.status = commonCode;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -201,6 +200,7 @@ public class UpQuestionMaster implements Serializable {
             ", delYn='" + delYn + "'" +
             ", cTime='" + cTime + "'" +
             ", author='" + author + "'" +
+            ", status='" + status + "'" +
             '}';
     }
 }

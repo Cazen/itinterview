@@ -1,10 +1,10 @@
 package com.cazen.iti.web.rest;
 
+import com.cazen.iti.config.Constants;
 import com.cazen.iti.domain.UpQuestionMaster;
 import com.cazen.iti.security.SecurityUtils;
-import com.cazen.iti.security.UserDetailsService;
+import com.cazen.iti.service.CommonCodeService;
 import com.cazen.iti.service.UploadQustionService;
-import com.cazen.iti.service.UserService;
 import com.cazen.iti.web.rest.util.HeaderUtil;
 import com.cazen.iti.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +37,8 @@ public class UploadQuestionResource {
     private UploadQustionService uploadQuestionService;
 
     @Inject
-    private UserDetailsService userDetailsService;
+    private CommonCodeService commonCodeService;
+
     /**
      * POST  /uploadQuestion : Create a new uploadQuestion.
      *
@@ -53,6 +55,9 @@ public class UploadQuestionResource {
         }
 
         upQuestionMaster.setAuthor(SecurityUtils.getCurrentUserLogin());
+        upQuestionMaster.setcTime(ZonedDateTime.now());
+        upQuestionMaster.setDelYn("N");
+        upQuestionMaster.setStatus(commonCodeService.findByCd_Id(Constants.QSTN_STAT_WAIT).getCdId());
 
         UpQuestionMaster result = uploadQuestionService.save(upQuestionMaster);
         return ResponseEntity.created(new URI("/app/uploadquestion/" + result.getId()))

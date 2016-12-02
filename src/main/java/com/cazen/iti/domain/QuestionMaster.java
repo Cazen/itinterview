@@ -31,11 +31,11 @@ public class QuestionMaster implements Serializable {
     @Column(name = "del_yn")
     private String delYn;
 
-    @Column(name = "author")
-    private String author;
-
     @Column(name = "c_time")
     private ZonedDateTime cTime;
+
+    @Column(name = "author")
+    private String author;
 
     @OneToMany(mappedBy = "questionMaster")
     @JsonIgnore
@@ -84,19 +84,6 @@ public class QuestionMaster implements Serializable {
         this.delYn = delYn;
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public QuestionMaster author(String author) {
-        this.author = author;
-        return this;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public ZonedDateTime getcTime() {
         return cTime;
     }
@@ -108,6 +95,19 @@ public class QuestionMaster implements Serializable {
 
     public void setcTime(ZonedDateTime cTime) {
         this.cTime = cTime;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public QuestionMaster author(String author) {
+        this.author = author;
+        return this;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public Set<RightAnswer> getRightAnswers() {
@@ -199,8 +199,8 @@ public class QuestionMaster implements Serializable {
             "id=" + id +
             ", title='" + title + "'" +
             ", delYn='" + delYn + "'" +
-            ", author='" + author + "'" +
             ", cTime='" + cTime + "'" +
+            ", author='" + author + "'" +
             '}';
     }
 }

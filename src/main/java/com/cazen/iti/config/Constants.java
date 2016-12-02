@@ -23,4 +23,10 @@ public final class Constants {
 
     private Constants() {
     }
+
+    //ITInterview Custom Constants
+    public static final String QSTN_STAT_WAIT = "QSTN_STAT.WAITING";
+    public static final String QSTN_STAT_RUNN = "QSTN_STAT.RUNNING";
+    public static final String QSTN_STAT_DELE = "QSTN_STAT.DELETED";
+
 }
