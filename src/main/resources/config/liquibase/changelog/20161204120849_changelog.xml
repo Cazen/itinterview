@@ -60,11 +60,8 @@
         <loadData encoding="UTF-8"
                   file="config/liquibase/commonCode.csv"
                   separator=";"
-                  tableName="jhi_user">
-            <column name="activated" type="boolean"/>
-            <column name="created_date" type="timestamp"/>
+                  tableName="COMMON_CODE">
         </loadData>
-        <dropDefaultValue tableName="jhi_user" columnName="created_date" columnDataType="datetime"/>
     </changeSet>
 
 </databaseChangeLog>
