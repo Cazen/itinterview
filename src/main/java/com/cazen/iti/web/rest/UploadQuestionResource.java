@@ -1,8 +1,6 @@
 package com.cazen.iti.web.rest;
 
-import com.cazen.iti.config.Constants;
 import com.cazen.iti.domain.UpQuestionMaster;
-import com.cazen.iti.security.SecurityUtils;
 import com.cazen.iti.service.CommonCodeService;
 import com.cazen.iti.service.UploadQustionService;
 import com.cazen.iti.web.rest.util.HeaderUtil;
@@ -20,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,18 +46,18 @@ public class UploadQuestionResource {
      */
     @PostMapping("/uploadquestion")
     @Timed
-    public ResponseEntity<UpQuestionMaster> createUpQuestionMaster(@RequestBody UpQuestionMaster upQuestionMaster) throws URISyntaxException {
+    public ResponseEntity<UpQuestionMaster> createUpQuestionMaster(@RequestBody UpQuestionMaster upQuestionMaster, @RequestParam(value="optionText", required=false)ArrayList<String> optionText) throws URISyntaxException {
+
         log.debug("REST request to save UpQuestionMaster : {}", upQuestionMaster);
         if (upQuestionMaster.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("upQuestionMaster", "idexists", "A new upQuestionMaster cannot already have an ID")).body(null);
         }
 
-        upQuestionMaster.setAuthor(SecurityUtils.getCurrentUserLogin());
-        upQuestionMaster.setcTime(ZonedDateTime.now());
-        upQuestionMaster.setDelYn("N");
-        upQuestionMaster.setStatus(commonCodeService.findByCd_Id(Constants.QSTN_STAT_WAIT).getCdId());
+
 
         UpQuestionMaster result = uploadQuestionService.save(upQuestionMaster);
+
+
         return ResponseEntity.created(new URI("/app/uploadquestion/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("upQuestionMaster", result.getId().toString()))
             .body(result);
@@ -76,10 +74,10 @@ public class UploadQuestionResource {
      */
     @PutMapping("/uploadquestion")
     @Timed
-    public ResponseEntity<UpQuestionMaster> updateUpQuestionMaster(@RequestBody UpQuestionMaster upQuestionMaster) throws URISyntaxException {
+    public ResponseEntity<UpQuestionMaster> updateUpQuestionMaster(@RequestBody UpQuestionMaster upQuestionMaster, @RequestParam(value="optionText", required=false)ArrayList<String> optionText) throws URISyntaxException {
         log.debug("REST request to update UpQuestionMaster : {}", upQuestionMaster);
         if (upQuestionMaster.getId() == null) {
-            return createUpQuestionMaster(upQuestionMaster);
+            return createUpQuestionMaster(upQuestionMaster, optionText);
         }
         UpQuestionMaster result = uploadQuestionService.save(upQuestionMaster);
         return ResponseEntity.ok()

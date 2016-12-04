@@ -2,16 +2,16 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "uprightAnswer",
+            "relationshipName": "upRightAnswer",
             "otherEntityName": "upRightAnswer",
-            "otherEntityRelationshipName": "upquestionMaster"
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "upQuestionMaster"
         },
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "upwrongAnswer",
+            "relationshipName": "upWrongAnswer",
             "otherEntityName": "upWrongAnswer",
-            "otherEntityRelationshipName": "upquestionMaster"
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "upQuestionMaster"
         }
     ],
     "fields": [

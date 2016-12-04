@@ -1,6 +1,5 @@
 package com.cazen.iti.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,8 +7,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A UpQuestionMaster.
@@ -40,14 +39,13 @@ public class UpQuestionMaster implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(mappedBy = "upquestionMaster")
-    @JsonIgnore
+    @OneToMany(mappedBy = "upQuestionMaster")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<UpRightAnswer> uprightAnswers = new HashSet<>();
+    private Set<UpRightAnswer> upRightAnswers = new HashSet<>();
 
-    @OneToMany(mappedBy = "upquestionMaster")
+    @OneToMany(mappedBy = "upQuestionMaster")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<UpWrongAnswer> upwrongAnswers = new HashSet<>();
+    private Set<UpWrongAnswer> upWrongAnswers = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -122,54 +120,54 @@ public class UpQuestionMaster implements Serializable {
         this.status = status;
     }
 
-    public Set<UpRightAnswer> getUprightAnswers() {
-        return uprightAnswers;
+    public Set<UpRightAnswer> getUpRightAnswers() {
+        return upRightAnswers;
     }
 
-    public UpQuestionMaster uprightAnswers(Set<UpRightAnswer> upRightAnswers) {
-        this.uprightAnswers = upRightAnswers;
+    public UpQuestionMaster upRightAnswers(Set<UpRightAnswer> upRightAnswers) {
+        this.upRightAnswers = upRightAnswers;
         return this;
     }
 
-    public UpQuestionMaster addUprightAnswer(UpRightAnswer upRightAnswer) {
-        uprightAnswers.add(upRightAnswer);
-        upRightAnswer.setUpquestionMaster(this);
+    public UpQuestionMaster addUpRightAnswer(UpRightAnswer upRightAnswer) {
+        upRightAnswers.add(upRightAnswer);
+        upRightAnswer.setUpQuestionMaster(this);
         return this;
     }
 
-    public UpQuestionMaster removeUprightAnswer(UpRightAnswer upRightAnswer) {
-        uprightAnswers.remove(upRightAnswer);
-        upRightAnswer.setUpquestionMaster(null);
+    public UpQuestionMaster removeUpRightAnswer(UpRightAnswer upRightAnswer) {
+        upRightAnswers.remove(upRightAnswer);
+        upRightAnswer.setUpQuestionMaster(null);
         return this;
     }
 
-    public void setUprightAnswers(Set<UpRightAnswer> upRightAnswers) {
-        this.uprightAnswers = upRightAnswers;
+    public void setUpRightAnswers(Set<UpRightAnswer> upRightAnswers) {
+        this.upRightAnswers = upRightAnswers;
     }
 
-    public Set<UpWrongAnswer> getUpwrongAnswers() {
-        return upwrongAnswers;
+    public Set<UpWrongAnswer> getUpWrongAnswers() {
+        return upWrongAnswers;
     }
 
-    public UpQuestionMaster upwrongAnswers(Set<UpWrongAnswer> upWrongAnswers) {
-        this.upwrongAnswers = upWrongAnswers;
+    public UpQuestionMaster upWrongAnswers(Set<UpWrongAnswer> upWrongAnswers) {
+        this.upWrongAnswers = upWrongAnswers;
         return this;
     }
 
-    public UpQuestionMaster addUpwrongAnswer(UpWrongAnswer upWrongAnswer) {
-        upwrongAnswers.add(upWrongAnswer);
-        upWrongAnswer.setUpquestionMaster(this);
+    public UpQuestionMaster addUpWrongAnswer(UpWrongAnswer upWrongAnswer) {
+        upWrongAnswers.add(upWrongAnswer);
+        upWrongAnswer.setUpQuestionMaster(this);
         return this;
     }
 
-    public UpQuestionMaster removeUpwrongAnswer(UpWrongAnswer upWrongAnswer) {
-        upwrongAnswers.remove(upWrongAnswer);
-        upWrongAnswer.setUpquestionMaster(null);
+    public UpQuestionMaster removeUpWrongAnswer(UpWrongAnswer upWrongAnswer) {
+        upWrongAnswers.remove(upWrongAnswer);
+        upWrongAnswer.setUpQuestionMaster(null);
         return this;
     }
 
-    public void setUpwrongAnswers(Set<UpWrongAnswer> upWrongAnswers) {
-        this.upwrongAnswers = upWrongAnswers;
+    public void setUpWrongAnswers(Set<UpWrongAnswer> upWrongAnswers) {
+        this.upWrongAnswers = upWrongAnswers;
     }
 
     @Override

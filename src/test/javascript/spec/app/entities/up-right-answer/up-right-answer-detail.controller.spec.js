@@ -4,7 +4,7 @@ describe('Controller Tests', function() {
 
     describe('UpRightAnswer Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockPreviousState, MockUpRightAnswer, MockCommonCode, MockUpQuestionMaster;
+        var MockEntity, MockPreviousState, MockUpRightAnswer, MockUpQuestionMaster;
         var createController;
 
         beforeEach(inject(function($injector) {
@@ -13,7 +13,6 @@ describe('Controller Tests', function() {
             MockEntity = jasmine.createSpy('MockEntity');
             MockPreviousState = jasmine.createSpy('MockPreviousState');
             MockUpRightAnswer = jasmine.createSpy('MockUpRightAnswer');
-            MockCommonCode = jasmine.createSpy('MockCommonCode');
             MockUpQuestionMaster = jasmine.createSpy('MockUpQuestionMaster');
             
 
@@ -23,7 +22,6 @@ describe('Controller Tests', function() {
                 'entity': MockEntity,
                 'previousState': MockPreviousState,
                 'UpRightAnswer': MockUpRightAnswer,
-                'CommonCode': MockCommonCode,
                 'UpQuestionMaster': MockUpQuestionMaster
             };
             createController = function() {

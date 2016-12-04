@@ -27,14 +27,8 @@
         </div>
 
         <div class="form-group">
-            <label for="field_status">Status</label>
-            <select class="form-control" id="field_status" name="status" ng-model="vm.upWrongAnswer.status" ng-options="commonCode as commonCode.id for commonCode in vm.commoncodes track by commonCode.id">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="field_upquestionMaster">Upquestion Master</label>
-            <select class="form-control" id="field_upquestionMaster" name="upquestionMaster" ng-model="vm.upWrongAnswer.upquestionMaster" ng-options="upQuestionMaster as upQuestionMaster.id for upQuestionMaster in vm.upquestionmasters track by upQuestionMaster.id">
+            <label for="field_upQuestionMaster">Up Question Master</label>
+            <select class="form-control" id="field_upQuestionMaster" name="upQuestionMaster" ng-model="vm.upWrongAnswer.upQuestionMaster" ng-options="upQuestionMaster as upQuestionMaster.id for upQuestionMaster in vm.upquestionmasters track by upQuestionMaster.id">
                 <option value=""></option>
             </select>
         </div>

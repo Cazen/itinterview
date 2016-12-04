@@ -97,7 +97,6 @@
                             return {
                                 title: null,
                                 delYn: null,
-                                cTime: null,
                                 id: null
                             };
                         }

@@ -16,46 +16,34 @@
         <div class="form-group row">
             <label class="form-control-label" for="field_title">문제 제목</label>
             <textarea style="resize:none" type="text" class="form-control" name="title" id="field_title"
-                      rows="5" ng-model="vm.uploadQuestion.title" />
+                      rows="4" ng-model="vm.uploadQuestion.title" />
         </div>
 
         <div class="form-group row">
-            <label class="form-control-label" for="field_title">정답</label>
-            <div>
-            <textarea style="resize:none" type="text" class="form-control" name="optionText"
-                      rows="3" ng-model="vm.uprightanswers.optionText" />
-            </div>
-
-        </div>
-<!--        <div class="form-group">
-            <label class="control-label" for="field_delYn">Del Yn</label>
-            <input type="text" class="form-control" name="delYn" id="field_delYn"
-                    ng-model="vm.uploadQuestion.delYn"
-                     />
-        </div>-->
-<!--        <div class="form-group">
-            <label class="control-label" for="field_cTime">C Time</label>
-                <div class="input-group">
-                    <input id="field_cTime" type="text" class="form-control" name="cTime" datetime-picker="{{dateformat}}" ng-model="vm.uploadQuestion.cTime" is-open="vm.datePickerOpenStatus.cTime"
-                      />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('cTime')"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
+            <labehshs.inven.cl class="form-control-label" for="field_title">정답</labehshs.inven.cl>
+            <button type="button" class="btn btn-xs btn-info margin-inline" ng-click="addUpRightAnswerInputBox()">정답항목추가</button>
+            <div data-ng-repeat="upRightAnswer in upRightAnswers track by $index">
+                <div>
+                    <textarea style="resize:none" type="text" class="form-control" name="optionText"
+                      rows="2" ng-model="vm.upRightAnswers[$index].optionText" />
                 </div>
-        </div>-->
+            </div>
+            <button type="button" class="btn btn-xs btn-info margin-inline" ng-click="removeUpRightAnswerInputBox()">정답항목삭제</button>
+        </div>
 
-<!--        <div class="form-group">
-            <label for="field_author">Author</label>
-            <select class="form-control" id="field_author" name="author" ng-model="vm.uploadQuestion.author" ng-options="user as user.id for user in vm.users track by user.id">
-                <option value=""></option>
-            </select>
-        </div>-->
-<!--        <div class="form-group">
-            <label for="field_status">Status</label>
-            <select class="form-control" id="field_status" name="status" ng-model="vm.uploadQuestion.status" ng-options="commonCode as commonCode.id for commonCode in vm.commoncodes track by commonCode.id">
-                <option value=""></option>
-            </select>
-        </div>-->
+        <div class="form-group row">
+            <labehshs.inven.cl class="form-control-label" for="field_title">오답</labehshs.inven.cl>
+            <button type="button" class="btn btn-xs btn-info margin-inline" ng-click="addUpWrongAnswerInputBox()">오답항목추가</button>
+            <div data-ng-repeat="upWrongAnswer in upWrongAnswers track by $index">
+                <div>
+                    <textarea style="resize:none" type="text" class="form-control" name="optionText"
+                              rows="2" ng-model="vm.upWrongAnswers[$index].optionText" />
+                </div>
+            </div>
+            <button type="button" class="btn btn-xs btn-info margin-inline" ng-click="removeUpWrongAnswerInputBox()">오답항목삭제</button>
+        </div>
+
+
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

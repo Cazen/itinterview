@@ -28,10 +28,7 @@ public class UpRightAnswer implements Serializable {
     private String delYn;
 
     @ManyToOne
-    private CommonCode status;
-
-    @ManyToOne
-    private UpQuestionMaster upquestionMaster;
+    private UpQuestionMaster upQuestionMaster;
 
     public Long getId() {
         return id;
@@ -67,30 +64,17 @@ public class UpRightAnswer implements Serializable {
         this.delYn = delYn;
     }
 
-    public CommonCode getStatus() {
-        return status;
+    public UpQuestionMaster getUpQuestionMaster() {
+        return upQuestionMaster;
     }
 
-    public UpRightAnswer status(CommonCode commonCode) {
-        this.status = commonCode;
+    public UpRightAnswer upQuestionMaster(UpQuestionMaster upQuestionMaster) {
+        this.upQuestionMaster = upQuestionMaster;
         return this;
     }
 
-    public void setStatus(CommonCode commonCode) {
-        this.status = commonCode;
-    }
-
-    public UpQuestionMaster getUpquestionMaster() {
-        return upquestionMaster;
-    }
-
-    public UpRightAnswer upquestionMaster(UpQuestionMaster upQuestionMaster) {
-        this.upquestionMaster = upQuestionMaster;
-        return this;
-    }
-
-    public void setUpquestionMaster(UpQuestionMaster upQuestionMaster) {
-        this.upquestionMaster = upQuestionMaster;
+    public void setUpQuestionMaster(UpQuestionMaster upQuestionMaster) {
+        this.upQuestionMaster = upQuestionMaster;
     }
 
     @Override

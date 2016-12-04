@@ -5,9 +5,9 @@
         .module('itinterviewApp')
         .controller('UpWrongAnswerDetailController', UpWrongAnswerDetailController);
 
-    UpWrongAnswerDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'UpWrongAnswer', 'CommonCode', 'UpQuestionMaster'];
+    UpWrongAnswerDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'UpWrongAnswer', 'UpQuestionMaster'];
 
-    function UpWrongAnswerDetailController($scope, $rootScope, $stateParams, previousState, entity, UpWrongAnswer, CommonCode, UpQuestionMaster) {
+    function UpWrongAnswerDetailController($scope, $rootScope, $stateParams, previousState, entity, UpWrongAnswer, UpQuestionMaster) {
         var vm = this;
 
         vm.upWrongAnswer = entity;
