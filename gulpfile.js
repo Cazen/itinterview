@@ -46,7 +46,7 @@ gulp.task('images', function () {
     return gulp.src(config.app + 'content/images/**')
         .pipe(plumber({errorHandler: handleErrors}))
         .pipe(changed(config.dist + 'content/images'))
-        .pipe(imagemin({optimizationLevel: 5, progressive: true, interlaced: true}))
+        //.pipe(imagemin({optimizationLevel: 5, progressive: true, interlaced: true}))
         .pipe(rev())
         .pipe(gulp.dest(config.dist + 'content/images'))
         .pipe(rev.manifest(config.revManifest, {
