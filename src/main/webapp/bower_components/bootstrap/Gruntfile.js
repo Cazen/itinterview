@@ -232,7 +232,8 @@ module.exports = function (grunt) {
         keepSpecialComments: '*',
         sourceMap: true,
         sourceMapInlineSources: true,
-        advanced: false
+        advanced: false,
+        rebase: false
       },
       minifyCore: {
         src: 'dist/css/<%= pkg.name %>.css',

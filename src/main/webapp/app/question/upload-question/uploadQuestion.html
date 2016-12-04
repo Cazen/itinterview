@@ -86,28 +86,24 @@
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
                     <!--<th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>-->
                     <th jh-sort-by="title"><span>문제 제목</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <!--<th jh-sort-by="delYn"><span>Del Yn</span> <span class="glyphicon glyphicon-sort"></span></th>-->
-                    <!--<th jh-sort-by="cTime"><span>C Time</span> <span class="glyphicon glyphicon-sort"></span></th>-->
-                    <!--<th jh-sort-by="author.id"><span>Author</span> <span class="glyphicon glyphicon-sort"></span></th>-->
                     <th jh-sort-by="status.id"><span>상태</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
                 <tr ng-repeat="uploadQuestion in vm.uploadQuestions track by uploadQuestion.id">
-                    <!--<td><a ui-sref="uploadQuestion-detail({id:uploadQuestion.id})">{{uploadQuestion.id}}</a></td>-->
                     <td>{{uploadQuestion.title}}</td>
-                    <!--<td>{{uploadQuestion.delYn}}</td>-->
-                    <!--<td>{{uploadQuestion.cTime | date:'medium'}}</td>-->
-                    <!--<td>-->
-                        <!--{{uploadQuestion.author.id}}-->
-                    <!--</td>-->
                     <td>
-                        <a ui-sref="common-code-detail({id:uploadQuestion.status.id})">{{uploadQuestion.status.id}}</a>
+                        <div ng-switch="uploadQuestion.status">
+                            <div ng-switch-when="QSTN_STAT.WAITING">심사대기중</div>
+                            <div ng-switch-when="QSTN_STAT.RUNNING">반영중</div>
+                            <div ng-switch-default>상태값없음</div>
+                        </div>
+                        <a ui-sref="common-code-detail({id:uploadQuestion.status.id})">{{uploadQuestion.status.cd_nm}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
-                            <button type="submit"
+                            <!--<button type="submit"
                                     ui-sref="uploadQuestion-detail({id:uploadQuestion.id})"
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
@@ -118,7 +114,7 @@
                                     class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-xs hidden-sm"></span>
-                            </button>
+                            </button>-->
                             <button type="submit"
                                     ui-sref="uploadQuestion.delete({id:uploadQuestion.id})"
                                     class="btn btn-danger btn-sm">
