@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="hadoop (generated)" id="1480904638465-1">
+        <createTable tableName="common_code">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="common_codePK"/>
+            </column>
+            <column name="cd_id" type="VARCHAR(255)"/>
+            <column name="cd_nm" type="VARCHAR(255)"/>
+            <column name="cd_tp" type="VARCHAR(255)"/>
+            <column name="del_yn" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-2">
+        <createTable tableName="question_master">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="question_masterPK"/>
+            </column>
+            <column name="author" type="VARCHAR(255)"/>
+            <column name="c_time" type="timestamp"/>
+            <column name="del_yn" type="VARCHAR(255)"/>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="status_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-3">
+        <createTable tableName="question_vote">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="question_votePK"/>
+            </column>
+            <column name="c_time" type="timestamp"/>
+            <column name="question_master_id" type="BIGINT"/>
+            <column name="status_id" type="BIGINT"/>
+            <column name="voter_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-4">
+        <createTable tableName="right_answer">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="right_answerPK"/>
+            </column>
+            <column name="del_yn" type="VARCHAR(255)"/>
+            <column name="option_text" type="VARCHAR(255)"/>
+            <column name="question_master_id" type="BIGINT"/>
+            <column name="status_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-5">
+        <createTable tableName="up_question_master">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="up_question_masterPK"/>
+            </column>
+            <column name="author" type="VARCHAR(255)"/>
+            <column name="c_time" type="timestamp"/>
+            <column name="del_yn" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="title" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-6">
+        <createTable tableName="up_question_vote">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="up_question_votePK"/>
+            </column>
+            <column name="c_time" type="timestamp"/>
+            <column name="status_id" type="BIGINT"/>
+            <column name="upquestion_master_id" type="BIGINT"/>
+            <column name="voter_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-7">
+        <createTable tableName="up_right_answer">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="up_right_answerPK"/>
+            </column>
+            <column name="del_yn" type="VARCHAR(255)"/>
+            <column name="option_text" type="VARCHAR(255)"/>
+            <column name="up_question_master_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-8">
+        <createTable tableName="up_wrong_answer">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="up_wrong_answerPK"/>
+            </column>
+            <column name="del_yn" type="VARCHAR(255)"/>
+            <column name="option_text" type="VARCHAR(255)"/>
+            <column name="up_question_master_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-9">
+        <createTable tableName="wrong_answer">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="wrong_answerPK"/>
+            </column>
+            <column name="del_yn" type="VARCHAR(255)"/>
+            <column name="option_text" type="VARCHAR(255)"/>
+            <column name="question_master_id" type="BIGINT"/>
+            <column name="status_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-10">
+        <addForeignKeyConstraint baseColumnNames="status_id" baseTableName="question_master" constraintName="FK_1xq7lwtdq297pmlv66yh0rxoi" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="common_code"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-11">
+        <addForeignKeyConstraint baseColumnNames="status_id" baseTableName="up_question_vote" constraintName="FK_3b87bogg2k30oohwe399gdtvn" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="common_code"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-12">
+        <addForeignKeyConstraint baseColumnNames="status_id" baseTableName="right_answer" constraintName="FK_3dtejwpaoqqmun0foby0hrfni" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="common_code"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-13">
+        <addForeignKeyConstraint baseColumnNames="voter_id" baseTableName="up_question_vote" constraintName="FK_8gque8tc8g0de9mt0kj789jv5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-14">
+        <addForeignKeyConstraint baseColumnNames="voter_id" baseTableName="question_vote" constraintName="FK_9tbwbpgdrqqytp5ks0aevy3jm" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-15">
+        <addForeignKeyConstraint baseColumnNames="question_master_id" baseTableName="question_vote" constraintName="FK_av584nnlf8w0it5mse3ut6kp1" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="question_master"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-16">
+        <addForeignKeyConstraint baseColumnNames="up_question_master_id" baseTableName="up_wrong_answer" constraintName="FK_cgki5fc8tuh2cqowvsokscfv" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="up_question_master"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-17">
+        <addForeignKeyConstraint baseColumnNames="up_question_master_id" baseTableName="up_right_answer" constraintName="FK_co9jj6xcfa16k2ai8kk8pe2nu" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="up_question_master"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-18">
+        <addForeignKeyConstraint baseColumnNames="question_master_id" baseTableName="right_answer" constraintName="FK_coyh10riysmllgy6mo26iffyl" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="question_master"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-19">
+        <addForeignKeyConstraint baseColumnNames="upquestion_master_id" baseTableName="up_question_vote" constraintName="FK_e73afnlbfku2an4hv80s7pl3q" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="up_question_master"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-20">
+        <addForeignKeyConstraint baseColumnNames="question_master_id" baseTableName="wrong_answer" constraintName="FK_eow6bauloe299t4r8mq1mta67" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="question_master"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-21">
+        <addForeignKeyConstraint baseColumnNames="status_id" baseTableName="question_vote" constraintName="FK_mfwlsnvmq1bk95luu31a8twe0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="common_code"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-22">
+        <addForeignKeyConstraint baseColumnNames="status_id" baseTableName="wrong_answer" constraintName="FK_pcl5q0i849wujireiu2oeiy60" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="common_code"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-23">
+        <dropUniqueConstraint constraintName="CONSTRAINT_7" tableName="JHI_SOCIAL_USER_CONNECTION"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-24">
+        <dropUniqueConstraint constraintName="CONSTRAINT_71" tableName="JHI_SOCIAL_USER_CONNECTION"/>
+    </changeSet>
+    <changeSet author="hadoop (generated)" id="1480904638465-25">
+        <dropDefaultValue columnDataType="timestamp" columnName="created_date" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Cazen (generated)" id="1480904638465-26">
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/commonCode.csv"
+                  separator=";"
+                  tableName="COMMON_CODE">
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>
