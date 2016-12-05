@@ -1,0 +1,44 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "upRightAnswer",
+            "otherEntityName": "upRightAnswer",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "upQuestionMaster"
+        },
+        {
+            "relationshipName": "upWrongAnswer",
+            "otherEntityName": "upWrongAnswer",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "upQuestionMaster"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "delYn",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "author",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20161112173917",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "up_question_master",
+    "pagination": "infinite-scroll"
+}

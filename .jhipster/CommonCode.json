@@ -1,0 +1,27 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "cdTp",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cdId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cdNm",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "delYn",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20161112173912",
+    "entityTableName": "common_code",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl"
+}
