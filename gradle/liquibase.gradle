@@ -45,3 +45,20 @@ task liquibaseGenerateChangeLog(dependsOn: compileJava, type: JavaExec) {
     args "generateChangeLog"
 
 }
+
+task liquibaseclearCheckSums(dependsOn: compileJava, type: JavaExec) {
+    group = "liquibase"
+
+    classpath sourceSets.main.runtimeClasspath
+    classpath configurations.liquibase
+    main = "liquibase.integration.commandline.Main"
+
+    args "--changeLogFile=src/main/resources/config/liquibase/changelog/" + buildTimestamp() +"_changelog.xml"
+    args "--referenceUrl=hibernate:spring:com.cazen.iti.domain?dialect=org.hibernate.dialect.H2Dialect&hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy"
+    args "--username=itinterview"
+    args "--password="
+    args "--url=jdbc:h2:file:./target/h2db/db/itinterview"
+    args "--driver=org.h2.Driver"
+    args "generateChangeLog"
+
+}

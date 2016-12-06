@@ -1,5 +1,6 @@
 package com.cazen.iti.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -7,8 +8,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
+import java.util.Objects;
 
 /**
  * A UpQuestionMaster.
@@ -40,10 +41,12 @@ public class UpQuestionMaster implements Serializable {
     private String status;
 
     @OneToMany(mappedBy = "upQuestionMaster")
+    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<UpRightAnswer> upRightAnswers = new HashSet<>();
 
     @OneToMany(mappedBy = "upQuestionMaster")
+    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<UpWrongAnswer> upWrongAnswers = new HashSet<>();
 
