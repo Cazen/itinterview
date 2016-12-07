@@ -86,5 +86,16 @@
             var lastItem = $scope.upWrongAnswers.length-1;
             $scope.upWrongAnswers.splice(lastItem);
         };
+
+        $scope.scrollBarInit = function() {
+            $("#difficulty-slider").ionRangeSlider({
+                min: 0,
+                max: 100,
+                from: 50,
+                step: 10,
+                grid: true,
+                grid_num: 10
+            });
+        };
     }
 })();

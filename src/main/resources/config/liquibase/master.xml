@@ -10,7 +10,7 @@
     <include file="classpath:config/liquibase/changelog/20161112173914_added_entity_RightAnswer.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173915_added_entity_WrongAnswer.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173916_added_entity_QuestionVote.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161112173917_added_entity_UpQuestionMaster.xml" relativeToChangelogFile="false"/>
+    <!--<include file="classpath:config/liquibase/changelog/20161112173917_added_entity_UpQuestionMaster.xml" relativeToChangelogFile="false"/>-->
     <include file="classpath:config/liquibase/changelog/20161112173918_added_entity_UpRightAnswer.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173919_added_entity_UpWrongAnswer.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161112173920_added_entity_UpQuestionVote.xml" relativeToChangelogFile="false"/>
@@ -24,4 +24,5 @@
     <include file="classpath:config/liquibase/changelog/20161112173920_added_entity_constraints_UpQuestionVote.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <include file="classpath:config/liquibase/changelog/20161206235251_changelog.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161208000628_changelog.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

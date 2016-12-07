@@ -100,6 +100,7 @@
                                 cTime: null,
                                 author: null,
                                 status: null,
+                                difficulty: null,
                                 id: null
                             };
                         }

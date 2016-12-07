@@ -4,7 +4,7 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myUploadQuestionLabel">Create or edit a Up Question </h4>
+        <h4 class="modal-title" id="myUploadQuestionLabel">문제를 출제해 주세요</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
@@ -19,8 +19,15 @@
                       rows="4" ng-model="vm.uploadQuestion.title" />
         </div>
 
+        <div class="form-group row panel-body">
+            <label class="form-control-label" for="field_title">예상 난이도</label>
+            <div class="margin-bottom-50">
+                <input type="text" id="difficulty-slider" name="difficulty" ng-model="vm.uploadQuestion.difficulty" data-ng-init="scrollBarInit()"/>
+            </div>
+        </div>
+
         <div class="form-group row">
-            <labehshs.inven.cl class="form-control-label" for="field_title">정답</labehshs.inven.cl>
+            <label class="form-control-label" for="field_title">정답</label>
             <button type="button" class="btn btn-xs btn-info margin-inline" ng-click="addUpRightAnswerInputBox()">정답항목추가</button>
             <div data-ng-repeat="upRightAnswer in upRightAnswers track by $index">
                 <div>
@@ -32,7 +39,7 @@
         </div>
 
         <div class="form-group row">
-            <labehshs.inven.cl class="form-control-label" for="field_title">오답</labehshs.inven.cl>
+            <label class="form-control-label" for="field_title">오답</label>
             <button type="button" class="btn btn-xs btn-info margin-inline" ng-click="addUpWrongAnswerInputBox()">오답항목추가</button>
             <div data-ng-repeat="upWrongAnswer in upWrongAnswers track by $index">
                 <div>

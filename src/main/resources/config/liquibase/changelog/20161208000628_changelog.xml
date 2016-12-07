@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <changeSet author="Cazen (generated)" id="1481035985222-3">
+    <changeSet author="Cazen (generated)" id="1481123211924-1">
+        <addColumn tableName="up_question_master">
+            <column name="difficulty" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Cazen (generated)" id="1481123211924-2">
+        <dropUniqueConstraint constraintName="CONSTRAINT_7" tableName="JHI_SOCIAL_USER_CONNECTION"/>
+    </changeSet>
+    <changeSet author="Cazen (generated)" id="1481123211924-3">
+        <dropUniqueConstraint constraintName="CONSTRAINT_71" tableName="JHI_SOCIAL_USER_CONNECTION"/>
+    </changeSet>
+    <changeSet author="Cazen (generated)" id="1481123211924-4">
         <dropDefaultValue columnDataType="timestamp" columnName="c_time" tableName="question_master"/>
     </changeSet>
-    <changeSet author="Cazen (generated)" id="1481035985222-4">
+    <changeSet author="Cazen (generated)" id="1481123211924-5">
         <dropDefaultValue columnDataType="timestamp" columnName="c_time" tableName="question_vote"/>
     </changeSet>
-    <changeSet author="Cazen (generated)" id="1481035985222-5">
+    <changeSet author="Cazen (generated)" id="1481123211924-6">
         <dropDefaultValue columnDataType="timestamp" columnName="c_time" tableName="up_question_master"/>
     </changeSet>
-    <changeSet author="Cazen (generated)" id="1481035985222-6">
+    <changeSet author="Cazen (generated)" id="1481123211924-7">
         <dropDefaultValue columnDataType="timestamp" columnName="c_time" tableName="up_question_vote"/>
     </changeSet>
-    <changeSet author="Cazen (generated)" id="1481035985222-7">
+    <changeSet author="Cazen (generated)" id="1481123211924-8">
         <dropDefaultValue columnDataType="timestamp" columnName="created_date" tableName="jhi_user"/>
-    </changeSet>
-    <changeSet author="Cazen (generated)" id="1481035985222-1">
-    <loadData encoding="UTF-8"
-              file="config/liquibase/commonCode.csv"
-              separator=";"
-              tableName="COMMON_CODE">
-    </loadData>
     </changeSet>
 </databaseChangeLog>

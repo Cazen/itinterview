@@ -41,6 +41,10 @@
                 <constraints nullable="true" />
             </column>
             
+            <column name="difficulty" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="up_question_master" columnName="c_time" columnDataType="datetime"/>

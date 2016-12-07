@@ -59,6 +59,9 @@ public class UpQuestionMasterResourceIntTest {
     private static final String DEFAULT_STATUS = "AAAAA";
     private static final String UPDATED_STATUS = "BBBBB";
 
+    private static final Integer DEFAULT_DIFFICULTY = 1;
+    private static final Integer UPDATED_DIFFICULTY = 2;
+
     @Inject
     private UpQuestionMasterRepository upQuestionMasterRepository;
 
@@ -100,7 +103,8 @@ public class UpQuestionMasterResourceIntTest {
                 .delYn(DEFAULT_DEL_YN)
                 .cTime(DEFAULT_C_TIME)
                 .author(DEFAULT_AUTHOR)
-                .status(DEFAULT_STATUS);
+                .status(DEFAULT_STATUS)
+                .difficulty(DEFAULT_DIFFICULTY);
         return upQuestionMaster;
     }
 
@@ -130,6 +134,7 @@ public class UpQuestionMasterResourceIntTest {
         assertThat(testUpQuestionMaster.getcTime()).isEqualTo(DEFAULT_C_TIME);
         assertThat(testUpQuestionMaster.getAuthor()).isEqualTo(DEFAULT_AUTHOR);
         assertThat(testUpQuestionMaster.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testUpQuestionMaster.getDifficulty()).isEqualTo(DEFAULT_DIFFICULTY);
     }
 
     @Test
@@ -147,7 +152,8 @@ public class UpQuestionMasterResourceIntTest {
                 .andExpect(jsonPath("$.[*].delYn").value(hasItem(DEFAULT_DEL_YN.toString())))
                 .andExpect(jsonPath("$.[*].cTime").value(hasItem(DEFAULT_C_TIME_STR)))
                 .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR.toString())))
-                .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+                .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+                .andExpect(jsonPath("$.[*].difficulty").value(hasItem(DEFAULT_DIFFICULTY)));
     }
 
     @Test
@@ -165,7 +171,8 @@ public class UpQuestionMasterResourceIntTest {
             .andExpect(jsonPath("$.delYn").value(DEFAULT_DEL_YN.toString()))
             .andExpect(jsonPath("$.cTime").value(DEFAULT_C_TIME_STR))
             .andExpect(jsonPath("$.author").value(DEFAULT_AUTHOR.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.difficulty").value(DEFAULT_DIFFICULTY));
     }
 
     @Test
@@ -191,7 +198,8 @@ public class UpQuestionMasterResourceIntTest {
                 .delYn(UPDATED_DEL_YN)
                 .cTime(UPDATED_C_TIME)
                 .author(UPDATED_AUTHOR)
-                .status(UPDATED_STATUS);
+                .status(UPDATED_STATUS)
+                .difficulty(UPDATED_DIFFICULTY);
 
         restUpQuestionMasterMockMvc.perform(put("/api/up-question-masters")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -207,6 +215,7 @@ public class UpQuestionMasterResourceIntTest {
         assertThat(testUpQuestionMaster.getcTime()).isEqualTo(UPDATED_C_TIME);
         assertThat(testUpQuestionMaster.getAuthor()).isEqualTo(UPDATED_AUTHOR);
         assertThat(testUpQuestionMaster.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testUpQuestionMaster.getDifficulty()).isEqualTo(UPDATED_DIFFICULTY);
     }
 
     @Test

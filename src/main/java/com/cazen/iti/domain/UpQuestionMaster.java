@@ -40,6 +40,9 @@ public class UpQuestionMaster implements Serializable {
     @Column(name = "status")
     private String status;
 
+    @Column(name = "difficulty")
+    private Integer difficulty;
+
     @OneToMany(mappedBy = "upQuestionMaster")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -123,6 +126,19 @@ public class UpQuestionMaster implements Serializable {
         this.status = status;
     }
 
+    public Integer getDifficulty() {
+        return difficulty;
+    }
+
+    public UpQuestionMaster difficulty(Integer difficulty) {
+        this.difficulty = difficulty;
+        return this;
+    }
+
+    public void setDifficulty(Integer difficulty) {
+        this.difficulty = difficulty;
+    }
+
     public Set<UpRightAnswer> getUpRightAnswers() {
         return upRightAnswers;
     }
@@ -202,6 +218,7 @@ public class UpQuestionMaster implements Serializable {
             ", cTime='" + cTime + "'" +
             ", author='" + author + "'" +
             ", status='" + status + "'" +
+            ", difficulty='" + difficulty + "'" +
             '}';
     }
 }
