@@ -1,0 +1,46 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "rightAnswer",
+            "otherEntityName": "rightAnswer",
+            "otherEntityRelationshipName": "questionMaster"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "wrongAnswer",
+            "otherEntityName": "wrongAnswer",
+            "otherEntityRelationshipName": "questionMaster"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "status",
+            "otherEntityName": "commonCode",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "delYn",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "author",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20161112173913",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "question_master",
+    "pagination": "infinite-scroll"
+}
