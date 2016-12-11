@@ -1,7 +1,6 @@
 package com.cazen.iti.web.rest;
 
 import com.cazen.iti.domain.UpQuestionMaster;
-import com.cazen.iti.service.CommonCodeService;
 import com.cazen.iti.service.UploadQustionService;
 import com.cazen.iti.web.rest.util.HeaderUtil;
 import com.cazen.iti.web.rest.util.PaginationUtil;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,9 +32,6 @@ public class UploadQuestionResource {
     @Inject
     private UploadQustionService uploadQuestionService;
 
-    @Inject
-    private CommonCodeService commonCodeService;
-
     /**
      * POST  /uploadQuestion : Create a new uploadQuestion.
      *
@@ -46,17 +41,14 @@ public class UploadQuestionResource {
      */
     @PostMapping("/uploadquestion")
     @Timed
-    public ResponseEntity<UpQuestionMaster> createUpQuestionMaster(@RequestBody UpQuestionMaster upQuestionMaster, @RequestParam(value="optionText", required=false)ArrayList<String> optionText) throws URISyntaxException {
+    public ResponseEntity<UpQuestionMaster> createUpQuestionMaster(@RequestBody UpQuestionMaster upQuestionMaster) throws URISyntaxException {
 
         log.debug("REST request to save UpQuestionMaster : {}", upQuestionMaster);
         if (upQuestionMaster.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("upQuestionMaster", "idexists", "A new upQuestionMaster cannot already have an ID")).body(null);
         }
 
-
-
         UpQuestionMaster result = uploadQuestionService.save(upQuestionMaster);
-
 
         return ResponseEntity.created(new URI("/app/uploadquestion/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("upQuestionMaster", result.getId().toString()))
@@ -74,10 +66,10 @@ public class UploadQuestionResource {
      */
     @PutMapping("/uploadquestion")
     @Timed
-    public ResponseEntity<UpQuestionMaster> updateUpQuestionMaster(@RequestBody UpQuestionMaster upQuestionMaster, @RequestParam(value="optionText", required=false)ArrayList<String> optionText) throws URISyntaxException {
+    public ResponseEntity<UpQuestionMaster> updateUpQuestionMaster(@RequestBody UpQuestionMaster upQuestionMaster) throws URISyntaxException {
         log.debug("REST request to update UpQuestionMaster : {}", upQuestionMaster);
         if (upQuestionMaster.getId() == null) {
-            return createUpQuestionMaster(upQuestionMaster, optionText);
+            return createUpQuestionMaster(upQuestionMaster);
         }
         UpQuestionMaster result = uploadQuestionService.save(upQuestionMaster);
         return ResponseEntity.ok()

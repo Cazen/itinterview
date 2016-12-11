@@ -12,6 +12,13 @@
             "otherEntityName": "upWrongAnswer",
             "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "upQuestionMaster"
+        },
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true
         }
     ],
     "fields": [
@@ -26,10 +33,6 @@
         {
             "fieldName": "cTime",
             "fieldType": "ZonedDateTime"
-        },
-        {
-            "fieldName": "author",
-            "fieldType": "String"
         },
         {
             "fieldName": "status",

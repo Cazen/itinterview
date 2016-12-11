@@ -1,15 +1,17 @@
 package com.cazen.iti.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A UpQuestionMaster.
@@ -17,6 +19,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "up_question_master")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
 public class UpQuestionMaster implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,24 +37,24 @@ public class UpQuestionMaster implements Serializable {
     @Column(name = "c_time")
     private ZonedDateTime cTime;
 
-    @Column(name = "author")
-    private String author;
-
     @Column(name = "status")
     private String status;
 
     @Column(name = "difficulty")
     private Integer difficulty;
 
-    @OneToMany(mappedBy = "upQuestionMaster")
-    @JsonIgnore
+    @OneToMany(mappedBy = "upQuestionMaster", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonManagedReference
     private Set<UpRightAnswer> upRightAnswers = new HashSet<>();
 
-    @OneToMany(mappedBy = "upQuestionMaster")
-    @JsonIgnore
+    @OneToMany(mappedBy = "upQuestionMaster", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonManagedReference
     private Set<UpWrongAnswer> upWrongAnswers = new HashSet<>();
+
+    @ManyToOne
+    private User user;
 
     public Long getId() {
         return id;
@@ -100,19 +103,6 @@ public class UpQuestionMaster implements Serializable {
         this.cTime = cTime;
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public UpQuestionMaster author(String author) {
-        this.author = author;
-        return this;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -139,6 +129,7 @@ public class UpQuestionMaster implements Serializable {
         this.difficulty = difficulty;
     }
 
+    @OneToMany(mappedBy = "upQuestionMaster", cascade = CascadeType.ALL)
     public Set<UpRightAnswer> getUpRightAnswers() {
         return upRightAnswers;
     }
@@ -189,6 +180,19 @@ public class UpQuestionMaster implements Serializable {
         this.upWrongAnswers = upWrongAnswers;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public UpQuestionMaster user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -198,7 +202,7 @@ public class UpQuestionMaster implements Serializable {
             return false;
         }
         UpQuestionMaster upQuestionMaster = (UpQuestionMaster) o;
-        if(upQuestionMaster.id == null || id == null) {
+        if (upQuestionMaster.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, upQuestionMaster.id);
@@ -216,7 +220,6 @@ public class UpQuestionMaster implements Serializable {
             ", title='" + title + "'" +
             ", delYn='" + delYn + "'" +
             ", cTime='" + cTime + "'" +
-            ", author='" + author + "'" +
             ", status='" + status + "'" +
             ", difficulty='" + difficulty + "'" +
             '}';

@@ -16,10 +16,6 @@
         <dd>
             <span>{{vm.upQuestionMaster.cTime | date:'medium'}}</span>
         </dd>
-        <dt><span>Author</span></dt>
-        <dd>
-            <span>{{vm.upQuestionMaster.author}}</span>
-        </dd>
         <dt><span>Status</span></dt>
         <dd>
             <span>{{vm.upQuestionMaster.status}}</span>
@@ -27,6 +23,10 @@
         <dt><span>Difficulty</span></dt>
         <dd>
             <span>{{vm.upQuestionMaster.difficulty}}</span>
+        </dd>
+        <dt><span>User</span></dt>
+        <dd>
+            {{vm.upQuestionMaster.user.login}}
         </dd>
     </dl>
 

@@ -53,9 +53,6 @@ public class UpQuestionMasterResourceIntTest {
     private static final ZonedDateTime UPDATED_C_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
     private static final String DEFAULT_C_TIME_STR = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(DEFAULT_C_TIME);
 
-    private static final String DEFAULT_AUTHOR = "AAAAA";
-    private static final String UPDATED_AUTHOR = "BBBBB";
-
     private static final String DEFAULT_STATUS = "AAAAA";
     private static final String UPDATED_STATUS = "BBBBB";
 
@@ -102,7 +99,6 @@ public class UpQuestionMasterResourceIntTest {
                 .title(DEFAULT_TITLE)
                 .delYn(DEFAULT_DEL_YN)
                 .cTime(DEFAULT_C_TIME)
-                .author(DEFAULT_AUTHOR)
                 .status(DEFAULT_STATUS)
                 .difficulty(DEFAULT_DIFFICULTY);
         return upQuestionMaster;
@@ -132,7 +128,6 @@ public class UpQuestionMasterResourceIntTest {
         assertThat(testUpQuestionMaster.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testUpQuestionMaster.getDelYn()).isEqualTo(DEFAULT_DEL_YN);
         assertThat(testUpQuestionMaster.getcTime()).isEqualTo(DEFAULT_C_TIME);
-        assertThat(testUpQuestionMaster.getAuthor()).isEqualTo(DEFAULT_AUTHOR);
         assertThat(testUpQuestionMaster.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testUpQuestionMaster.getDifficulty()).isEqualTo(DEFAULT_DIFFICULTY);
     }
@@ -151,7 +146,6 @@ public class UpQuestionMasterResourceIntTest {
                 .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
                 .andExpect(jsonPath("$.[*].delYn").value(hasItem(DEFAULT_DEL_YN.toString())))
                 .andExpect(jsonPath("$.[*].cTime").value(hasItem(DEFAULT_C_TIME_STR)))
-                .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR.toString())))
                 .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
                 .andExpect(jsonPath("$.[*].difficulty").value(hasItem(DEFAULT_DIFFICULTY)));
     }
@@ -170,7 +164,6 @@ public class UpQuestionMasterResourceIntTest {
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
             .andExpect(jsonPath("$.delYn").value(DEFAULT_DEL_YN.toString()))
             .andExpect(jsonPath("$.cTime").value(DEFAULT_C_TIME_STR))
-            .andExpect(jsonPath("$.author").value(DEFAULT_AUTHOR.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.difficulty").value(DEFAULT_DIFFICULTY));
     }
@@ -197,7 +190,6 @@ public class UpQuestionMasterResourceIntTest {
                 .title(UPDATED_TITLE)
                 .delYn(UPDATED_DEL_YN)
                 .cTime(UPDATED_C_TIME)
-                .author(UPDATED_AUTHOR)
                 .status(UPDATED_STATUS)
                 .difficulty(UPDATED_DIFFICULTY);
 
@@ -213,7 +205,6 @@ public class UpQuestionMasterResourceIntTest {
         assertThat(testUpQuestionMaster.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testUpQuestionMaster.getDelYn()).isEqualTo(UPDATED_DEL_YN);
         assertThat(testUpQuestionMaster.getcTime()).isEqualTo(UPDATED_C_TIME);
-        assertThat(testUpQuestionMaster.getAuthor()).isEqualTo(UPDATED_AUTHOR);
         assertThat(testUpQuestionMaster.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testUpQuestionMaster.getDifficulty()).isEqualTo(UPDATED_DIFFICULTY);
     }

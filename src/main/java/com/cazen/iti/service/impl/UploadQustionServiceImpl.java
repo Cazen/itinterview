@@ -5,9 +5,9 @@ import com.cazen.iti.domain.UpQuestionMaster;
 import com.cazen.iti.repository.UpQuestionMasterRepository;
 import com.cazen.iti.repository.UpRightAnswerRepository;
 import com.cazen.iti.repository.UpWrongAnswerRepository;
-import com.cazen.iti.security.SecurityUtils;
 import com.cazen.iti.service.CommonCodeService;
 import com.cazen.iti.service.UploadQustionService;
+import com.cazen.iti.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -39,6 +39,9 @@ public class UploadQustionServiceImpl implements UploadQustionService {
     @Inject
     private CommonCodeService commonCodeService;
 
+    @Inject
+    private UserService userService;
+
     /**
      * Save a upQuestionMaster.
      *
@@ -48,26 +51,24 @@ public class UploadQustionServiceImpl implements UploadQustionService {
     public UpQuestionMaster save(UpQuestionMaster upQuestionMaster) {
 
         //Set Upload Master Properties
-        upQuestionMaster.setAuthor(SecurityUtils.getCurrentUserLogin());
+        upQuestionMaster.setUser(userService.getUserWithAuthorities());
         upQuestionMaster.setcTime(ZonedDateTime.now());
         upQuestionMaster.setDelYn("N");
         upQuestionMaster.setStatus(commonCodeService.findByCd_Id(Constants.QSTN_STAT_WAIT).getCdId());
 
-        log.debug("Request to save UpQuestionMaster : {}", upQuestionMaster);
-        UpQuestionMaster result = upQuestionMasterRepository.save(upQuestionMaster);
-
-
         upQuestionMaster.getUpRightAnswers().forEach(t -> {
             t.setDelYn("N");
         });
-        log.debug("Request to save UpRightAnswer : {}", upQuestionMaster.getUpRightAnswers());
-        upRightAnswerRepository.save(upQuestionMaster.getUpRightAnswers());
+        log.debug("Request to change UpRightAnswer : {}", upQuestionMaster.getUpRightAnswers());
 
         upQuestionMaster.getUpWrongAnswers().forEach(t -> {
             t.setDelYn("N");
         });
-        log.debug("Request to save UpWrongAnswer : {}", upQuestionMaster.getUpWrongAnswers());
-        upWrongAnswerRepository.save(upQuestionMaster.getUpWrongAnswers());
+        log.debug("Request to change UpWrongAnswer : {}", upQuestionMaster.getUpWrongAnswers());
+
+        log.debug("Request to save UpQuestionMaster : {}", upQuestionMaster);
+        UpQuestionMaster result = upQuestionMasterRepository.save(upQuestionMaster);
+
 
         return result;
     }
@@ -79,9 +80,10 @@ public class UploadQustionServiceImpl implements UploadQustionService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
+
     public Page<UpQuestionMaster> findAll(Pageable pageable) {
         log.debug("Request to get all UpQuestionMasters");
-        Page<UpQuestionMaster> result = upQuestionMasterRepository.findAll(pageable);
+        Page<UpQuestionMaster> result = upQuestionMasterRepository.findByUserIsCurrentUser(pageable);
         return result;
     }
 
@@ -99,12 +101,14 @@ public class UploadQustionServiceImpl implements UploadQustionService {
     }
 
     /**
-     * Delete the  upQuestionMaster by id.
+     * Update Y to delYn column instead of delete it.
      *
      * @param id the id of the entity
      */
     public void delete(Long id) {
         log.debug("Request to delete UpQuestionMaster : {}", id);
-        upQuestionMasterRepository.delete(id);
+        UpQuestionMaster upQuestionMaster = upQuestionMasterRepository.findOne(id);
+        upQuestionMaster.setDelYn("Y");
+        upQuestionMasterRepository.save(upQuestionMaster);
     }
 }

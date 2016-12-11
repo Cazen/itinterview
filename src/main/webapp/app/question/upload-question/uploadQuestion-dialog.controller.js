@@ -38,22 +38,27 @@
             if (vm.uploadQuestion.id !== null) {
                 UploadQuestion.update(vm.uploadQuestion, onSaveSuccess, onSaveError);
             } else {
+                //Get Slider Data
+                vm.uploadQuestion.difficulty = $("#difficulty-slider").data("from");
+
                 $scope.upRightAnswersArray = [];
                 $scope.upWrongAnswersArray = [];
 
                 for (var i = 0; i < $scope.upRightAnswers.length; i++) {
-                    $scope.upRightAnswersArray.push(vm.upRightAnswers[i]);
+                    if(vm.upRightAnswers[i] != null) {
+                        $scope.upRightAnswersArray.push(vm.upRightAnswers[i]);
+                    }
                 }
                 vm.uploadQuestion.upRightAnswers = $scope.upRightAnswersArray;
 
                 for (var i = 0; i < $scope.upWrongAnswers.length; i++) {
-                    $scope.upWrongAnswersArray.push(vm.upWrongAnswers[i]);
+                    if(vm.upWrongAnswers[i] != null) {
+                        $scope.upWrongAnswersArray.push(vm.upWrongAnswers[i]);
+                    }
                 }
                 vm.uploadQuestion.upWrongAnswers = $scope.upWrongAnswersArray;
 
                 UploadQuestion.save(vm.uploadQuestion, onSaveSuccess, onSaveError);
-
-
             }
         }
 

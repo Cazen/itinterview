@@ -33,10 +33,6 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="author" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            
             <column name="status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -45,6 +41,10 @@
                 <constraints nullable="true" />
             </column>
             
+            <column name="user_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="up_question_master" columnName="c_time" columnDataType="datetime"/>
