@@ -44,15 +44,15 @@ function fonts() {
         .pipe(gulp.dest(config.dist)),
         gulp.src(config.bower + 'bootstrap/fonts/*.*')
         .pipe(plumber({errorHandler: handleErrors}))
-        .pipe(changed(config.bower + 'bootstrap/fonts/'))
+        .pipe(changed(config.dist + 'bower_components/bootstrap/dist/fonts/'))
         .pipe(flatten())
         .pipe(rev())
-        .pipe(gulp.dest(config.bower + 'bootstrap/fonts/'))
+        .pipe(gulp.dest(config.dist + 'bower_components/bootstrap/dist/fonts/'))
         .pipe(rev.manifest(config.revManifest, {
             base: config.dist,
             merge: true
         }))
-        .pipe(gulp.dest(config.bower + 'bootstrap/fonts/'))
+        .pipe(gulp.dest(config.dist))
     );
 }
 
