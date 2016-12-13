@@ -4,7 +4,7 @@ describe('Controller Tests', function() {
 
     describe('QuestionMaster Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockPreviousState, MockQuestionMaster, MockRightAnswer, MockWrongAnswer, MockUser, MockCommonCode;
+        var MockEntity, MockPreviousState, MockQuestionMaster, MockRightAnswer, MockWrongAnswer, MockCommonCode;
         var createController;
 
         beforeEach(inject(function($injector) {
@@ -15,7 +15,6 @@ describe('Controller Tests', function() {
             MockQuestionMaster = jasmine.createSpy('MockQuestionMaster');
             MockRightAnswer = jasmine.createSpy('MockRightAnswer');
             MockWrongAnswer = jasmine.createSpy('MockWrongAnswer');
-            MockUser = jasmine.createSpy('MockUser');
             MockCommonCode = jasmine.createSpy('MockCommonCode');
             
 
@@ -27,7 +26,6 @@ describe('Controller Tests', function() {
                 'QuestionMaster': MockQuestionMaster,
                 'RightAnswer': MockRightAnswer,
                 'WrongAnswer': MockWrongAnswer,
-                'User': MockUser,
                 'CommonCode': MockCommonCode
             };
             createController = function() {

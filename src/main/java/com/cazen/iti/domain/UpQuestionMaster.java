@@ -1,15 +1,17 @@
 package com.cazen.iti.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A UpQuestionMaster.
@@ -17,6 +19,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "up_question_master")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
 public class UpQuestionMaster implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,21 +37,24 @@ public class UpQuestionMaster implements Serializable {
     @Column(name = "c_time")
     private ZonedDateTime cTime;
 
-    @OneToMany(mappedBy = "upquestionMaster")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<UpRightAnswer> uprightAnswers = new HashSet<>();
+    @Column(name = "status")
+    private String status;
 
-    @OneToMany(mappedBy = "upquestionMaster")
-    @JsonIgnore
+    @Column(name = "difficulty")
+    private Integer difficulty;
+
+    @OneToMany(mappedBy = "upQuestionMaster", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<UpWrongAnswer> upwrongAnswers = new HashSet<>();
+    @JsonManagedReference
+    private Set<UpRightAnswer> upRightAnswers = new HashSet<>();
+
+    @OneToMany(mappedBy = "upQuestionMaster", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonManagedReference
+    private Set<UpWrongAnswer> upWrongAnswers = new HashSet<>();
 
     @ManyToOne
-    private User author;
-
-    @ManyToOne
-    private CommonCode status;
+    private User user;
 
     public Long getId() {
         return id;
@@ -97,80 +103,94 @@ public class UpQuestionMaster implements Serializable {
         this.cTime = cTime;
     }
 
-    public Set<UpRightAnswer> getUprightAnswers() {
-        return uprightAnswers;
-    }
-
-    public UpQuestionMaster uprightAnswers(Set<UpRightAnswer> upRightAnswers) {
-        this.uprightAnswers = upRightAnswers;
-        return this;
-    }
-
-    public UpQuestionMaster addUprightAnswer(UpRightAnswer upRightAnswer) {
-        uprightAnswers.add(upRightAnswer);
-        upRightAnswer.setUpquestionMaster(this);
-        return this;
-    }
-
-    public UpQuestionMaster removeUprightAnswer(UpRightAnswer upRightAnswer) {
-        uprightAnswers.remove(upRightAnswer);
-        upRightAnswer.setUpquestionMaster(null);
-        return this;
-    }
-
-    public void setUprightAnswers(Set<UpRightAnswer> upRightAnswers) {
-        this.uprightAnswers = upRightAnswers;
-    }
-
-    public Set<UpWrongAnswer> getUpwrongAnswers() {
-        return upwrongAnswers;
-    }
-
-    public UpQuestionMaster upwrongAnswers(Set<UpWrongAnswer> upWrongAnswers) {
-        this.upwrongAnswers = upWrongAnswers;
-        return this;
-    }
-
-    public UpQuestionMaster addUpwrongAnswer(UpWrongAnswer upWrongAnswer) {
-        upwrongAnswers.add(upWrongAnswer);
-        upWrongAnswer.setUpquestionMaster(this);
-        return this;
-    }
-
-    public UpQuestionMaster removeUpwrongAnswer(UpWrongAnswer upWrongAnswer) {
-        upwrongAnswers.remove(upWrongAnswer);
-        upWrongAnswer.setUpquestionMaster(null);
-        return this;
-    }
-
-    public void setUpwrongAnswers(Set<UpWrongAnswer> upWrongAnswers) {
-        this.upwrongAnswers = upWrongAnswers;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public UpQuestionMaster author(User user) {
-        this.author = user;
-        return this;
-    }
-
-    public void setAuthor(User user) {
-        this.author = user;
-    }
-
-    public CommonCode getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public UpQuestionMaster status(CommonCode commonCode) {
-        this.status = commonCode;
+    public UpQuestionMaster status(String status) {
+        this.status = status;
         return this;
     }
 
-    public void setStatus(CommonCode commonCode) {
-        this.status = commonCode;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getDifficulty() {
+        return difficulty;
+    }
+
+    public UpQuestionMaster difficulty(Integer difficulty) {
+        this.difficulty = difficulty;
+        return this;
+    }
+
+    public void setDifficulty(Integer difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    @OneToMany(mappedBy = "upQuestionMaster", cascade = CascadeType.ALL)
+    public Set<UpRightAnswer> getUpRightAnswers() {
+        return upRightAnswers;
+    }
+
+    public UpQuestionMaster upRightAnswers(Set<UpRightAnswer> upRightAnswers) {
+        this.upRightAnswers = upRightAnswers;
+        return this;
+    }
+
+    public UpQuestionMaster addUpRightAnswer(UpRightAnswer upRightAnswer) {
+        upRightAnswers.add(upRightAnswer);
+        upRightAnswer.setUpQuestionMaster(this);
+        return this;
+    }
+
+    public UpQuestionMaster removeUpRightAnswer(UpRightAnswer upRightAnswer) {
+        upRightAnswers.remove(upRightAnswer);
+        upRightAnswer.setUpQuestionMaster(null);
+        return this;
+    }
+
+    public void setUpRightAnswers(Set<UpRightAnswer> upRightAnswers) {
+        this.upRightAnswers = upRightAnswers;
+    }
+
+    public Set<UpWrongAnswer> getUpWrongAnswers() {
+        return upWrongAnswers;
+    }
+
+    public UpQuestionMaster upWrongAnswers(Set<UpWrongAnswer> upWrongAnswers) {
+        this.upWrongAnswers = upWrongAnswers;
+        return this;
+    }
+
+    public UpQuestionMaster addUpWrongAnswer(UpWrongAnswer upWrongAnswer) {
+        upWrongAnswers.add(upWrongAnswer);
+        upWrongAnswer.setUpQuestionMaster(this);
+        return this;
+    }
+
+    public UpQuestionMaster removeUpWrongAnswer(UpWrongAnswer upWrongAnswer) {
+        upWrongAnswers.remove(upWrongAnswer);
+        upWrongAnswer.setUpQuestionMaster(null);
+        return this;
+    }
+
+    public void setUpWrongAnswers(Set<UpWrongAnswer> upWrongAnswers) {
+        this.upWrongAnswers = upWrongAnswers;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public UpQuestionMaster user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -182,7 +202,7 @@ public class UpQuestionMaster implements Serializable {
             return false;
         }
         UpQuestionMaster upQuestionMaster = (UpQuestionMaster) o;
-        if(upQuestionMaster.id == null || id == null) {
+        if (upQuestionMaster.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, upQuestionMaster.id);
@@ -200,6 +220,8 @@ public class UpQuestionMaster implements Serializable {
             ", title='" + title + "'" +
             ", delYn='" + delYn + "'" +
             ", cTime='" + cTime + "'" +
+            ", status='" + status + "'" +
+            ", difficulty='" + difficulty + "'" +
             '}';
     }
 }

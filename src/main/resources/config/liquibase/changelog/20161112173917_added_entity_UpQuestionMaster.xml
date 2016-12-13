@@ -33,11 +33,15 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="author_id" type="bigint">
+            <column name="status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-
-            <column name="status_id" type="bigint">
+            
+            <column name="difficulty" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="user_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

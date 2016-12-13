@@ -94,5 +94,13 @@
         timeToLiveSeconds="3600">
     </cache>
 
+    <cache name="com.cazen.iti.domain.UpQuestionMaster.upRightAnswers"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.cazen.iti.domain.UpQuestionMaster.upWrongAnswers"
+        timeToLiveSeconds="3600">
+    </cache>
+
     <!-- jhipster-needle-ehcache-add-entry -->
 </ehcache>

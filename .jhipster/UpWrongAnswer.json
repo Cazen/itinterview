@@ -2,15 +2,9 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "status",
-            "otherEntityName": "commonCode",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "upquestionMaster",
+            "relationshipName": "upQuestionMaster",
             "otherEntityName": "upQuestionMaster",
+            "relationshipType": "many-to-one",
             "otherEntityField": "id"
         }
     ],
@@ -25,8 +19,8 @@
         }
     ],
     "changelogDate": "20161112173919",
-    "entityTableName": "up_wrong_answer",
     "dto": "no",
-    "pagination": "infinite-scroll",
-    "service": "serviceImpl"
+    "service": "serviceImpl",
+    "entityTableName": "up_wrong_answer",
+    "pagination": "infinite-scroll"
 }

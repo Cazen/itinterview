@@ -5,15 +5,14 @@
         .module('itinterviewApp')
         .controller('UpWrongAnswerDialogController', UpWrongAnswerDialogController);
 
-    UpWrongAnswerDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'UpWrongAnswer', 'CommonCode', 'UpQuestionMaster'];
+    UpWrongAnswerDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'UpWrongAnswer', 'UpQuestionMaster'];
 
-    function UpWrongAnswerDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, UpWrongAnswer, CommonCode, UpQuestionMaster) {
+    function UpWrongAnswerDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, UpWrongAnswer, UpQuestionMaster) {
         var vm = this;
 
         vm.upWrongAnswer = entity;
         vm.clear = clear;
         vm.save = save;
-        vm.commoncodes = CommonCode.query();
         vm.upquestionmasters = UpQuestionMaster.query();
 
         $timeout(function (){

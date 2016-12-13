@@ -34,6 +34,9 @@ public class QuestionMaster implements Serializable {
     @Column(name = "c_time")
     private ZonedDateTime cTime;
 
+    @Column(name = "author")
+    private String author;
+
     @OneToMany(mappedBy = "questionMaster")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -43,9 +46,6 @@ public class QuestionMaster implements Serializable {
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<WrongAnswer> wrongAnswers = new HashSet<>();
-
-    @ManyToOne
-    private User author;
 
     @ManyToOne
     private CommonCode status;
@@ -95,6 +95,19 @@ public class QuestionMaster implements Serializable {
 
     public void setcTime(ZonedDateTime cTime) {
         this.cTime = cTime;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public QuestionMaster author(String author) {
+        this.author = author;
+        return this;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public Set<RightAnswer> getRightAnswers() {
@@ -147,19 +160,6 @@ public class QuestionMaster implements Serializable {
         this.wrongAnswers = wrongAnswers;
     }
 
-    public User getAuthor() {
-        return author;
-    }
-
-    public QuestionMaster author(User user) {
-        this.author = user;
-        return this;
-    }
-
-    public void setAuthor(User user) {
-        this.author = user;
-    }
-
     public CommonCode getStatus() {
         return status;
     }
@@ -200,6 +200,7 @@ public class QuestionMaster implements Serializable {
             ", title='" + title + "'" +
             ", delYn='" + delYn + "'" +
             ", cTime='" + cTime + "'" +
+            ", author='" + author + "'" +
             '}';
     }
 }

@@ -1,7 +1,10 @@
 package com.cazen.iti.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +16,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "up_wrong_answer")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
 public class UpWrongAnswer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,10 +32,9 @@ public class UpWrongAnswer implements Serializable {
     private String delYn;
 
     @ManyToOne
-    private CommonCode status;
-
-    @ManyToOne
-    private UpQuestionMaster upquestionMaster;
+    @JoinColumn(name = "upQuestionMaster_Id")
+    @JsonBackReference
+    private UpQuestionMaster upQuestionMaster;
 
     public Long getId() {
         return id;
@@ -67,30 +70,17 @@ public class UpWrongAnswer implements Serializable {
         this.delYn = delYn;
     }
 
-    public CommonCode getStatus() {
-        return status;
+    public UpQuestionMaster getUpQuestionMaster() {
+        return upQuestionMaster;
     }
 
-    public UpWrongAnswer status(CommonCode commonCode) {
-        this.status = commonCode;
+    public UpWrongAnswer upQuestionMaster(UpQuestionMaster upQuestionMaster) {
+        this.upQuestionMaster = upQuestionMaster;
         return this;
     }
 
-    public void setStatus(CommonCode commonCode) {
-        this.status = commonCode;
-    }
-
-    public UpQuestionMaster getUpquestionMaster() {
-        return upquestionMaster;
-    }
-
-    public UpWrongAnswer upquestionMaster(UpQuestionMaster upQuestionMaster) {
-        this.upquestionMaster = upQuestionMaster;
-        return this;
-    }
-
-    public void setUpquestionMaster(UpQuestionMaster upQuestionMaster) {
-        this.upquestionMaster = upQuestionMaster;
+    public void setUpQuestionMaster(UpQuestionMaster upQuestionMaster) {
+        this.upQuestionMaster = upQuestionMaster;
     }
 
     @Override

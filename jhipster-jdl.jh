@@ -11,6 +11,7 @@ entity CommonCode{
 entity QuestionMaster {
 	title String,
 	delYn String,
+        author String,
     cTime ZonedDateTime
 }
 
@@ -57,7 +58,6 @@ relationship OneToMany {
 
 relationship ManyToOne {
   QuestionVote{questionMaster} to QuestionMaster,
-  QuestionMaster{author} to User,
   QuestionVote{voter} to User,
   QuestionMaster{status} to CommonCode,
   RightAnswer{status} to CommonCode,
@@ -65,7 +65,6 @@ relationship ManyToOne {
   QuestionVote{status} to CommonCode,
   
   UpQuestionVote{upquestionMaster} to UpQuestionMaster,
-  UpQuestionMaster{author} to User,
   UpQuestionVote{voter} to User,
   UpQuestionMaster{status} to CommonCode,
   UpRightAnswer{status} to CommonCode,

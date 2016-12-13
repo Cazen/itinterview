@@ -98,6 +98,8 @@
                                 title: null,
                                 delYn: null,
                                 cTime: null,
+                                status: null,
+                                difficulty: null,
                                 id: null
                             };
                         }

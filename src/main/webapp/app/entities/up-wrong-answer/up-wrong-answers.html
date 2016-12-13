@@ -21,8 +21,7 @@
                     <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="optionText"><span>Option Text</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="delYn"><span>Del Yn</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="status.id"><span>Status</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="upquestionMaster.id"><span>Upquestion Master</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="upQuestionMaster.id"><span>Up Question Master</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -32,10 +31,7 @@
                     <td>{{upWrongAnswer.optionText}}</td>
                     <td>{{upWrongAnswer.delYn}}</td>
                     <td>
-                        <a ui-sref="common-code-detail({id:upWrongAnswer.status.id})">{{upWrongAnswer.status.id}}</a>
-                    </td>
-                    <td>
-                        <a ui-sref="up-question-master-detail({id:upWrongAnswer.upquestionMaster.id})">{{upWrongAnswer.upquestionMaster.id}}</a>
+                        <a ui-sref="up-question-master-detail({id:upWrongAnswer.upQuestionMaster.id})">{{upWrongAnswer.upQuestionMaster.id}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

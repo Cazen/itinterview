@@ -8,15 +8,9 @@
     -->
     <changeSet id="20161112173919-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="status_id"
+        <addForeignKeyConstraint baseColumnNames="up_question_master_id"
                                  baseTableName="up_wrong_answer"
-                                 constraintName="fk_up_wrong_answer_status_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="common_code"/>
-
-        <addForeignKeyConstraint baseColumnNames="upquestion_master_id"
-                                 baseTableName="up_wrong_answer"
-                                 constraintName="fk_up_wrong_answer_upquestion_master_id"
+                                 constraintName="fk_up_wrong_answer_up_question_master_id"
                                  referencedColumnNames="id"
                                  referencedTableName="up_question_master"/>
 

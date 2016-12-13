@@ -2,28 +2,23 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "uprightAnswer",
+            "relationshipName": "upRightAnswer",
             "otherEntityName": "upRightAnswer",
-            "otherEntityRelationshipName": "upquestionMaster"
-        },
-        {
             "relationshipType": "one-to-many",
-            "relationshipName": "upwrongAnswer",
+            "otherEntityRelationshipName": "upQuestionMaster"
+        },
+        {
+            "relationshipName": "upWrongAnswer",
             "otherEntityName": "upWrongAnswer",
-            "otherEntityRelationshipName": "upquestionMaster"
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "upQuestionMaster"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "author",
+            "relationshipName": "user",
             "otherEntityName": "user",
-            "otherEntityField": "id"
-        },
-        {
             "relationshipType": "many-to-one",
-            "relationshipName": "status",
-            "otherEntityName": "commonCode",
-            "otherEntityField": "id"
+            "otherEntityField": "login",
+            "ownerSide": true
         }
     ],
     "fields": [
@@ -38,11 +33,19 @@
         {
             "fieldName": "cTime",
             "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "difficulty",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20161112173917",
-    "entityTableName": "up_question_master",
     "dto": "no",
-    "pagination": "infinite-scroll",
-    "service": "serviceImpl"
+    "service": "serviceImpl",
+    "entityTableName": "up_question_master",
+    "pagination": "infinite-scroll"
 }
