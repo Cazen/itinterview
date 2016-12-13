@@ -22,7 +22,8 @@
         <div class="form-group row panel-body">
             <label class="form-control-label" for="field_title">예상 난이도</label>
             <div class="margin-bottom-50">
-                <input type="text" id="difficulty-slider" name="difficulty" ng-model="vm.uploadQuestion.difficulty" data-ng-init="scrollBarInit()"/>
+                <input type="text" id="difficulty-slider" name="difficulty" ng-model="vm.uploadQuestion.difficulty" data-ng-init="scrollBarInit()">
+                </input>
             </div>
         </div>
 
@@ -32,7 +33,7 @@
             <div data-ng-repeat="upRightAnswer in upRightAnswers track by $index">
                 <div>
                     <textarea style="resize:none" type="text" class="form-control" name="optionText"
-                      rows="2" ng-model="vm.upRightAnswers[$index].optionText" />
+                      rows="2" ng-model="vm.upRightAnswers[$index].optionText" ></textarea>
                 </div>
             </div>
             <button type="button" class="btn btn-xs btn-info margin-inline" ng-click="removeUpRightAnswerInputBox()">정답항목삭제</button>
@@ -44,7 +45,7 @@
             <div data-ng-repeat="upWrongAnswer in upWrongAnswers track by $index">
                 <div>
                     <textarea style="resize:none" type="text" class="form-control" name="optionText"
-                              rows="2" ng-model="vm.upWrongAnswers[$index].optionText" />
+                              rows="2" ng-model="vm.upWrongAnswers[$index].optionText" ></textarea>
                 </div>
             </div>
             <button type="button" class="btn btn-xs btn-info margin-inline" ng-click="removeUpWrongAnswerInputBox()">오답항목삭제</button>
