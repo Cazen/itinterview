@@ -102,7 +102,7 @@ public class RightAnswer implements Serializable {
             return false;
         }
         RightAnswer rightAnswer = (RightAnswer) o;
-        if(rightAnswer.id == null || id == null) {
+        if (rightAnswer.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, rightAnswer.id);

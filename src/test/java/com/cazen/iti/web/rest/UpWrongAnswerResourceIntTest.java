@@ -9,24 +9,23 @@ import com.cazen.iti.service.UpWrongAnswerService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -39,11 +38,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = ItinterviewApp.class)
 public class UpWrongAnswerResourceIntTest {
 
-    private static final String DEFAULT_OPTION_TEXT = "AAAAA";
-    private static final String UPDATED_OPTION_TEXT = "BBBBB";
+    private static final String DEFAULT_OPTION_TEXT = "AAAAAAAAAA";
+    private static final String UPDATED_OPTION_TEXT = "BBBBBBBBBB";
 
-    private static final String DEFAULT_DEL_YN = "AAAAA";
-    private static final String UPDATED_DEL_YN = "BBBBB";
+    private static final String DEFAULT_DEL_YN = "AAAAAAAAAA";
+    private static final String UPDATED_DEL_YN = "BBBBBBBBBB";
 
     @Inject
     private UpWrongAnswerRepository upWrongAnswerRepository;
@@ -64,7 +63,7 @@ public class UpWrongAnswerResourceIntTest {
 
     private UpWrongAnswer upWrongAnswer;
 
-    @PostConstruct
+    @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
         UpWrongAnswerResource upWrongAnswerResource = new UpWrongAnswerResource();
@@ -100,16 +99,36 @@ public class UpWrongAnswerResourceIntTest {
         // Create the UpWrongAnswer
 
         restUpWrongAnswerMockMvc.perform(post("/api/up-wrong-answers")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(upWrongAnswer)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(upWrongAnswer)))
+            .andExpect(status().isCreated());
 
         // Validate the UpWrongAnswer in the database
-        List<UpWrongAnswer> upWrongAnswers = upWrongAnswerRepository.findAll();
-        assertThat(upWrongAnswers).hasSize(databaseSizeBeforeCreate + 1);
-        UpWrongAnswer testUpWrongAnswer = upWrongAnswers.get(upWrongAnswers.size() - 1);
+        List<UpWrongAnswer> upWrongAnswerList = upWrongAnswerRepository.findAll();
+        assertThat(upWrongAnswerList).hasSize(databaseSizeBeforeCreate + 1);
+        UpWrongAnswer testUpWrongAnswer = upWrongAnswerList.get(upWrongAnswerList.size() - 1);
         assertThat(testUpWrongAnswer.getOptionText()).isEqualTo(DEFAULT_OPTION_TEXT);
         assertThat(testUpWrongAnswer.getDelYn()).isEqualTo(DEFAULT_DEL_YN);
+    }
+
+    @Test
+    @Transactional
+    public void createUpWrongAnswerWithExistingId() throws Exception {
+        int databaseSizeBeforeCreate = upWrongAnswerRepository.findAll().size();
+
+        // Create the UpWrongAnswer with an existing ID
+        UpWrongAnswer existingUpWrongAnswer = new UpWrongAnswer();
+        existingUpWrongAnswer.setId(1L);
+
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restUpWrongAnswerMockMvc.perform(post("/api/up-wrong-answers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(existingUpWrongAnswer)))
+            .andExpect(status().isBadRequest());
+
+        // Validate the Alice in the database
+        List<UpWrongAnswer> upWrongAnswerList = upWrongAnswerRepository.findAll();
+        assertThat(upWrongAnswerList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
@@ -118,13 +137,13 @@ public class UpWrongAnswerResourceIntTest {
         // Initialize the database
         upWrongAnswerRepository.saveAndFlush(upWrongAnswer);
 
-        // Get all the upWrongAnswers
+        // Get all the upWrongAnswerList
         restUpWrongAnswerMockMvc.perform(get("/api/up-wrong-answers?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(upWrongAnswer.getId().intValue())))
-                .andExpect(jsonPath("$.[*].optionText").value(hasItem(DEFAULT_OPTION_TEXT.toString())))
-                .andExpect(jsonPath("$.[*].delYn").value(hasItem(DEFAULT_DEL_YN.toString())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(upWrongAnswer.getId().intValue())))
+            .andExpect(jsonPath("$.[*].optionText").value(hasItem(DEFAULT_OPTION_TEXT.toString())))
+            .andExpect(jsonPath("$.[*].delYn").value(hasItem(DEFAULT_DEL_YN.toString())));
     }
 
     @Test
@@ -147,7 +166,7 @@ public class UpWrongAnswerResourceIntTest {
     public void getNonExistingUpWrongAnswer() throws Exception {
         // Get the upWrongAnswer
         restUpWrongAnswerMockMvc.perform(get("/api/up-wrong-answers/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -165,16 +184,34 @@ public class UpWrongAnswerResourceIntTest {
                 .delYn(UPDATED_DEL_YN);
 
         restUpWrongAnswerMockMvc.perform(put("/api/up-wrong-answers")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(updatedUpWrongAnswer)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedUpWrongAnswer)))
+            .andExpect(status().isOk());
 
         // Validate the UpWrongAnswer in the database
-        List<UpWrongAnswer> upWrongAnswers = upWrongAnswerRepository.findAll();
-        assertThat(upWrongAnswers).hasSize(databaseSizeBeforeUpdate);
-        UpWrongAnswer testUpWrongAnswer = upWrongAnswers.get(upWrongAnswers.size() - 1);
+        List<UpWrongAnswer> upWrongAnswerList = upWrongAnswerRepository.findAll();
+        assertThat(upWrongAnswerList).hasSize(databaseSizeBeforeUpdate);
+        UpWrongAnswer testUpWrongAnswer = upWrongAnswerList.get(upWrongAnswerList.size() - 1);
         assertThat(testUpWrongAnswer.getOptionText()).isEqualTo(UPDATED_OPTION_TEXT);
         assertThat(testUpWrongAnswer.getDelYn()).isEqualTo(UPDATED_DEL_YN);
+    }
+
+    @Test
+    @Transactional
+    public void updateNonExistingUpWrongAnswer() throws Exception {
+        int databaseSizeBeforeUpdate = upWrongAnswerRepository.findAll().size();
+
+        // Create the UpWrongAnswer
+
+        // If the entity doesn't have an ID, it will be created instead of just being updated
+        restUpWrongAnswerMockMvc.perform(put("/api/up-wrong-answers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(upWrongAnswer)))
+            .andExpect(status().isCreated());
+
+        // Validate the UpWrongAnswer in the database
+        List<UpWrongAnswer> upWrongAnswerList = upWrongAnswerRepository.findAll();
+        assertThat(upWrongAnswerList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
     @Test
@@ -187,11 +224,11 @@ public class UpWrongAnswerResourceIntTest {
 
         // Get the upWrongAnswer
         restUpWrongAnswerMockMvc.perform(delete("/api/up-wrong-answers/{id}", upWrongAnswer.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<UpWrongAnswer> upWrongAnswers = upWrongAnswerRepository.findAll();
-        assertThat(upWrongAnswers).hasSize(databaseSizeBeforeDelete - 1);
+        List<UpWrongAnswer> upWrongAnswerList = upWrongAnswerRepository.findAll();
+        assertThat(upWrongAnswerList).hasSize(databaseSizeBeforeDelete - 1);
     }
 }

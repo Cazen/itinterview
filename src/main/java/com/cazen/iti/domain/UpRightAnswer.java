@@ -1,10 +1,7 @@
 package com.cazen.iti.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,7 +13,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "up_right_answer")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
 public class UpRightAnswer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,8 +28,6 @@ public class UpRightAnswer implements Serializable {
     private String delYn;
 
     @ManyToOne
-    @JoinColumn(name = "upQuestionMaster_Id")
-    @JsonBackReference
     private UpQuestionMaster upQuestionMaster;
 
     public Long getId() {
@@ -92,7 +86,7 @@ public class UpRightAnswer implements Serializable {
             return false;
         }
         UpRightAnswer upRightAnswer = (UpRightAnswer) o;
-        if(upRightAnswer.id == null || id == null) {
+        if (upRightAnswer.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, upRightAnswer.id);

@@ -5,6 +5,8 @@ import com.cazen.iti.domain.UpWrongAnswer;
 import com.cazen.iti.service.UpWrongAnswerService;
 import com.cazen.iti.web.rest.util.HeaderUtil;
 import com.cazen.iti.web.rest.util.PaginationUtil;
+
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -83,7 +85,7 @@ public class UpWrongAnswerResource {
      */
     @GetMapping("/up-wrong-answers")
     @Timed
-    public ResponseEntity<List<UpWrongAnswer>> getAllUpWrongAnswers(Pageable pageable)
+    public ResponseEntity<List<UpWrongAnswer>> getAllUpWrongAnswers(@ApiParam Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of UpWrongAnswers");
         Page<UpWrongAnswer> page = upWrongAnswerService.findAll(pageable);

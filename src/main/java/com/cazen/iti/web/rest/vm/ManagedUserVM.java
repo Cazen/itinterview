@@ -6,7 +6,6 @@ import java.util.Set;
 
 import com.cazen.iti.domain.User;
 import com.cazen.iti.service.dto.UserDTO;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**

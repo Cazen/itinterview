@@ -5,6 +5,7 @@ import com.cazen.iti.service.UploadQustionService;
 import com.cazen.iti.web.rest.util.HeaderUtil;
 import com.cazen.iti.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -86,7 +87,7 @@ public class UploadQuestionResource {
      */
     @GetMapping("/uploadquestion")
     @Timed
-    public ResponseEntity<List<UpQuestionMaster>> getAllUpQuestionMasters(Pageable pageable)
+    public ResponseEntity<List<UpQuestionMaster>> getAllUpQuestionMasters(@ApiParam Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of UpQuestionMasters");
         Page<UpQuestionMaster> page = uploadQuestionService.findAll(pageable);

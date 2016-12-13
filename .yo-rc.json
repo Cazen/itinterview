@@ -1,6 +1,6 @@
 {
   "generator-jhipster": {
-    "jhipsterVersion": "3.10.0",
+    "jhipsterVersion": "3.12.1",
     "baseName": "itinterview",
     "packageName": "com.cazen.iti",
     "packageFolder": "com/cazen/iti",
@@ -11,13 +11,13 @@
     "websocket": false,
     "databaseType": "sql",
     "devDatabaseType": "h2Disk",
-    "prodDatabaseType": "postgresql",
+    "prodDatabaseType": "mysql",
     "searchEngine": false,
     "messageBroker": false,
     "buildTool": "gradle",
     "enableSocialSignIn": true,
-    "rememberMeKey": "2ddc0e85f6532c640cb9d7520af5cf0dc6a6e593",
-    "useSass": false,
+    "rememberMeKey": "8356c1a893f3bd58afcdcccaff4e7079ff9e1b3f",
+    "useSass": true,
     "applicationType": "monolith",
     "testFrameworks": [
       "gatling"

@@ -3,7 +3,7 @@
 
     angular
         .module('itinterviewApp', [
-            'ngStorage', 
+            'ngStorage',
             'ngResource',
             'ngCookies',
             'ngAria',

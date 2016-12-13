@@ -5,13 +5,14 @@
         .module('itinterviewApp')
         .controller('QuestionMasterController', QuestionMasterController);
 
-    QuestionMasterController.$inject = ['$scope', '$state', 'QuestionMaster', 'ParseLinks', 'AlertService'];
+    QuestionMasterController.$inject = ['$scope', '$state', 'QuestionMaster', 'ParseLinks', 'AlertService', 'paginationConstants'];
 
-    function QuestionMasterController ($scope, $state, QuestionMaster, ParseLinks, AlertService) {
+    function QuestionMasterController ($scope, $state, QuestionMaster, ParseLinks, AlertService, paginationConstants) {
         var vm = this;
-        
+
         vm.questionMasters = [];
         vm.loadPage = loadPage;
+        vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.page = 0;
         vm.links = {
             last: 0
@@ -25,7 +26,7 @@
         function loadAll () {
             QuestionMaster.query({
                 page: vm.page,
-                size: 20,
+                size: vm.itemsPerPage,
                 sort: sort()
             }, onSuccess, onError);
             function sort() {

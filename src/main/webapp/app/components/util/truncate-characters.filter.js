@@ -4,7 +4,7 @@
     angular
         .module('itinterviewApp')
         .filter('characters', characters);
-        
+
     function characters () {
         return charactersFilter;
 

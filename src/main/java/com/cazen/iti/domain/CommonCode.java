@@ -102,7 +102,7 @@ public class CommonCode implements Serializable {
             return false;
         }
         CommonCode commonCode = (CommonCode) o;
-        if(commonCode.id == null || id == null) {
+        if (commonCode.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, commonCode.id);

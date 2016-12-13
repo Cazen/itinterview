@@ -1,4 +1,4 @@
-(function() {
+navbar.states.js(function() {
     'use strict';
 
     angular
