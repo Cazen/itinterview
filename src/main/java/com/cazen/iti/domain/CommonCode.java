@@ -33,6 +33,9 @@ public class CommonCode implements Serializable {
     @Column(name = "del_yn")
     private String delYn;
 
+    @ManyToOne
+    private CommonCode parentId;
+
     public Long getId() {
         return id;
     }
@@ -91,6 +94,19 @@ public class CommonCode implements Serializable {
 
     public void setDelYn(String delYn) {
         this.delYn = delYn;
+    }
+
+    public CommonCode getParentId() {
+        return parentId;
+    }
+
+    public CommonCode parentId(CommonCode commonCode) {
+        this.parentId = commonCode;
+        return this;
+    }
+
+    public void setParentId(CommonCode commonCode) {
+        this.parentId = commonCode;
     }
 
     @Override

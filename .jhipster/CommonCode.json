@@ -1,6 +1,13 @@
 {
     "fluentMethods": true,
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipName": "parentId",
+            "otherEntityName": "commonCode",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
     "fields": [
         {
             "fieldName": "cdTp",
@@ -20,8 +27,8 @@
         }
     ],
     "changelogDate": "20161112173912",
-    "entityTableName": "common_code",
     "dto": "no",
-    "pagination": "no",
-    "service": "serviceImpl"
+    "service": "serviceImpl",
+    "entityTableName": "common_code",
+    "pagination": "no"
 }

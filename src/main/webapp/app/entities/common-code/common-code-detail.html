@@ -20,6 +20,10 @@
         <dd>
             <span>{{vm.commonCode.delYn}}</span>
         </dd>
+        <dt><span>Parent Id</span></dt>
+        <dd>
+            <a ui-sref="common-code-detail({id:vm.commonCode.parentId.id})">{{vm.commonCode.parentId.id}}</a>
+        </dd>
     </dl>
 
     <button type="submit"
