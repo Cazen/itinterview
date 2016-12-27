@@ -23,7 +23,7 @@
                     <th><span>Cd Id</span></th>
                     <th><span>Cd Nm</span></th>
                     <th><span>Del Yn</span></th>
-                    <th><span>Parent Id</span></th>
+                    <th><span>Parent</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -35,7 +35,7 @@
                     <td>{{commonCode.cdNm}}</td>
                     <td>{{commonCode.delYn}}</td>
                     <td>
-                        <a ui-sref="common-code-detail({id:commonCode.parentId.id})">{{commonCode.parentId.id}}</a>
+                        <a ui-sref="common-code-detail({id:commonCode.parent.id})">{{commonCode.parent.id}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

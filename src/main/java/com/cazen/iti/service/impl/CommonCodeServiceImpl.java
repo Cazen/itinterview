@@ -62,6 +62,19 @@ public class CommonCodeServiceImpl implements CommonCodeService{
     }
 
     /**
+     *  Get one commonCode by unique codeId.
+     *
+     *  @param codeId the id of the entity
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public CommonCode findByCd_Id(String codeId) {
+        log.debug("Request to get CommonCode from codeId : {}", codeId);
+        CommonCode commonCode = commonCodeRepository.findByCd_Id(codeId);
+        return commonCode;
+    }
+
+    /**
      *  Delete the  commonCode by id.
      *
      *  @param id the id of the entity

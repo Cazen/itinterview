@@ -40,7 +40,7 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="parent_id_id" type="bigint">
+            <column name="parent_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

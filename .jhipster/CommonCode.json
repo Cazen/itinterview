@@ -2,7 +2,7 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipName": "parentId",
+            "relationshipName": "parent",
             "otherEntityName": "commonCode",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"

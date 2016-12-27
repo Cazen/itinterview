@@ -11,5 +11,6 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 public interface CommonCodeRepository extends JpaRepository<CommonCode,Long> {
-
+    @Query(value = "SELECT * FROM COMMON_CODE WHERE CD_ID = ?1", nativeQuery = true)
+    CommonCode findByCd_Id(String codeId);
 }
