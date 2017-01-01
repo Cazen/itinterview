@@ -103,7 +103,7 @@ public class QuestionVote implements Serializable {
             return false;
         }
         QuestionVote questionVote = (QuestionVote) o;
-        if(questionVote.id == null || id == null) {
+        if (questionVote.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, questionVote.id);

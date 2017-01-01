@@ -92,7 +92,7 @@ public class UpWrongAnswer implements Serializable {
             return false;
         }
         UpWrongAnswer upWrongAnswer = (UpWrongAnswer) o;
-        if(upWrongAnswer.id == null || id == null) {
+        if (upWrongAnswer.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, upWrongAnswer.id);

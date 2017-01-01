@@ -3,15 +3,13 @@ package com.cazen.iti.domain;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
+import java.util.Objects;
 
 /**
  * A UpQuestionMaster.
@@ -19,7 +17,6 @@ import java.util.Set;
 @Entity
 @Table(name = "up_question_master")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
 public class UpQuestionMaster implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,12 +40,12 @@ public class UpQuestionMaster implements Serializable {
     @Column(name = "difficulty")
     private Integer difficulty;
 
-    @OneToMany(mappedBy = "upQuestionMaster", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "upQuestionMaster", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonManagedReference
     private Set<UpRightAnswer> upRightAnswers = new HashSet<>();
 
-    @OneToMany(mappedBy = "upQuestionMaster", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "upQuestionMaster", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonManagedReference
     private Set<UpWrongAnswer> upWrongAnswers = new HashSet<>();
@@ -129,7 +126,6 @@ public class UpQuestionMaster implements Serializable {
         this.difficulty = difficulty;
     }
 
-    @OneToMany(mappedBy = "upQuestionMaster", cascade = CascadeType.ALL)
     public Set<UpRightAnswer> getUpRightAnswers() {
         return upRightAnswers;
     }

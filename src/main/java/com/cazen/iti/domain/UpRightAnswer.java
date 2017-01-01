@@ -92,7 +92,7 @@ public class UpRightAnswer implements Serializable {
             return false;
         }
         UpRightAnswer upRightAnswer = (UpRightAnswer) o;
-        if(upRightAnswer.id == null || id == null) {
+        if (upRightAnswer.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, upRightAnswer.id);

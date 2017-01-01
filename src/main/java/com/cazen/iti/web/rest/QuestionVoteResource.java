@@ -5,6 +5,8 @@ import com.cazen.iti.domain.QuestionVote;
 import com.cazen.iti.service.QuestionVoteService;
 import com.cazen.iti.web.rest.util.HeaderUtil;
 import com.cazen.iti.web.rest.util.PaginationUtil;
+
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -83,7 +85,7 @@ public class QuestionVoteResource {
      */
     @GetMapping("/question-votes")
     @Timed
-    public ResponseEntity<List<QuestionVote>> getAllQuestionVotes(Pageable pageable)
+    public ResponseEntity<List<QuestionVote>> getAllQuestionVotes(@ApiParam Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of QuestionVotes");
         Page<QuestionVote> page = questionVoteService.findAll(pageable);

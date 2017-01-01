@@ -103,7 +103,7 @@ public class UpQuestionVote implements Serializable {
             return false;
         }
         UpQuestionVote upQuestionVote = (UpQuestionVote) o;
-        if(upQuestionVote.id == null || id == null) {
+        if (upQuestionVote.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, upQuestionVote.id);

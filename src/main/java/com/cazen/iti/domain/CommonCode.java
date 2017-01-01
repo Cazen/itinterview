@@ -33,6 +33,9 @@ public class CommonCode implements Serializable {
     @Column(name = "del_yn")
     private String delYn;
 
+    @ManyToOne
+    private CommonCode parent;
+
     public Long getId() {
         return id;
     }
@@ -93,6 +96,19 @@ public class CommonCode implements Serializable {
         this.delYn = delYn;
     }
 
+    public CommonCode getParent() {
+        return parent;
+    }
+
+    public CommonCode parent(CommonCode commonCode) {
+        this.parent = commonCode;
+        return this;
+    }
+
+    public void setParent(CommonCode commonCode) {
+        this.parent = commonCode;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -102,7 +118,7 @@ public class CommonCode implements Serializable {
             return false;
         }
         CommonCode commonCode = (CommonCode) o;
-        if(commonCode.id == null || id == null) {
+        if (commonCode.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, commonCode.id);

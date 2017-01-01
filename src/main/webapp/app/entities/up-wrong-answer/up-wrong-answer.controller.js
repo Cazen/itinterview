@@ -5,13 +5,14 @@
         .module('itinterviewApp')
         .controller('UpWrongAnswerController', UpWrongAnswerController);
 
-    UpWrongAnswerController.$inject = ['$scope', '$state', 'UpWrongAnswer', 'ParseLinks', 'AlertService'];
+    UpWrongAnswerController.$inject = ['$scope', '$state', 'UpWrongAnswer', 'ParseLinks', 'AlertService', 'paginationConstants'];
 
-    function UpWrongAnswerController ($scope, $state, UpWrongAnswer, ParseLinks, AlertService) {
+    function UpWrongAnswerController ($scope, $state, UpWrongAnswer, ParseLinks, AlertService, paginationConstants) {
         var vm = this;
-        
+
         vm.upWrongAnswers = [];
         vm.loadPage = loadPage;
+        vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.page = 0;
         vm.links = {
             last: 0
@@ -25,7 +26,7 @@
         function loadAll () {
             UpWrongAnswer.query({
                 page: vm.page,
-                size: 20,
+                size: vm.itemsPerPage,
                 sort: sort()
             }, onSuccess, onError);
             function sort() {

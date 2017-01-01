@@ -5,13 +5,14 @@
         .module('itinterviewApp')
         .controller('QuestionVoteController', QuestionVoteController);
 
-    QuestionVoteController.$inject = ['$scope', '$state', 'QuestionVote', 'ParseLinks', 'AlertService'];
+    QuestionVoteController.$inject = ['$scope', '$state', 'QuestionVote', 'ParseLinks', 'AlertService', 'paginationConstants'];
 
-    function QuestionVoteController ($scope, $state, QuestionVote, ParseLinks, AlertService) {
+    function QuestionVoteController ($scope, $state, QuestionVote, ParseLinks, AlertService, paginationConstants) {
         var vm = this;
-        
+
         vm.questionVotes = [];
         vm.loadPage = loadPage;
+        vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.page = 0;
         vm.links = {
             last: 0
@@ -25,7 +26,7 @@
         function loadAll () {
             QuestionVote.query({
                 page: vm.page,
-                size: 20,
+                size: vm.itemsPerPage,
                 sort: sort()
             }, onSuccess, onError);
             function sort() {

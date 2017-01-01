@@ -4,6 +4,7 @@ import com.cazen.iti.domain.Authority;
 import com.cazen.iti.domain.User;
 import com.cazen.iti.repository.AuthorityRepository;
 import com.cazen.iti.repository.UserRepository;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

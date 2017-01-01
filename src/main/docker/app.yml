@@ -1,25 +1,16 @@
 version: '2'
 services:
-    nginx-proxy:
-        image: jwilder/nginx-proxy
-        container_name: nginx-proxy
-        ports:
-          - "80:80"
-        volumes:
-          - /var/run/docker.sock:/tmp/docker.sock:ro
-
     itinterview-app:
         image: itinterview
         external_links:
-            - itinterview-postgresql:postgresql
+            - itinterview-mysql:mysql
         environment:
             - SPRING_PROFILES_ACTIVE=prod,swagger
-            - SPRING_DATASOURCE_URL=jdbc:postgresql://10.146.0.5:5432/itinterview
+            - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/itinterview?useUnicode=true&characterEncoding=utf8&useSSL=false
             - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
-            - VIRTUAL_HOST=itinterview.co.kr,www.itinterview.co.kr
         ports:
             - 8080:8080
-    itinterview-postgresql:
+    itinterview-mysql:
         extends:
-            file: postgresql.yml
-            service: itinterview-postgresql
+            file: mysql.yml
+            service: itinterview-mysql

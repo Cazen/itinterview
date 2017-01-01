@@ -9,7 +9,7 @@
 
     function CommonCodeController ($scope, $state, CommonCode) {
         var vm = this;
-        
+
         vm.commonCodes = [];
 
         loadAll();
@@ -17,6 +17,7 @@
         function loadAll() {
             CommonCode.query(function(result) {
                 vm.commonCodes = result;
+                vm.searchQuery = null;
             });
         }
     }

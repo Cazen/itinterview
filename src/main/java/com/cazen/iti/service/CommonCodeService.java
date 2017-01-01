@@ -1,7 +1,6 @@
 package com.cazen.iti.service;
 
 import com.cazen.iti.domain.CommonCode;
-
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ public interface CommonCodeService {
 
     /**
      *  Get all the commonCodes.
-     *
+     *  
      *  @return the list of entities
      */
     List<CommonCode> findAll();

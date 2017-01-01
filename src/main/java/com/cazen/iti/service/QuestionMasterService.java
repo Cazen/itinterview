@@ -4,8 +4,6 @@ import com.cazen.iti.domain.QuestionMaster;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
 /**
  * Service Interface for managing QuestionMaster.
  */
@@ -21,7 +19,7 @@ public interface QuestionMasterService {
 
     /**
      *  Get all the questionMasters.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */

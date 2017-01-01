@@ -5,6 +5,8 @@ import com.cazen.iti.domain.QuestionMaster;
 import com.cazen.iti.service.QuestionMasterService;
 import com.cazen.iti.web.rest.util.HeaderUtil;
 import com.cazen.iti.web.rest.util.PaginationUtil;
+
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -83,7 +85,7 @@ public class QuestionMasterResource {
      */
     @GetMapping("/question-masters")
     @Timed
-    public ResponseEntity<List<QuestionMaster>> getAllQuestionMasters(Pageable pageable)
+    public ResponseEntity<List<QuestionMaster>> getAllQuestionMasters(@ApiParam Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of QuestionMasters");
         Page<QuestionMaster> page = questionMasterService.findAll(pageable);

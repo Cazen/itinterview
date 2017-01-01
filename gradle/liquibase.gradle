@@ -3,7 +3,7 @@ configurations {
 }
 
 dependencies {
-    liquibase "org.liquibase.ext:liquibase-hibernate4:${liquibase_hibernate4_version}"
+    liquibase "org.liquibase.ext:liquibase-hibernate5:${liquibase_hibernate5_version}"
 }
 
 task liquibaseDiffChangelog(dependsOn: compileJava, type: JavaExec) {
@@ -14,51 +14,17 @@ task liquibaseDiffChangelog(dependsOn: compileJava, type: JavaExec) {
     main = "liquibase.integration.commandline.Main"
 
     args "--changeLogFile=src/main/resources/config/liquibase/changelog/" + buildTimestamp() +"_changelog.xml"
-    args "--referenceUrl=hibernate:spring:com.cazen.iti.domain?dialect=org.hibernate.dialect.H2Dialect&hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy"
+    args "--referenceUrl=hibernate:spring:com.cazen.iti.domain?dialect=org.hibernate.dialect.H2Dialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
     args "--username=itinterview"
     args "--password="
     args "--url=jdbc:h2:file:./target/h2db/db/itinterview"
     args "--driver=org.h2.Driver"
     args "diffChangeLog"
-
+    
 }
 
 def buildTimestamp() {
     def date = new Date()
     def formattedDate = date.format('yyyyMMddHHmmss')
     return formattedDate
-}
-
-task liquibaseGenerateChangeLog(dependsOn: compileJava, type: JavaExec) {
-    group = "liquibase"
-
-    classpath sourceSets.main.runtimeClasspath
-    classpath configurations.liquibase
-    main = "liquibase.integration.commandline.Main"
-
-    args "--changeLogFile=src/main/resources/config/liquibase/changelog/" + buildTimestamp() +"_changelog.xml"
-    args "--referenceUrl=hibernate:spring:com.cazen.iti.domain?dialect=org.hibernate.dialect.H2Dialect&hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy"
-    args "--username=itinterview"
-    args "--password="
-    args "--url=jdbc:h2:file:./target/h2db/db/itinterview"
-    args "--driver=org.h2.Driver"
-    args "generateChangeLog"
-
-}
-
-task liquibaseclearCheckSums(dependsOn: compileJava, type: JavaExec) {
-    group = "liquibase"
-
-    classpath sourceSets.main.runtimeClasspath
-    classpath configurations.liquibase
-    main = "liquibase.integration.commandline.Main"
-
-    args "--changeLogFile=src/main/resources/config/liquibase/changelog/" + buildTimestamp() +"_changelog.xml"
-    args "--referenceUrl=hibernate:spring:com.cazen.iti.domain?dialect=org.hibernate.dialect.H2Dialect&hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy"
-    args "--username=itinterview"
-    args "--password="
-    args "--url=jdbc:h2:file:./target/h2db/db/itinterview"
-    args "--driver=org.h2.Driver"
-    args "generateChangeLog"
-
 }

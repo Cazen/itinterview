@@ -182,7 +182,7 @@ public class QuestionMaster implements Serializable {
             return false;
         }
         QuestionMaster questionMaster = (QuestionMaster) o;
-        if(questionMaster.id == null || id == null) {
+        if (questionMaster.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, questionMaster.id);
