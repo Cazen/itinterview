@@ -25,6 +25,9 @@
                     <th jh-sort-by="status"><span>Status</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="difficulty"><span>Difficulty</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="user.login"><span>User</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="category1.id"><span>Category 1</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="category2.id"><span>Category 2</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="category3.id"><span>Category 3</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -38,6 +41,15 @@
                     <td>{{upQuestionMaster.difficulty}}</td>
                     <td>
                         {{upQuestionMaster.user.login}}
+                    </td>
+                    <td>
+                        <a ui-sref="common-code-detail({id:upQuestionMaster.category1.id})">{{upQuestionMaster.category1.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="common-code-detail({id:upQuestionMaster.category2.id})">{{upQuestionMaster.category2.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="common-code-detail({id:upQuestionMaster.category3.id})">{{upQuestionMaster.category3.id}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

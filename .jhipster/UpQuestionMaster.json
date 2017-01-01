@@ -19,6 +19,24 @@
             "relationshipType": "many-to-one",
             "otherEntityField": "login",
             "ownerSide": true
+        },
+        {
+            "relationshipName": "category1",
+            "otherEntityName": "commonCode",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "category2",
+            "otherEntityName": "commonCode",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "category3",
+            "otherEntityName": "commonCode",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "fields": [
