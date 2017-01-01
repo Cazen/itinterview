@@ -1,6 +1,6 @@
 package com.cazen.iti.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -40,14 +40,14 @@ public class UpQuestionMaster implements Serializable {
     @Column(name = "difficulty")
     private Integer difficulty;
 
-    @OneToMany(mappedBy = "upQuestionMaster")
-    @JsonIgnore
+    @OneToMany(mappedBy = "upQuestionMaster", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonManagedReference
     private Set<UpRightAnswer> upRightAnswers = new HashSet<>();
 
-    @OneToMany(mappedBy = "upQuestionMaster")
-    @JsonIgnore
+    @OneToMany(mappedBy = "upQuestionMaster", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonManagedReference
     private Set<UpWrongAnswer> upWrongAnswers = new HashSet<>();
 
     @ManyToOne
