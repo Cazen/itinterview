@@ -21,6 +21,7 @@
         vm.reverse = true;
 
         loadAll();
+        selectBoxInit();
 
         function loadAll () {
             TryQuestion.query({
@@ -62,6 +63,12 @@
 
         $scope.popoverInit = function() {
             return $scope.downloadSize > 100;
+        };
+
+        function selectBoxInit () {
+            [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
+                new SelectFx(el);
+            } );
         };
 
 
