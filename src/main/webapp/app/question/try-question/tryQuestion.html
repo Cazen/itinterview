@@ -1,4 +1,4 @@
-<br><br><br><br>
+<br><br><br><br><br>
 <div class="row">
 
     <div class="page-content-inner">
@@ -35,6 +35,11 @@
                                     popover-enable="popoverInit">
                                 Statistics
                             </button>
+                            <button type="button" class="btn btn-default margin-inline"
+                                    uib-popover="문제 풀이 가능 시간은 5분 입니다"
+                                    popover-enable="popoverInit">
+                                5mins
+                            </button>
                         </div>
                     <h4>문제 풀이를 진행할 Category를 선택하세요</h4>
                     <br>
@@ -48,19 +53,14 @@
                     <select class="form-control mobileSelect" id="category3Selectbox" data-theme="holo" data-style="success">
                     </select>
 
+                    <br><br>
+
+                    <button type="button" id="submitButton" class="btn btn-lg btn-primary margin-inline" ui-sref="tryQuestion.new" disabled>문제풀기</button>
                 </div>
 
             </div>
         </section>
 
-        <section>
-
-        </section>
-
-        <form name="tryForm" role="form" novalidate ng-submit="vm.save()">
-
-
-        </form>
 
     </div>
 

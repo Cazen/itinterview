@@ -139,6 +139,8 @@
 
             initCategorySelectBox($('#category2Selectbox'), 'QSTN_SEC2', null, category1SelectBox.id);
             initCategorySelectBox($('#category3Selectbox'), 'QSTN_SEC3', null, null);
+
+            category3SelectboxChanged();
         };
 
         function callbackCategory2SelectBox(cdNm) {
@@ -149,6 +151,8 @@
 
             initCategorySelectBox($('#category1Selectbox'), 'QSTN_SEC1', category2SelectBox.hardCodedParentId, null);
             initCategorySelectBox($('#category3Selectbox'), 'QSTN_SEC3', null, category2SelectBox.id);
+
+            category3SelectboxChanged();
         };
 
         function callbackCategory3SelectBox(cdNm) {
@@ -158,6 +162,17 @@
             var category3SelectBox = getCommonCdFromcdNm(cdNm);
             initCategorySelectBox($('#category1Selectbox'), 'QSTN_SEC1', category3SelectBox.hardCodedParentParentId, null);
             initCategorySelectBox($('#category2Selectbox'), 'QSTN_SEC2', category3SelectBox.hardCodedParentId, null);
+
+            category3SelectboxChanged(cdNm);
         };
+
+        //Temporary function -> will change with ng-directive
+        function category3SelectboxChanged(cdNm) {
+            if(cdNm != null) {
+                $('#submitButton').removeAttr("disabled");
+            } else {
+                $('#submitButton').attr("disabled", "disabled");
+            }
+        }
     }
 })();

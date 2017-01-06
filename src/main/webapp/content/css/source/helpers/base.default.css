@@ -2031,17 +2031,7 @@ body.single-page-inverse .single-page-block-header .single-page-block-header-men
 /*
  * FOOTER BLOCK
  */
-.cwt__footer {
-    display: none;
-    background: #38354a;
-    color: #827ca1;
-    padding: 50px 60px 40px;
-    font-size: 14px;
-    margin-right: 16px;
-    margin-left: 16px;
-    -webkit-border-radius: 5px 5px 0px 0px;
-            border-radius: 5px 5px 0px 0px;
-}
+
 
 nav.left-menu + * + * + .cwt__footer {
     margin-left: 256px;
