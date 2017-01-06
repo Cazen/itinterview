@@ -1,5 +1,9 @@
 package com.cazen.iti.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -13,6 +17,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "common_code")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@commonCodeId")
 public class CommonCode implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,6 +40,32 @@ public class CommonCode implements Serializable {
 
     @ManyToOne
     private CommonCode parent;
+
+    public long getHardCodedParentId() {
+        return hardCodedParentId;
+    }
+
+    public void setHardCodedParentId(long hardCodedParentId) {
+        this.hardCodedParentId = hardCodedParentId;
+    }
+
+    public long getHardCodedParentParentId() {
+        return hardCodedParentParentId;
+    }
+
+    public void setHardCodedParentParentId(long hardCodedParentParentId) {
+        this.hardCodedParentParentId = hardCodedParentParentId;
+    }
+
+    @Transient
+    @JsonSerialize
+    @JsonDeserialize
+    private long hardCodedParentId;
+
+    @Transient
+    @JsonSerialize
+    @JsonDeserialize
+    private long hardCodedParentParentId;
 
     public Long getId() {
         return id;

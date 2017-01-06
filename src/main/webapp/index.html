@@ -23,11 +23,6 @@
 
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
 
-    <link rel="stylesheet" href="bower_components/SelectInspiration/css/normalize.css">
-
-    <link rel="stylesheet" href="bower_components/SelectInspiration/css/cs-skin-border.css">
-
-    <link rel="stylesheet" href="bower_components/SelectInspiration/css/cs-select.css">
     <!-- endinject -->
     <link rel="stylesheet" href="content/css/vendor.css">
     <!-- endbuild -->
@@ -43,6 +38,9 @@
 
     <!-- build:css content/css/source/helpers/base.responsive.css -->
     <link rel="stylesheet" href="content/css/source/helpers/base.responsive.css">
+
+    <!-- build:css content/css/source/bootstrap-fullscreen-select/bootstrap-fullscreen-select.css -->
+    <link rel="stylesheet" href="content/css/source/bootstrap-fullscreen-select/bootstrap-fullscreen-select.css">
 
     <!-- build:css content/css/source/helpers/fonts.css -->
     <link rel="stylesheet" href="content/css/source/helpers/fonts.css">
@@ -92,9 +90,6 @@
     <!-- build:css content/css/cleanui/source/clean.main.min.css -->
     <link rel=stylesheet" href="content/css/source/cleanui/clean.main.min.css">
 
-    <!-- build:js content/js/common.js -->
-    <link rel=stylesheet" href="content/js/common.js">
-
     <!-- endbuild -->
 </head>
 <body ng-app="itinterviewApp" ng-strict-di>
@@ -124,7 +119,6 @@
         ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>-->
 
-    <!-- build:js app/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/json3/lib/json3.js"></script>
@@ -143,10 +137,13 @@
     <script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
-    <script src="bower_components/SelectInspiration/js/classie.js"></script>
-    <script src="bower_components/SelectInspiration/js/selectFx.js"></script>
     <!-- endinject -->
     <!-- endbuild -->
+
+    <!-- build:js content/js/common.js -->
+    <script src="content/js/common.js"></script>
+    <!-- build:js content/js/bootstrap-fullscreen-select/bootstrap-fullscreen-select.min.js -->
+    <script src="content/js/bootstrap-fullscreen-select/bootstrap-fullscreen-select.min.js"></script>
 
     <!-- build:js app/app.js  -->
     <!-- inject:js -->
