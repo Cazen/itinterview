@@ -7,7 +7,7 @@
     TryQuestion.$inject = ['$resource', 'DateUtils'];
 
     function TryQuestion ($resource, DateUtils) {
-        var resourceUrl =  'api/question/tryquestion/:id';
+        var resourceUrl =  'api/question/tryquestion/';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},
@@ -25,4 +25,5 @@
         });
 
     }
+
 })();

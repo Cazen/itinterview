@@ -6,10 +6,12 @@
         .controller('TryQuestionNewController', TryQuestionNewController);
 
 
-    TryQuestionNewController.$inject = ['$scope'];
+    TryQuestionNewController.$inject = ['$scope', 'TryQuestionNew'];
 
-    function TryQuestionNewController ($scope) {
+    function TryQuestionNewController ($scope, TryQuestionNew) {
         var vm = this;
+
+        //vm.QuestionMasterList = TryQuestionNew.getQuestionListbyCategory3();
 
         // we will store all of our form data in this object
         $scope.formData = {};

@@ -49,13 +49,16 @@
                     <select class="form-control mobileSelect" id="category2Selectbox" data-theme="holo" data-style="success">
                     </select>
 
-                    <select class="form-control mobileSelect" id="category3Selectbox" ng-model="category3SelectboxVal" data-theme="holo" data-style="success">
+                    <select class="form-control mobileSelect" id="category3Selectbox" data-theme="holo" data-style="success">
                     </select>
+
+
 
                     <br><br>
 
+
                 </div>
-                <button type="submit" id="submitButton" class="btn btn-lg btn-primary margin-inline" ui-sref="tryQuestionNew" disabled>문제풀기</button>
+                <button type="submit" id="submitButton" class="btn btn-lg btn-primary margin-inline" ui-sref="tryQuestionNew({ category3SelectboxVal: vm.category3SelectboxVal })" disabled>문제풀기</button>
 
             </div>
         </section>

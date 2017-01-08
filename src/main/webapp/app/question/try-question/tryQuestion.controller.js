@@ -17,6 +17,7 @@
         vm.predicate = 'id';
         vm.reset = reset;
         vm.reverse = true;
+        vm.category3SelectboxVal = 'tesetCazen';
 
         loadAll();
         selectBoxInit('category1Selectbox');
@@ -81,7 +82,7 @@
                 UploadQuestion.save(vm.uploadQuestion, onSaveSuccess, onSaveError);
             }
         }
-        
+
         function initCategorySelectBox(selectbox, cdTp, selectedVal, parentId) {
             selectbox.find("option").remove();
 
@@ -192,6 +193,9 @@
             initCategorySelectBox($('#category1Selectbox'), 'QSTN_SEC1', category3SelectBox.hardCodedParentParentId, null);
             initCategorySelectBox($('#category2Selectbox'), 'QSTN_SEC2', category3SelectBox.hardCodedParentId, null);
 
+            alert(vm.category3SelectboxVal);
+            vm.category3SelectboxVal = category3SelectBox.cdId;
+            alert(vm.category3SelectboxVal);
             category3SelectboxChanged(cdNm);
         };
 
