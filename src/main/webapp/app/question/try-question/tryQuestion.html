@@ -1,4 +1,3 @@
-<br><br><br><br><br>
 <div class="row">
 
     <div class="page-content-inner">
@@ -50,13 +49,13 @@
                     <select class="form-control mobileSelect" id="category2Selectbox" data-theme="holo" data-style="success">
                     </select>
 
-                    <select class="form-control mobileSelect" id="category3Selectbox" data-theme="holo" data-style="success">
+                    <select class="form-control mobileSelect" id="category3Selectbox" ng-model="category3SelectboxVal" data-theme="holo" data-style="success">
                     </select>
 
                     <br><br>
 
-                    <button type="button" id="submitButton" class="btn btn-lg btn-primary margin-inline" ui-sref="tryQuestion.new" disabled>문제풀기</button>
                 </div>
+                <button type="submit" id="submitButton" class="btn btn-lg btn-primary margin-inline" ui-sref="tryQuestionNew" disabled>문제풀기</button>
 
             </div>
         </section>
