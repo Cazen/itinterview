@@ -193,9 +193,9 @@
             initCategorySelectBox($('#category1Selectbox'), 'QSTN_SEC1', category3SelectBox.hardCodedParentParentId, null);
             initCategorySelectBox($('#category2Selectbox'), 'QSTN_SEC2', category3SelectBox.hardCodedParentId, null);
 
-            alert(vm.category3SelectboxVal);
             vm.category3SelectboxVal = category3SelectBox.cdId;
-            alert(vm.category3SelectboxVal);
+            $scope.category3SelectboxVal = category3SelectBox.cdId;
+            
             category3SelectboxChanged(cdNm);
         };
 

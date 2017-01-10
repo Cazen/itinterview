@@ -10,8 +10,7 @@
 
     function TryQuestionNewController ($scope, TryQuestionNew) {
         var vm = this;
-
-        //vm.QuestionMasterList = TryQuestionNew.getQuestionListbyCategory3();
+        //vm.QuestionMasterList = TryQuestionNew.getQuestionListbyCategory3($stateParams.category3SelectboxVal);
 
         // we will store all of our form data in this object
         $scope.formData = {};

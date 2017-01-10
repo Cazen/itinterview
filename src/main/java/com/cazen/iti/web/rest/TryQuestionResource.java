@@ -60,6 +60,7 @@ public class TryQuestionResource {
     public ResponseEntity<List<UpQuestionMaster>> getQuestionListbyCategory3(@PathVariable String category3SelectboxVal) throws URISyntaxException {
 
         log.debug("REST(POST) request to get tryQuestionNew : {}", category3SelectboxVal);
+        log.debug("category3SelectboxVal = " + category3SelectboxVal);
         if (category3SelectboxVal == null || category3SelectboxVal.length() == 0) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("category3Selectbox", "notextists", "카테고리를 선택해 주세요")).body(null);
         }

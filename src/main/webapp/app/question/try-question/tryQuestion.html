@@ -58,7 +58,8 @@
 
 
                 </div>
-                <button type="submit" id="submitButton" class="btn btn-lg btn-primary margin-inline" ui-sref="tryQuestionNew({ category3SelectboxVal: vm.category3SelectboxVal })" disabled>문제풀기</button>
+                <button type="submit" id="submitButton" class="btn btn-lg btn-primary margin-inline" ui-sref="tryQuestionNew({ category3SelectboxVal: category3SelectboxVal })" disabled>문제풀기{{category3SelectboxVal}}</button>
+                <input type="hidden" ng-value="category3SelectboxVal" />
 
             </div>
         </section>

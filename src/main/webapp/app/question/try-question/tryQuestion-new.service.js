@@ -4,14 +4,14 @@
         .module('itinterviewApp')
         .factory('TryQuestionNew', TryQuestionNew);
 
-    TryQuestionNew.$inject = ['$resource', 'DateUtils'];
+    TryQuestionNew.$inject = ['$resource', "$stateParams", 'DateUtils'];
 
-    function TryQuestionNew ($resource, DateUtils) {
+    function TryQuestionNew ($resource, $stateParams, DateUtils) {
         var resourceUrl =  'api/question/tryquestionnew/';
 
         return $resource(resourceUrl, {}, {
 
-            'getQuestionListbyCategory3': { method: 'GET', isArray: true}
+            'getQuestionListbyCategory3': { url: 'api/question/tryquestionnew/:category3SelectboxVal', method: 'GET', isArray: true}
         });
 
     }
