@@ -11,6 +11,6 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 public interface TryQuestionRepository extends JpaRepository<CommonCode,Long> {
-    @Query(value = "SELECT * FROM COMMON_CODE WHERE CD_ID LIKE 'QSTN_SEC%'", nativeQuery = true)
+    @Query(value = "SELECT * FROM COMMON_CODE WHERE CD_TP LIKE 'QSTN_SEC%'", nativeQuery = true)
     List<CommonCode> getCategory123CommonCodeList();
 }

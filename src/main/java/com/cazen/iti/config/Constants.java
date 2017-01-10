@@ -26,8 +26,8 @@ public final class Constants {
     }
 
     //ITInterview Custom Constants
-    public static final String QSTN_STAT_WAIT = "QSTN_STAT.WAITING";
-    public static final String QSTN_STAT_RUNN = "QSTN_STAT.RUNNING";
-    public static final String QSTN_STAT_DELE = "QSTN_STAT.DELETED";
+    public static final String QSTN_STAT_WAIT = "WAITING";
+    public static final String QSTN_STAT_RUNN = "RUNNING";
+    public static final String QSTN_STAT_DELE = "DELETED";
 
 }
