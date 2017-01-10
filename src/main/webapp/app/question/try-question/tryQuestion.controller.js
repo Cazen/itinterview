@@ -195,7 +195,8 @@
 
             vm.category3SelectboxVal = category3SelectBox.cdId;
             $scope.category3SelectboxVal = category3SelectBox.cdId;
-            
+            $scope.$apply();
+ 
             category3SelectboxChanged(cdNm);
         };
 
