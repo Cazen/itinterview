@@ -12,4 +12,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface QuestionMasterRepository extends JpaRepository<QuestionMaster,Long> {
 
+    @Query("select questionMaster from QuestionMaster questionMaster where questionMaster.author.login = ?#{principal.username}")
+    List<QuestionMaster> findByAuthorIsCurrentUser();
+
 }

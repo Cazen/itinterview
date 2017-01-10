@@ -52,8 +52,8 @@ public class QuestionMasterResourceIntTest {
     private static final ZonedDateTime DEFAULT_C_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_C_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
-    private static final String DEFAULT_AUTHOR = "AAAAAAAAAA";
-    private static final String UPDATED_AUTHOR = "BBBBBBBBBB";
+    private static final String DEFAULT_STATUS = "AAAAAAAAAA";
+    private static final String UPDATED_STATUS = "BBBBBBBBBB";
 
     @Inject
     private QuestionMasterRepository questionMasterRepository;
@@ -95,7 +95,7 @@ public class QuestionMasterResourceIntTest {
                 .title(DEFAULT_TITLE)
                 .delYn(DEFAULT_DEL_YN)
                 .cTime(DEFAULT_C_TIME)
-                .author(DEFAULT_AUTHOR);
+                .status(DEFAULT_STATUS);
         return questionMaster;
     }
 
@@ -123,7 +123,7 @@ public class QuestionMasterResourceIntTest {
         assertThat(testQuestionMaster.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testQuestionMaster.getDelYn()).isEqualTo(DEFAULT_DEL_YN);
         assertThat(testQuestionMaster.getcTime()).isEqualTo(DEFAULT_C_TIME);
-        assertThat(testQuestionMaster.getAuthor()).isEqualTo(DEFAULT_AUTHOR);
+        assertThat(testQuestionMaster.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
     @Test
@@ -160,7 +160,7 @@ public class QuestionMasterResourceIntTest {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
             .andExpect(jsonPath("$.[*].delYn").value(hasItem(DEFAULT_DEL_YN.toString())))
             .andExpect(jsonPath("$.[*].cTime").value(hasItem(sameInstant(DEFAULT_C_TIME))))
-            .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
 
     @Test
@@ -177,7 +177,7 @@ public class QuestionMasterResourceIntTest {
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
             .andExpect(jsonPath("$.delYn").value(DEFAULT_DEL_YN.toString()))
             .andExpect(jsonPath("$.cTime").value(sameInstant(DEFAULT_C_TIME)))
-            .andExpect(jsonPath("$.author").value(DEFAULT_AUTHOR.toString()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -202,7 +202,7 @@ public class QuestionMasterResourceIntTest {
                 .title(UPDATED_TITLE)
                 .delYn(UPDATED_DEL_YN)
                 .cTime(UPDATED_C_TIME)
-                .author(UPDATED_AUTHOR);
+                .status(UPDATED_STATUS);
 
         restQuestionMasterMockMvc.perform(put("/api/question-masters")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -216,7 +216,7 @@ public class QuestionMasterResourceIntTest {
         assertThat(testQuestionMaster.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testQuestionMaster.getDelYn()).isEqualTo(UPDATED_DEL_YN);
         assertThat(testQuestionMaster.getcTime()).isEqualTo(UPDATED_C_TIME);
-        assertThat(testQuestionMaster.getAuthor()).isEqualTo(UPDATED_AUTHOR);
+        assertThat(testQuestionMaster.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test

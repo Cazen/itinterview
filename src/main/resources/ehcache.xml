@@ -48,5 +48,7 @@
 
     <cache alias="com.cazen.iti.domain.UpWrongAnswer" uses-template="simple"/>
 
+    <cache alias="com.cazen.iti.domain.QuestionMasterStatics" uses-template="simple"/>
+
     <!-- jhipster-needle-ehcache-add-entry -->
 </config>

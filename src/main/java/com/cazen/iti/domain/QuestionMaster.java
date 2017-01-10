@@ -1,6 +1,6 @@
 package com.cazen.iti.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,8 +8,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A QuestionMaster.
@@ -34,21 +34,34 @@ public class QuestionMaster implements Serializable {
     @Column(name = "c_time")
     private ZonedDateTime cTime;
 
-    @Column(name = "author")
-    private String author;
+    @Column(name = "status")
+    private String status;
 
     @OneToMany(mappedBy = "questionMaster")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonManagedReference
     private Set<RightAnswer> rightAnswers = new HashSet<>();
 
     @OneToMany(mappedBy = "questionMaster")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonManagedReference
     private Set<WrongAnswer> wrongAnswers = new HashSet<>();
 
     @ManyToOne
-    private CommonCode status;
+    private CommonCode category1;
+
+    @ManyToOne
+    private CommonCode category2;
+
+    @ManyToOne
+    private CommonCode category3;
+
+    @ManyToOne
+    private User author;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private QuestionMasterStatics questionMasterStatics;
 
     public Long getId() {
         return id;
@@ -97,17 +110,17 @@ public class QuestionMaster implements Serializable {
         this.cTime = cTime;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getStatus() {
+        return status;
     }
 
-    public QuestionMaster author(String author) {
-        this.author = author;
+    public QuestionMaster status(String status) {
+        this.status = status;
         return this;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Set<RightAnswer> getRightAnswers() {
@@ -160,17 +173,69 @@ public class QuestionMaster implements Serializable {
         this.wrongAnswers = wrongAnswers;
     }
 
-    public CommonCode getStatus() {
-        return status;
+    public CommonCode getCategory1() {
+        return category1;
     }
 
-    public QuestionMaster status(CommonCode commonCode) {
-        this.status = commonCode;
+    public QuestionMaster category1(CommonCode commonCode) {
+        this.category1 = commonCode;
         return this;
     }
 
-    public void setStatus(CommonCode commonCode) {
-        this.status = commonCode;
+    public void setCategory1(CommonCode commonCode) {
+        this.category1 = commonCode;
+    }
+
+    public CommonCode getCategory2() {
+        return category2;
+    }
+
+    public QuestionMaster category2(CommonCode commonCode) {
+        this.category2 = commonCode;
+        return this;
+    }
+
+    public void setCategory2(CommonCode commonCode) {
+        this.category2 = commonCode;
+    }
+
+    public CommonCode getCategory3() {
+        return category3;
+    }
+
+    public QuestionMaster category3(CommonCode commonCode) {
+        this.category3 = commonCode;
+        return this;
+    }
+
+    public void setCategory3(CommonCode commonCode) {
+        this.category3 = commonCode;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public QuestionMaster author(User user) {
+        this.author = user;
+        return this;
+    }
+
+    public void setAuthor(User user) {
+        this.author = user;
+    }
+
+    public QuestionMasterStatics getQuestionMasterStatics() {
+        return questionMasterStatics;
+    }
+
+    public QuestionMaster questionMasterStatics(QuestionMasterStatics questionMasterStatics) {
+        this.questionMasterStatics = questionMasterStatics;
+        return this;
+    }
+
+    public void setQuestionMasterStatics(QuestionMasterStatics questionMasterStatics) {
+        this.questionMasterStatics = questionMasterStatics;
     }
 
     @Override
@@ -200,7 +265,7 @@ public class QuestionMaster implements Serializable {
             ", title='" + title + "'" +
             ", delYn='" + delYn + "'" +
             ", cTime='" + cTime + "'" +
-            ", author='" + author + "'" +
+            ", status='" + status + "'" +
             '}';
     }
 }

@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.duration._
 
 /**
- * Performance test for the QuestionMaster entity.
+ * Performance test for the QuestionMasterStatics entity.
  */
-class QuestionMasterGatlingTest extends Simulation {
+class QuestionMasterStaticsGatlingTest extends Simulation {
 
     val context: LoggerContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
     // Log all HTTP requests
@@ -37,7 +37,7 @@ class QuestionMasterGatlingTest extends Simulation {
         "X-XSRF-TOKEN" -> "${xsrf_token}"
     )
 
-    val scn = scenario("Test the QuestionMaster entity")
+    val scn = scenario("Test the QuestionMasterStatics entity")
         .exec(http("First unauthenticated request")
         .get("/api/account")
         .headers(headers_http)
@@ -59,26 +59,26 @@ class QuestionMasterGatlingTest extends Simulation {
         .check(status.is(200)))
         .pause(10)
         .repeat(2) {
-            exec(http("Get all questionMasters")
-            .get("/api/question-masters")
+            exec(http("Get all questionMasterStatics")
+            .get("/api/question-master-statics")
             .headers(headers_http_authenticated)
             .check(status.is(200)))
             .pause(10 seconds, 20 seconds)
-            .exec(http("Create new questionMaster")
-            .post("/api/question-masters")
+            .exec(http("Create new questionMasterStatics")
+            .post("/api/question-master-statics")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "title":"SAMPLE_TEXT", "delYn":"SAMPLE_TEXT", "cTime":"2020-01-01T00:00:00.000Z", "status":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "rightCount":"0", "wrongCount":"0", "upVoteCount":"0", "downVoteCount":"0"}""")).asJSON
             .check(status.is(201))
-            .check(headerRegex("Location", "(.*)").saveAs("new_questionMaster_url"))).exitHereIfFailed
+            .check(headerRegex("Location", "(.*)").saveAs("new_questionMasterStatics_url"))).exitHereIfFailed
             .pause(10)
             .repeat(5) {
-                exec(http("Get created questionMaster")
-                .get("${new_questionMaster_url}")
+                exec(http("Get created questionMasterStatics")
+                .get("${new_questionMasterStatics_url}")
                 .headers(headers_http_authenticated))
                 .pause(10)
             }
-            .exec(http("Delete created questionMaster")
-            .delete("${new_questionMaster_url}")
+            .exec(http("Delete created questionMasterStatics")
+            .delete("${new_questionMasterStatics_url}")
             .headers(headers_http_authenticated))
             .pause(10)
         }

@@ -2,9 +2,9 @@
 
 describe('Controller Tests', function() {
 
-    describe('QuestionMaster Management Detail Controller', function() {
+    describe('QuestionMasterStatics Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockPreviousState, MockQuestionMaster, MockRightAnswer, MockWrongAnswer, MockCommonCode, MockUser, MockQuestionMasterStatics;
+        var MockEntity, MockPreviousState, MockQuestionMasterStatics, MockQuestionMaster;
         var createController;
 
         beforeEach(inject(function($injector) {
@@ -12,12 +12,8 @@ describe('Controller Tests', function() {
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
             MockPreviousState = jasmine.createSpy('MockPreviousState');
-            MockQuestionMaster = jasmine.createSpy('MockQuestionMaster');
-            MockRightAnswer = jasmine.createSpy('MockRightAnswer');
-            MockWrongAnswer = jasmine.createSpy('MockWrongAnswer');
-            MockCommonCode = jasmine.createSpy('MockCommonCode');
-            MockUser = jasmine.createSpy('MockUser');
             MockQuestionMasterStatics = jasmine.createSpy('MockQuestionMasterStatics');
+            MockQuestionMaster = jasmine.createSpy('MockQuestionMaster');
             
 
             var locals = {
@@ -25,22 +21,18 @@ describe('Controller Tests', function() {
                 '$rootScope': $rootScope,
                 'entity': MockEntity,
                 'previousState': MockPreviousState,
-                'QuestionMaster': MockQuestionMaster,
-                'RightAnswer': MockRightAnswer,
-                'WrongAnswer': MockWrongAnswer,
-                'CommonCode': MockCommonCode,
-                'User': MockUser,
-                'QuestionMasterStatics': MockQuestionMasterStatics
+                'QuestionMasterStatics': MockQuestionMasterStatics,
+                'QuestionMaster': MockQuestionMaster
             };
             createController = function() {
-                $injector.get('$controller')("QuestionMasterDetailController", locals);
+                $injector.get('$controller')("QuestionMasterStaticsDetailController", locals);
             };
         }));
 
 
         describe('Root Scope Listening', function() {
             it('Unregisters root scope listener upon scope destruction', function() {
-                var eventType = 'itinterviewApp:questionMasterUpdate';
+                var eventType = 'itinterviewApp:questionMasterStaticsUpdate';
 
                 createController();
                 expect($rootScope.$$listenerCount[eventType]).toEqual(1);
