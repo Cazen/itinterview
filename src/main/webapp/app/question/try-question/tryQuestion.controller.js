@@ -54,7 +54,7 @@
             }
         }
 
-        function save () {
+        /*function save () {
             vm.isSaving = true;
             if (vm.uploadQuestion.id !== null) {
                 UploadQuestion.update(vm.uploadQuestion, onSaveSuccess, onSaveError);
@@ -81,7 +81,7 @@
 
                 UploadQuestion.save(vm.uploadQuestion, onSaveSuccess, onSaveError);
             }
-        }
+        }*/
 
         function initCategorySelectBox(selectbox, cdTp, selectedVal, parentId) {
             selectbox.find("option").remove();
@@ -196,7 +196,7 @@
             vm.category3SelectboxVal = category3SelectBox.cdId;
             $scope.category3SelectboxVal = category3SelectBox.cdId;
             $scope.$apply();
- 
+
             category3SelectboxChanged(cdNm);
         };
 

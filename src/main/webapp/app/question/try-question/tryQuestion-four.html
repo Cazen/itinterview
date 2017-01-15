@@ -1,23 +1,13 @@
-<label>What's Your Console of Choice?</label>
-<div class="form-group">
-    <div class="radio">
-        <label>
-            <input type="radio" ng-model="formData.type" value="xbox" checked>
-            I like XBOX
+<label>{{ vm.questionList[3].title }}</label>
+
+<div ng-repeat="questionOption in vm.questionList[3].wrongAnswers track by questionOption.id">
+    <p>
+    <div style="width: 100%" class="btn-group" data-toggle="buttons">
+        <label style="width: 100%" ng-class="(formData.answerfour == questionOption.id ? 'btn btn-default-outline active' : 'btn btn-default-outline')">
+            <input type="radio" ng-model='formData.answerfour' ng-value="questionOption.id" ui-sref="tryQuestionNew.five">
+            {{ questionOption.optionText }}
         </label>
     </div>
-    <div class="radio">
-        <label>
-            <input type="radio" ng-model="formData.type" value="ps">
-            I like PS4
-        </label>
-    </div>
+    </p>
 </div>
 
-<div class="form-group row">
-    <div class="col-xs-6 col-xs-offset-3">
-        <a ui-sref="form.payment" class="btn btn-block btn-info">
-            Next Section <span class="glyphicon glyphicon-circle-arrow-right"></span>
-        </a>
-    </div>
-</div>

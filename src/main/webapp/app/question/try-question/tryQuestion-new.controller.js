@@ -6,11 +6,27 @@
         .controller('TryQuestionNewController', TryQuestionNewController);
 
 
-    TryQuestionNewController.$inject = ['$scope', 'TryQuestionNew'];
+    TryQuestionNewController.$inject = ['$scope', 'Principal', 'question'];
 
-    function TryQuestionNewController ($scope, TryQuestionNew) {
+    function TryQuestionNewController ($scope, Principal, question) {
         var vm = this;
-        //vm.QuestionMasterList = TryQuestionNew.getQuestionListbyCategory3($stateParams.category3SelectboxVal);
+        vm.account = null;
+        vm.isAuthenticated = null;
+
+        $scope.$on('authenticationSuccess', function() {
+            getAccount();
+        });
+
+        getAccount();
+
+        function getAccount() {
+            Principal.identity().then(function(account) {
+                vm.account = account;
+                vm.isAuthenticated = Principal.isAuthenticated;
+            });
+        }
+
+        vm.questionList = question;
 
         // we will store all of our form data in this object
         $scope.formData = {};

@@ -8,8 +8,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
+import java.util.Objects;
 
 /**
  * A QuestionMaster.
@@ -62,6 +62,28 @@ public class QuestionMaster implements Serializable {
     @OneToOne
     @JoinColumn(unique = true)
     private QuestionMasterStatics questionMasterStatics;
+
+    public String getGeneratedId() {
+        return generatedId;
+    }
+
+    public void setGeneratedId(String generatedId) {
+        this.generatedId = generatedId;
+    }
+
+    @Transient
+    private String generatedId;
+
+    public Set<AnswersForUser> getAnswersForUsersSet() {
+        return answersForUsersSet;
+    }
+
+    public void setAnswersForUsersSet(Set<AnswersForUser> answersForUsersSet) {
+        this.answersForUsersSet = answersForUsersSet;
+    }
+
+    @Transient
+    private Set<AnswersForUser> answersForUsersSet;
 
     public Long getId() {
         return id;

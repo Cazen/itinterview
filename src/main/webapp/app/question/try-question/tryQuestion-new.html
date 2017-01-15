@@ -22,15 +22,51 @@
             <!-- use ng-submit to catch the form submission and use our Angular function -->
             <form id="signup-form" ng-submit="processForm()">
                 <!-- our nested state views will be injected here -->
-                <div id="form-views" ui-view></div>
+                <div id="form-views" ui-view>
+                    <section class="panel panel-with-borders">
+                        <div class="panel-heading">
+                            <h3 class="text-center">반갑습니다 {{vm.account.login}} 님</h3>
+                        </div>
+                        <div class="panel-body">
+                            <section class="panel">
+                                <div class="panel-heading text-center">
+                                    <h3>5분동안 7문제를 풀어 Ranking을 확인하세요</h3>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <span>상단의 문제 번호를 눌러 시작합니다</span>
+                                </div>
+                            </section>
+                            <section class="panel">
+                                <div class="panel-heading text-center">
+                                    <h3>최종 점수는 ELO System을 통해 결정됩니다</h3>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <span>문제별 난이도와 풀이시간을 통해 계산됩니다</span>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="panel-footer text-center">
+                            <span>문제 풀이 시 문의사항은 postmaster@itinterview.co.kr 으로 주세요</span>
+                        </div>
+                    </section>
+                </div>
             </form>
 
         </div>
 
-        <!-- show our formData as it is being typed -->
-  <pre>
-    {{ formData }}
-  </pre>
+        <div align="center" ng-show="formData.answerone != null && formData.answertwo != null && formData.answerthree != null &&
+            formData.answerfour != null && formData.answerfive != null && formData.answersix != null && formData.answerseven != null">
+            <button type="submit" class="btn btn-block btn-info">정답 제출    <span class="glyphicon glyphicon-ok"></span></button>
+        </div>
 
+        <p>
+
+        </p>
+
+        <div>
+          <pre>
+            {{ formData }}
+          </pre>
+        </div>
     </div>
 </div>

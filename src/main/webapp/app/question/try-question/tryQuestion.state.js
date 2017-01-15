@@ -7,9 +7,9 @@
 
     //angular.module("itinterviewApp").requires.push('ngAnimate');
 
-    stateConfig.$inject = ['$stateProvider'];
+    stateConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-    function stateConfig($stateProvider) {
+    function stateConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('tryQuestion', {
                 parent: 'question',
@@ -111,7 +111,6 @@
                 templateUrl: 'app/question/try-question/tryQuestion-seven.html'
             })
         ;
-
     }
 
 })();
