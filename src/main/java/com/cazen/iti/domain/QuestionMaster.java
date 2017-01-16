@@ -37,12 +37,12 @@ public class QuestionMaster implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(mappedBy = "questionMaster")
+    @OneToMany(mappedBy = "questionMaster", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonManagedReference
     private Set<RightAnswer> rightAnswers = new HashSet<>();
 
-    @OneToMany(mappedBy = "questionMaster")
+    @OneToMany(mappedBy = "questionMaster", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonManagedReference
     private Set<WrongAnswer> wrongAnswers = new HashSet<>();

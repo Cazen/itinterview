@@ -2,6 +2,7 @@ package com.cazen.iti.web.rest;
 
 import com.cazen.iti.domain.*;
 import com.cazen.iti.service.CommonCodeService;
+import com.cazen.iti.service.QuestionMasterService;
 import com.cazen.iti.service.TryQustionService;
 import com.cazen.iti.service.util.AES256Util;
 import com.cazen.iti.web.rest.util.HeaderUtil;
@@ -25,8 +26,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * REST controller for managing UploadQuestionMaster.
- */
+ *  * REST controller for managing UploadQuestionMaster.
+ *   */
 @RestController
 @RequestMapping("/api/question")
 public class TryQuestionResource {
@@ -40,13 +41,16 @@ public class TryQuestionResource {
     private CommonCodeService commonCodeService;
 
     @Inject
+    private QuestionMasterService questionMasterService;
+
+    @Inject
     private AES256Util aes256Util;
     /**
-     * GET  /tryQuestion : get all category 123 Code.
-     *
-     * @return the ResponseEntity with status 200 (OK) and the list of upQuestionMasters in body
-     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
-     */
+ *      * GET  /tryQuestion : get all category 123 Code.
+ *           *
+ *                * @return the ResponseEntity with status 200 (OK) and the list of upQuestionMasters in body
+ *                     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
+ *                          */
     @GetMapping("/tryquestion")
     @Timed
     public ResponseEntity<List<CommonCode>> getAllUpQuestionMasters()
@@ -60,15 +64,15 @@ public class TryQuestionResource {
     }
 
     /**
-     * GET  /tryquestionnew : Create a new QuestionList and return to solving pages.
-     *
-     * @param category3SelectboxVal selected category3Id
-     * @return the ResponseEntity with status 201 (Created) and with body the new QuestionMasterList, or with status 400 (Bad Request) if the category3Selectbox does not exists
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
+ *      * GET  /tryquestionnew : Create a new QuestionList and return to solving pages.
+ *           *
+ *                * @param category3SelectboxVal selected category3Id
+ *                     * @return the ResponseEntity with status 201 (Created) and with body the new QuestionMasterList, or with status 400 (Bad Request) if the category3Selectbox does not exists
+ *                          * @throws URISyntaxException if the Location URI syntax is incorrect
+ *                               */
     @GetMapping("/tryquestionnew/{category3SelectboxVal}")
     @Timed
-    public ResponseEntity<List<QuestionMaster>> getQuestionListbyCategory3(@PathVariable String category3SelectboxVal) throws URISyntaxException {
+    public ResponseEntity<QuestionMasterForUser> getQuestionListbyCategory3(@PathVariable String category3SelectboxVal) throws URISyntaxException {
 
         log.debug("REST(POST) request to get tryQuestionNew : {}", category3SelectboxVal);
         log.debug("category3SelectboxVal = " + category3SelectboxVal);
@@ -76,28 +80,31 @@ public class TryQuestionResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("category3Selectbox", "notextists", "카테고리를 선택해 주세요")).body(null);
         }
 
-        List<Long> questionMasterList = tryQuestionService.getQuestionMasterIdList7Randomly(commonCodeService.findByCd_Id(category3SelectboxVal).getId());
-        log.debug("working working super working" + questionMasterList.toString() + " " + questionMasterList.get(0));
-        //UpQuestionMaster result = uploadQuestionService.save(upQuestionMaster);
+        List<Long> questionMasterIdList = tryQuestionService.getQuestionMasterIdList7Randomly(commonCodeService.findByCd_Id(category3SelectboxVal).getId());
+        QuestionMasterForUser questionMasterForUser = assembleQuestionMasterForUser(questionMasterIdList);
 
-        //List<QuestionMaster> questionMasterList = getSampleQuestionMasterList();
+        log.debug("working working questionMasterForUser.getQuestionMasterList().size() = " + questionMasterForUser.getQuestionMasterList().size());
 
-        return new ResponseEntity<>(getSampleQuestionMasterList(), HttpStatus.OK);
+        return new ResponseEntity<>(questionMasterForUser, HttpStatus.OK);
     }
 
-    private QuestionMasterForUser assembleQuestionMasterForUser(List<QuestionMaster> questionMasterList) {
+    private QuestionMasterForUser assembleQuestionMasterForUser(List<Long> questionMasterIdList) {
         QuestionMasterForUser questionMasterForUser = new QuestionMasterForUser();
+        ArrayList<QuestionMaster> questionMasterList = new ArrayList<>();
         Set<AnswersForUser> answersForUserSet = new HashSet<>();
         LocalDate startDate = LocalDate.now();
         LocalTime startTime = LocalTime.now();
 
-        questionMasterList.forEach(qm -> {
-            qm.setId(0l);
-            qm.setDelYn("");
-            qm.cTime(null);
-            qm.setStatus("");
 
-            qm.getRightAnswers().forEach(ra -> {
+        questionMasterIdList.forEach(questionMasterId -> {
+            log.debug("working working --------------" + questionMasterId + "------------");
+            QuestionMaster questionMaster = questionMasterService.findOne(questionMasterId);
+            log.debug("working working questionMaster.getTitle() = " + questionMaster.getTitle());
+            questionMaster.setDelYn("");
+            questionMaster.cTime(null);
+            questionMaster.setStatus("");
+
+            questionMaster.getRightAnswers().forEach(ra -> {
                 AnswersForUser answersForUser = new AnswersForUser();
                 try {
                     answersForUser.setGeneratedId(aes256Util.aesEncode("R_" + ra.getId()));
@@ -108,7 +115,7 @@ public class TryQuestionResource {
                 answersForUserSet.add(answersForUser);
             });
 
-            qm.getWrongAnswers().forEach(wa -> {
+            questionMaster.getWrongAnswers().forEach(wa -> {
                 AnswersForUser answersForUser = new AnswersForUser();
                 try {
                     answersForUser.setGeneratedId(aes256Util.aesEncode("W_" + wa.getId()));
@@ -119,12 +126,19 @@ public class TryQuestionResource {
                 answersForUserSet.add(answersForUser);
             });
 
-            qm.setAnswersForUsersSet(answersForUserSet);
+            questionMaster.setAnswersForUsersSet(answersForUserSet);
+
             try {
-                qm.setGeneratedId(aes256Util.aesEncode(qm.getId().toString()));
+                questionMaster.setGeneratedId(aes256Util.aesEncode(questionMaster.getId().toString()));
             } catch (Exception e) {
                 log.error("Exception while encrypt generatedId: ", e);
             }
+
+            questionMaster.setWrongAnswers(null);
+            questionMaster.setRightAnswers(null);
+
+            questionMasterList.add(questionMaster);
+
         });
 
         questionMasterForUser.setQuestionMasterList(questionMasterList);
@@ -188,3 +202,4 @@ public class TryQuestionResource {
         return wrongAnswerSet;
     }
 }
+
