@@ -1,6 +1,7 @@
 package com.cazen.iti.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -70,8 +71,8 @@ public class QuestionMaster implements Serializable {
     public void setGeneratedId(String generatedId) {
         this.generatedId = generatedId;
     }
-
     @Transient
+    @JsonSerialize
     private String generatedId;
 
     public Set<AnswersForUser> getAnswersForUsersSet() {
@@ -81,8 +82,8 @@ public class QuestionMaster implements Serializable {
     public void setAnswersForUsersSet(Set<AnswersForUser> answersForUsersSet) {
         this.answersForUsersSet = answersForUsersSet;
     }
-
     @Transient
+    @JsonSerialize
     private Set<AnswersForUser> answersForUsersSet;
 
     public Long getId() {

@@ -26,7 +26,7 @@
             });
         }
 
-        vm.questionList = question;
+        vm.questionMasterForUser = question;
 
         // we will store all of our form data in this object
         $scope.formData = {};

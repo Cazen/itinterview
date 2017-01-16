@@ -11,7 +11,7 @@
 
         return $resource(resourceUrl, {}, {
 
-            'getQuestionListbyCategory3': { url: 'api/question/tryquestionnew/:category3SelectboxVal', method: 'GET', isArray: true}
+            'getQuestionListbyCategory3': { url: 'api/question/tryquestionnew/:category3SelectboxVal', method: 'GET'}
         });
 
     }

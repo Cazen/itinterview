@@ -1,10 +1,10 @@
-<label>{{ vm.questionList[5].title }}</label>
+<label>{{ vm.questionMasterForUser.questionMasterList[5].title }}</label>
 
-<div ng-repeat="questionOption in vm.questionList[5].wrongAnswers track by questionOption.id">
+<div ng-repeat="questionOption in vm.questionMasterForUser.questionMasterList[5].answersForUsersSet track by questionOption.generatedId">
     <p>
     <div style="width: 100%" class="btn-group" data-toggle="buttons">
-        <label style="width: 100%" ng-class="(formData.answersix == questionOption.id ? 'btn btn-default-outline active' : 'btn btn-default-outline')">
-            <input type="radio" ng-model='formData.answersix' ng-value="questionOption.id" ui-sref="tryQuestionNew.seven">
+        <label style="width: 100%" ng-class="(formData.answersix == questionOption.generatedId ? 'btn btn-default-outline active' : 'btn btn-default-outline')">
+            <input type="radio" ng-model='formData.answersix' ng-value="questionOption.generatedId" ui-sref="tryQuestionNew.seven">
             {{ questionOption.optionText }}
         </label>
     </div>

@@ -91,7 +91,7 @@ public class TryQuestionResource {
     private QuestionMasterForUser assembleQuestionMasterForUser(List<Long> questionMasterIdList) {
         QuestionMasterForUser questionMasterForUser = new QuestionMasterForUser();
         ArrayList<QuestionMaster> questionMasterList = new ArrayList<>();
-        Set<AnswersForUser> answersForUserSet = new HashSet<>();
+        
         LocalDate startDate = LocalDate.now();
         LocalTime startTime = LocalTime.now();
 
@@ -99,6 +99,7 @@ public class TryQuestionResource {
         questionMasterIdList.forEach(questionMasterId -> {
             log.debug("working working --------------" + questionMasterId + "------------");
             QuestionMaster questionMaster = questionMasterService.findOne(questionMasterId);
+            Set<AnswersForUser> answersForUserSet = new HashSet<>();
             log.debug("working working questionMaster.getTitle() = " + questionMaster.getTitle());
             questionMaster.setDelYn("");
             questionMaster.cTime(null);
