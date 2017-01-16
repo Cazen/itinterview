@@ -11,7 +11,12 @@
 
         return $resource(resourceUrl, {}, {
 
-            'getQuestionListbyCategory3': { url: 'api/question/tryquestionnew/:category3SelectboxVal', method: 'GET'}
+            'postQuestionListbyCategory3': {
+                url: 'api/question/tryquestionnew/',
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json; charset=UTF-8'},
+                data: {category3SelectboxVal: '@category3SelectboxVal'}
+            }
         });
 
     }

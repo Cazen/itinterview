@@ -29,7 +29,7 @@
             })
             .state('tryQuestionNew', {
                 parent: 'question',
-                url: '/tryQuestionNew/{category3SelectboxVal}',
+                url: '/tryQuestionNew/',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: '문제풀기 - Main'
@@ -41,11 +41,15 @@
                         controllerAs: 'vm'
                     }
                 },
+                params: {
+                    category3SelectboxVal: {}
+                },
                 resolve: {
-                    question: ['$stateParams', 'TryQuestionNew', function($stateParams, TryQuestionNew) {
-                        return TryQuestionNew.getQuestionListbyCategory3({category3SelectboxVal : $stateParams.category3SelectboxVal}).$promise;
+                    category3SelectboxVal: ['$stateParams', function($stateParams) {
+                        return $stateParams.category3SelectboxVal;
                     }]
                 }
+
             })
             .state('tryQuestionNew.one', {
                 parent: 'tryQuestionNew',

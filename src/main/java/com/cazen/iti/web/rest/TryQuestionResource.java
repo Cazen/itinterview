@@ -11,23 +11,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
- *  * REST controller for managing UploadQuestionMaster.
- *   */
+ * * REST controller for managing UploadQuestionMaster.
+ */
 @RestController
 @RequestMapping("/api/question")
 public class TryQuestionResource {
@@ -45,12 +39,13 @@ public class TryQuestionResource {
 
     @Inject
     private AES256Util aes256Util;
+
     /**
- *      * GET  /tryQuestion : get all category 123 Code.
- *           *
- *                * @return the ResponseEntity with status 200 (OK) and the list of upQuestionMasters in body
- *                     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
- *                          */
+     * * GET  /tryQuestion : get all category 123 Code.
+     * *
+     * * @return the ResponseEntity with status 200 (OK) and the list of upQuestionMasters in body
+     * * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
+     */
     @GetMapping("/tryquestion")
     @Timed
     public ResponseEntity<List<CommonCode>> getAllUpQuestionMasters()
@@ -64,23 +59,23 @@ public class TryQuestionResource {
     }
 
     /**
- *      * GET  /tryquestionnew : Create a new QuestionList and return to solving pages.
- *           *
- *                * @param category3SelectboxVal selected category3Id
- *                     * @return the ResponseEntity with status 201 (Created) and with body the new QuestionMasterList, or with status 400 (Bad Request) if the category3Selectbox does not exists
- *                          * @throws URISyntaxException if the Location URI syntax is incorrect
- *                               */
-    @GetMapping("/tryquestionnew/{category3SelectboxVal}")
+     * * GET  /tryquestionnew : Create a new QuestionList and return to solving pages.
+     * *
+     * * @param category3SelectboxVal selected category3Id
+     * * @return the ResponseEntity with status 201 (Created) and with body the new QuestionMasterList, or with status 400 (Bad Request) if the category3Selectbox does not exists
+     * * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/tryquestionnew")
     @Timed
-    public ResponseEntity<QuestionMasterForUser> getQuestionListbyCategory3(@PathVariable String category3SelectboxVal) throws URISyntaxException {
+    public ResponseEntity<QuestionMasterForUser> getQuestionListbyCategory3(@RequestBody Map<String, String> category3SelectboxVal) throws URISyntaxException {
 
-        log.debug("REST(POST) request to get tryQuestionNew : {}", category3SelectboxVal);
+        log.debug("REST(POST) request to get tryQuestionNew : {}", category3SelectboxVal.get("category3SelectboxVal"));
         log.debug("category3SelectboxVal = " + category3SelectboxVal);
-        if (category3SelectboxVal == null || category3SelectboxVal.length() == 0) {
+        if (category3SelectboxVal == null || category3SelectboxVal.get("category3SelectboxVal").length() == 0) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("category3Selectbox", "notextists", "카테고리를 선택해 주세요")).body(null);
         }
 
-        List<Long> questionMasterIdList = tryQuestionService.getQuestionMasterIdList7Randomly(commonCodeService.findByCd_Id(category3SelectboxVal).getId());
+        List<Long> questionMasterIdList = tryQuestionService.getQuestionMasterIdList7Randomly(commonCodeService.findByCd_Id(category3SelectboxVal.get("category3SelectboxVal")).getId());
         QuestionMasterForUser questionMasterForUser = assembleQuestionMasterForUser(questionMasterIdList);
 
         log.debug("working working questionMasterForUser.getQuestionMasterList().size() = " + questionMasterForUser.getQuestionMasterList().size());
@@ -91,7 +86,7 @@ public class TryQuestionResource {
     private QuestionMasterForUser assembleQuestionMasterForUser(List<Long> questionMasterIdList) {
         QuestionMasterForUser questionMasterForUser = new QuestionMasterForUser();
         ArrayList<QuestionMaster> questionMasterList = new ArrayList<>();
-        
+
         LocalDate startDate = LocalDate.now();
         LocalTime startTime = LocalTime.now();
 
@@ -155,11 +150,17 @@ public class TryQuestionResource {
         CommonCode code2 = new CommonCode();
         CommonCode code3 = new CommonCode();
 
-        code1.setId(100l);code2.setId(202l);code3.setId(1201l);
-        code1.setCdId("DEVELOPER");code2.setCdId("BIGDATA");code3.setCdId("HIVE");
-        code1.setCdNm("개발자");code2.setCdNm("빅데이터\t");code3.setCdNm("Apache Hive");
+        code1.setId(100l);
+        code2.setId(202l);
+        code3.setId(1201l);
+        code1.setCdId("DEVELOPER");
+        code2.setCdId("BIGDATA");
+        code3.setCdId("HIVE");
+        code1.setCdNm("개발자");
+        code2.setCdNm("빅데이터\t");
+        code3.setCdNm("Apache Hive");
 
-        for(int i = 0; i < 7; i++) {
+        for (int i = 0; i < 7; i++) {
             QuestionMaster questionMaster = new QuestionMaster();
             questionMaster.setDelYn("N");
             questionMaster.setTitle("테스트용 문제 조금 길게 다시 변형해서 이정도 문제가 나오면 되겠지? " + i + "번");
@@ -192,7 +193,7 @@ public class TryQuestionResource {
     private Set<WrongAnswer> getWrongAnswerSet() {
         Set<WrongAnswer> wrongAnswerSet = new HashSet<>();
 
-        for(long i = 0; i < 4; i++) {
+        for (long i = 0; i < 4; i++) {
             WrongAnswer wrongAnswer = new WrongAnswer();
             wrongAnswer.setDelYn("N");
             wrongAnswer.setId(i);
