@@ -233,7 +233,7 @@
 
 .btn.btn-default-outline, .open > .btn.btn-default-outline {
     border-color: #acb7bf;
-    color: #acb7bf;
+    color: #000000;
 }
 
 .btn.btn-default-outline:hover, .btn.btn-default-outline:active, .open > .btn.btn-default-outline:hover, .open > .btn.btn-default-outline:active {
