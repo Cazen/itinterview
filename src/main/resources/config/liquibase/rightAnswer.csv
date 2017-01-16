@@ -1,0 +1,13 @@
+id;option_text;del_yn;status_id;question_master_id
+
+
+1000;Apache License 2.0;N;2;1000
+1001;OLTP(Online transaction processing) 업무에 주로 사용된다;N;2;1001
+1002;Commit과 Rollback기능을 바탕으로 기존 RDB Transaction과 유사하게 사용이 가능하다;N;2;1002
+1003;Output은 분산 처리 특징 상 Local file system에 출력할 수 없고 HDFS등을 이용한다;N;2;1003
+1004;ORDER BY 구문을 통해 정렬 시 Reducer가 반드시 1개만 수행된다;N;2;1004
+1005;Directory 내부의 File의 단위 Input Output이 가능하다;N;2;1005
+1006;INSERT OVERWRITE WITH MAPONLY TABLE ${destTable} SELECT * FROM ${srcTable};N;2;1006
+1007;Data를 물리적으로 분리하여 저장하고, 검색조건에 따라 Full Scan을 방지한다;N;2;1007
+1008;Partition Booster의 사용이 가능하다;N;2;1008
+1009;Index를 지정하여 성능 향상이 가능하다;N;2;1009

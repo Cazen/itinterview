@@ -1,0 +1,14 @@
+id;title;del_yn;status;category1_id;category2_id;category3_id;author_id;question_master_statics_id
+
+1000;Hive의 Software License는?;N;RUNNING;100;202;1201;3;NULL
+1001;Hive의 특징이 아닌것은?;N;TEST;100;202;1201;3;NULL
+1002;Hive의 장점이 아닌것은?;N;TEST;100;202;1201;3;NULL
+1003;다음 Hive에 관한 설명 중 틀린것은?;N;TEST;100;202;1201;3;NULL
+1004;Hive 구문에 관한 설명 중 옳은것은?;N;TEST;100;202;1201;3;NULL
+1005;다음 Hive에 관한 설명 중 틀린것은?;N;TEST;100;202;1201;3;NULL
+1006;다음 Hive 구문 중 틀린 것은?;N;TEST;100;202;1201;3;NULL
+1007;Hive Partitioning의 장점은?;N;TEST;100;202;1201;3;NULL
+1008;다음 Hive에 관한 설명 중 틀린것은?;N;TEST;100;202;1201;3;NULL
+1009;다음 Hive에 관한 설명 중 틀린것은?;N;TEST;100;202;1201;3;NULL
+
+

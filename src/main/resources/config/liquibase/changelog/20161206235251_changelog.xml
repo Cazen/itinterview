@@ -16,10 +16,10 @@
         <dropDefaultValue columnDataType="timestamp" columnName="created_date" tableName="jhi_user"/>
     </changeSet>
     <changeSet author="Cazen (generated)" id="1481035985222-1">
-    <loadData encoding="UTF-8"
-              file="config/liquibase/commonCode.csv"
-              separator=";"
-              tableName="COMMON_CODE">
-    </loadData>
+        <loadData encoding="UTF-8" file="config/liquibase/commonCode.csv" separator=";" tableName="COMMON_CODE" />
+        <loadData encoding="UTF-8" file="config/liquibase/questionMaster.csv" separator=";" tableName="QUESTION_MASTER" />
+        <loadData encoding="UTF-8" file="config/liquibase/rightAnswer.csv" separator=";" tableName="RIGHT_ANSWER" />
+        <loadData encoding="UTF-8" file="config/liquibase/wrongAnswer.csv" separator=";" tableName="WRONG_ANSWER" />
     </changeSet>
 </databaseChangeLog>
+
