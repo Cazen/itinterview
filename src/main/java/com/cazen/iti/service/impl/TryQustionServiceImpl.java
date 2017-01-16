@@ -1,6 +1,7 @@
 package com.cazen.iti.service.impl;
 
 import com.cazen.iti.domain.CommonCode;
+import com.cazen.iti.domain.QuestionMaster;
 import com.cazen.iti.repository.TryQuestionRepository;
 import com.cazen.iti.service.TryQustionService;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Service Implementation for managing Upload Question.
@@ -21,7 +23,7 @@ public class TryQustionServiceImpl implements TryQustionService {
     private final Logger log = LoggerFactory.getLogger(TryQustionServiceImpl.class);
 
     @Inject
-    private TryQuestionRepository trtQuestionRepository;
+    private TryQuestionRepository tryQuestionRepository;
 
     /**
      *  Get the Category 123 CommonCode entity
@@ -31,7 +33,21 @@ public class TryQustionServiceImpl implements TryQustionService {
     @Transactional(readOnly = true)
     public List<CommonCode> getCategory123CommonCodeList() {
         log.debug("Request to get category123CommonCode : {}");
-        List<CommonCode> category123CommonCodeList = trtQuestionRepository.getCategory123CommonCodeList();
+        List<CommonCode> category123CommonCodeList = tryQuestionRepository.getCategory123CommonCodeList();
         return category123CommonCodeList;
+    }
+
+    /**
+     *  Get the 7 random Question List
+     *
+     *  @return the list of QuestionMaster
+     */
+    @Transactional(readOnly = true)
+    public List<QuestionMaster> getQuestionMasterList7Randomly(long id) {
+        log.debug("Request to get getCategory123CommonCodeList : {}");
+        List<QuestionMaster> questionMasterList = new ArrayList<>();
+        tryQuestionRepository.getQuestionMasterList7Randomly(id).forEach(t -> questionMasterList.add((QuestionMaster) t));
+
+        return questionMasterList;
     }
 }

@@ -1,6 +1,7 @@
 package com.cazen.iti.repository;
 
 import com.cazen.iti.domain.CommonCode;
+import com.cazen.iti.domain.QuestionMaster;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,4 +14,7 @@ import java.util.List;
 public interface TryQuestionRepository extends JpaRepository<CommonCode,Long> {
     @Query(value = "SELECT * FROM COMMON_CODE WHERE CD_TP LIKE 'QSTN_SEC%'", nativeQuery = true)
     List<CommonCode> getCategory123CommonCodeList();
+
+    @Query(value = "SELECT * FROM QUESTION_MASTER WHERE CATEGORY3_ID = ?1 ORDER BY RAND() LIMIT 7", nativeQuery = true)
+    List<Object> getQuestionMasterList7Randomly(long id);
 }

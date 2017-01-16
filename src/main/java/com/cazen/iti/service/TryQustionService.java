@@ -1,6 +1,7 @@
 package com.cazen.iti.service;
 
 import com.cazen.iti.domain.CommonCode;
+import com.cazen.iti.domain.QuestionMaster;
 
 import java.util.List;
 
@@ -16,5 +17,10 @@ public interface TryQustionService {
      */
     List<CommonCode> getCategory123CommonCodeList();
 
-
+    /**
+     *  Get the 7 random Question List
+     *
+     *  @return the list of QuestionMaster
+     */
+    List<QuestionMaster> getQuestionMasterList7Randomly(long id);
 }

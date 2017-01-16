@@ -1,6 +1,7 @@
 package com.cazen.iti.web.rest;
 
 import com.cazen.iti.domain.*;
+import com.cazen.iti.service.CommonCodeService;
 import com.cazen.iti.service.TryQustionService;
 import com.cazen.iti.service.util.AES256Util;
 import com.cazen.iti.web.rest.util.HeaderUtil;
@@ -34,6 +35,9 @@ public class TryQuestionResource {
 
     @Inject
     private TryQustionService tryQuestionService;
+
+    @Inject
+    private CommonCodeService commonCodeService;
 
     @Inject
     private AES256Util aes256Util;
@@ -72,9 +76,10 @@ public class TryQuestionResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("category3Selectbox", "notextists", "카테고리를 선택해 주세요")).body(null);
         }
 
+        List<QuestionMaster> questionMasterList = tryQuestionService.getQuestionMasterList7Randomly(commonCodeService.findByCd_Id(category3SelectboxVal).getId());
         //UpQuestionMaster result = uploadQuestionService.save(upQuestionMaster);
 
-        List<QuestionMaster> questionMasterList = getSampleQuestionMasterList();
+        //List<QuestionMaster> questionMasterList = getSampleQuestionMasterList();
 
         return new ResponseEntity<>(questionMasterList, HttpStatus.OK);
     }
