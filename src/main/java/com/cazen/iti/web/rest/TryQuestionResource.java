@@ -76,12 +76,13 @@ public class TryQuestionResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("category3Selectbox", "notextists", "카테고리를 선택해 주세요")).body(null);
         }
 
-        List<QuestionMaster> questionMasterList = tryQuestionService.getQuestionMasterList7Randomly(commonCodeService.findByCd_Id(category3SelectboxVal).getId());
+        List<Long> questionMasterList = tryQuestionService.getQuestionMasterIdList7Randomly(commonCodeService.findByCd_Id(category3SelectboxVal).getId());
+        log.debug("working working super working" + questionMasterList.toString() + " " + questionMasterList.get(0));
         //UpQuestionMaster result = uploadQuestionService.save(upQuestionMaster);
 
         //List<QuestionMaster> questionMasterList = getSampleQuestionMasterList();
 
-        return new ResponseEntity<>(questionMasterList, HttpStatus.OK);
+        return new ResponseEntity<>(getSampleQuestionMasterList(), HttpStatus.OK);
     }
 
     private QuestionMasterForUser assembleQuestionMasterForUser(List<QuestionMaster> questionMasterList) {

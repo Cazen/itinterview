@@ -1,0 +1,86 @@
+From 571a490ce6abcdb090e1c490f50f483c4dd0dca6 Mon Sep 17 00:00:00 2001
+From: "cazen.lee" <cazen.lee@samsung.com>
+Date: Mon, 16 Jan 2017 14:44:02 +0900
+Subject: [PATCH] create patch2
+
+---
+ src/main/java/com/cazen/iti/repository/TryQuestionRepository.java | 4 ++--
+ src/main/java/com/cazen/iti/service/TryQustionService.java        | 2 +-
+ .../java/com/cazen/iti/service/impl/TryQustionServiceImpl.java    | 8 ++++----
+ src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java     | 5 +++--
+ 4 files changed, 10 insertions(+), 9 deletions(-)
+
+diff --git a/src/main/java/com/cazen/iti/repository/TryQuestionRepository.java b/src/main/java/com/cazen/iti/repository/TryQuestionRepository.java
+index 0fcf446..01da157 100644
+--- a/src/main/java/com/cazen/iti/repository/TryQuestionRepository.java
++++ b/src/main/java/com/cazen/iti/repository/TryQuestionRepository.java
+@@ -15,6 +15,6 @@ public interface TryQuestionRepository extends JpaRepository<CommonCode,Long> {
+     @Query(value = "SELECT * FROM COMMON_CODE WHERE CD_TP LIKE 'QSTN_SEC%'", nativeQuery = true)
+     List<CommonCode> getCategory123CommonCodeList();
+
+-    @Query(value = "SELECT * FROM QUESTION_MASTER WHERE CATEGORY3_ID = ?1 ORDER BY RAND() LIMIT 7", nativeQuery = true)
+-    List<Object> getQuestionMasterList7Randomly(long id);
++    @Query(value = "SELECT id FROM QUESTION_MASTER WHERE CATEGORY3_ID = ?1 ORDER BY RAND() LIMIT 7", nativeQuery = true)
++    List<Long> getQuestionMasterIdList7Randomly(long id);
+ }
+diff --git a/src/main/java/com/cazen/iti/service/TryQustionService.java b/src/main/java/com/cazen/iti/service/TryQustionService.java
+index 69fbb2e..c0eddff 100644
+--- a/src/main/java/com/cazen/iti/service/TryQustionService.java
++++ b/src/main/java/com/cazen/iti/service/TryQustionService.java
+@@ -22,5 +22,5 @@ public interface TryQustionService {
+      *
+      *  @return the list of QuestionMaster
+      */
+-    List<QuestionMaster> getQuestionMasterList7Randomly(long id);
++    List<Long> getQuestionMasterIdList7Randomly(long id);
+ }
+diff --git a/src/main/java/com/cazen/iti/service/impl/TryQustionServiceImpl.java b/src/main/java/com/cazen/iti/service/impl/TryQustionServiceImpl.java
+index cfd7eb7..1a5b8f0 100644
+--- a/src/main/java/com/cazen/iti/service/impl/TryQustionServiceImpl.java
++++ b/src/main/java/com/cazen/iti/service/impl/TryQustionServiceImpl.java
+@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
+ import org.springframework.transaction.annotation.Transactional;
+
+ import javax.inject.Inject;
++import java.util.HashMap;
+ import java.util.List;
+ import java.util.ArrayList;
+
+@@ -43,11 +44,10 @@ public class TryQustionServiceImpl implements TryQustionService {
+      *  @return the list of QuestionMaster
+      */
+     @Transactional(readOnly = true)
+-    public List<QuestionMaster> getQuestionMasterList7Randomly(long id) {
++    public List<Long> getQuestionMasterIdList7Randomly(long id) {
+         log.debug("Request to get getCategory123CommonCodeList : {}");
+-        List<QuestionMaster> questionMasterList = new ArrayList<>();
+-        tryQuestionRepository.getQuestionMasterList7Randomly(id).forEach(t -> questionMasterList.add((QuestionMaster) t));
++        List<Long> questionMasterIdList = tryQuestionRepository.getQuestionMasterIdList7Randomly(id);
+
+-        return questionMasterList;
++        return questionMasterIdList;
+     }
+ }
+diff --git a/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java b/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
+index 246fbae..5a8d361 100644
+--- a/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
++++ b/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
+@@ -76,12 +76,13 @@ public class TryQuestionResource {
+             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("category3Selectbox", "notextists", "카테고리를 선택해 주세요")).body(null);
+         }
+
+-        List<QuestionMaster> questionMasterList = tryQuestionService.getQuestionMasterList7Randomly(commonCodeService.findByCd_Id(category3SelectboxVal).getId());
++        List<Long> questionMasterList = tryQuestionService.getQuestionMasterIdList7Randomly(commonCodeService.findByCd_Id(category3SelectboxVal).getId());
++        log.debug("working working super working" + questionMasterList.toString() + " " + questionMasterList.get(0));
+         //UpQuestionMaster result = uploadQuestionService.save(upQuestionMaster);
+
+         //List<QuestionMaster> questionMasterList = getSampleQuestionMasterList();
+
+-        return new ResponseEntity<>(questionMasterList, HttpStatus.OK);
++        return new ResponseEntity<>(getSampleQuestionMasterList(), HttpStatus.OK);
+     }
+
+     private QuestionMasterForUser assembleQuestionMasterForUser(List<QuestionMaster> questionMasterList) {
+--
+2.5.0.windows.1
+

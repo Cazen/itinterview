@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -43,11 +44,10 @@ public class TryQustionServiceImpl implements TryQustionService {
      *  @return the list of QuestionMaster
      */
     @Transactional(readOnly = true)
-    public List<QuestionMaster> getQuestionMasterList7Randomly(long id) {
+    public List<Long> getQuestionMasterIdList7Randomly(long id) {
         log.debug("Request to get getCategory123CommonCodeList : {}");
-        List<QuestionMaster> questionMasterList = new ArrayList<>();
-        tryQuestionRepository.getQuestionMasterList7Randomly(id).forEach(t -> questionMasterList.add((QuestionMaster) t));
+        List<Long> questionMasterIdList = tryQuestionRepository.getQuestionMasterIdList7Randomly(id);
 
-        return questionMasterList;
+        return questionMasterIdList;
     }
 }

@@ -22,5 +22,5 @@ public interface TryQustionService {
      *
      *  @return the list of QuestionMaster
      */
-    List<QuestionMaster> getQuestionMasterList7Randomly(long id);
+    List<Long> getQuestionMasterIdList7Randomly(long id);
 }
