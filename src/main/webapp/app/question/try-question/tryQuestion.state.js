@@ -29,7 +29,7 @@
             })
             .state('tryQuestionNew', {
                 parent: 'question',
-                url: '/tryQuestionNew/',
+                url: '/tryQuestionNew',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: '문제풀기 - Main'

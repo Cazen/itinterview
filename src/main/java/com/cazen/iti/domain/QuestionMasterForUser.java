@@ -1,6 +1,6 @@
 package com.cazen.iti.domain;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -10,9 +10,11 @@ public class QuestionMasterForUser {
 
     private static final long serialVersionUID = 1L;
 
-    List<QuestionMaster> questionMasterList;
+    private List<QuestionMaster> questionMasterList;
 
-    LocalDate startTime;
+    private ZonedDateTime startTime;
+
+    private String generatedId;
 
     public List<QuestionMaster> getQuestionMasterList() {
         return questionMasterList;
@@ -22,12 +24,20 @@ public class QuestionMasterForUser {
         this.questionMasterList = questionMasterList;
     }
 
-    public LocalDate getStartTime() {
+    public ZonedDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDate startTime) {
+    public void setStartTime(ZonedDateTime startTime) {
         this.startTime = startTime;
+    }
+
+    public String getGeneratedId() {
+        return generatedId;
+    }
+
+    public void setGeneratedId(String generatedId) {
+        this.generatedId = generatedId;
     }
 
     @Override

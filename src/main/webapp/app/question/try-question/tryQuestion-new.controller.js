@@ -13,8 +13,7 @@
         vm.account = null;
         vm.isAuthenticated = null;
 
-        alert(category3SelectboxVal);
-        vm.questionMasterForUser = TryQuestionNew.postQuestionListbyCategory3({category3SelectboxVal : $scope.$parent.category3SelectboxVal});
+        vm.questionMasterForUser = TryQuestionNew.postQuestionListbyCategory3({category3SelectboxVal : category3SelectboxVal});
 
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -35,5 +34,10 @@
         $scope.processForm = function() {
             alert('awesome!');
         };
+
+        $scope.timerFinished = function (){
+            alert("finished");
+        };
+
     }
 })();

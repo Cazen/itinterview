@@ -1,6 +1,9 @@
 package com.cazen.iti.web.rest;
 
-import com.cazen.iti.domain.*;
+import com.cazen.iti.domain.AnswersForUser;
+import com.cazen.iti.domain.CommonCode;
+import com.cazen.iti.domain.QuestionMaster;
+import com.cazen.iti.domain.QuestionMasterForUser;
 import com.cazen.iti.service.CommonCodeService;
 import com.cazen.iti.service.QuestionMasterService;
 import com.cazen.iti.service.TryQustionService;
@@ -15,8 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.*;
 
 /**
@@ -27,16 +29,12 @@ import java.util.*;
 public class TryQuestionResource {
 
     private final Logger log = LoggerFactory.getLogger(TryQuestionResource.class);
-
     @Inject
     private TryQustionService tryQuestionService;
-
     @Inject
     private CommonCodeService commonCodeService;
-
     @Inject
     private QuestionMasterService questionMasterService;
-
     @Inject
     private AES256Util aes256Util;
 
@@ -48,8 +46,7 @@ public class TryQuestionResource {
      */
     @GetMapping("/tryquestion")
     @Timed
-    public ResponseEntity<List<CommonCode>> getAllUpQuestionMasters()
-        throws URISyntaxException {
+    public ResponseEntity<List<CommonCode>> getAllUpQuestionMasters() throws URISyntaxException {
         log.debug("REST request to get a page of UpQuestionMasters");
 
         List<CommonCode> category123CommonCodeList = tryQuestionService.getCategory123CommonCodeList();
@@ -75,7 +72,8 @@ public class TryQuestionResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("category3Selectbox", "notextists", "카테고리를 선택해 주세요")).body(null);
         }
 
-        List<Long> questionMasterIdList = tryQuestionService.getQuestionMasterIdList7Randomly(commonCodeService.findByCd_Id(category3SelectboxVal.get("category3SelectboxVal")).getId());
+        List<Long> questionMasterIdList =
+            tryQuestionService.getQuestionMasterIdList7Randomly(commonCodeService.findByCd_Id(category3SelectboxVal.get("category3SelectboxVal")).getId());
         QuestionMasterForUser questionMasterForUser = assembleQuestionMasterForUser(questionMasterIdList);
 
         log.debug("working working questionMasterForUser.getQuestionMasterList().size() = " + questionMasterForUser.getQuestionMasterList().size());
@@ -87,39 +85,44 @@ public class TryQuestionResource {
         QuestionMasterForUser questionMasterForUser = new QuestionMasterForUser();
         ArrayList<QuestionMaster> questionMasterList = new ArrayList<>();
 
-        LocalDate startDate = LocalDate.now();
-        LocalTime startTime = LocalTime.now();
+        ZonedDateTime startTime = ZonedDateTime.now().withNano(0);
+        questionMasterForUser.setStartTime(startTime);
 
+        try {
+            String generatedId = aes256Util.aesEncode(
+                startTime.getYear() + "_" + startTime.getMonthValue() + "_" + startTime.getDayOfMonth() + "_" + startTime.getHour() + "_" + startTime
+                    .getMinute() + "_" + startTime.getSecond() + "_" + startTime.getNano() + "_" + startTime.getZone());
+            questionMasterForUser.setGeneratedId(generatedId);
+        } catch (Exception e) {
+            log.error("Exception while encrypt generatedId: ", e);
+        }
 
         questionMasterIdList.forEach(questionMasterId -> {
-            log.debug("working working --------------" + questionMasterId + "------------");
             QuestionMaster questionMaster = questionMasterService.findOne(questionMasterId);
+
             Set<AnswersForUser> answersForUserSet = new HashSet<>();
-            log.debug("working working questionMaster.getTitle() = " + questionMaster.getTitle());
-            questionMaster.setDelYn("");
-            questionMaster.cTime(null);
-            questionMaster.setStatus("");
 
             questionMaster.getRightAnswers().forEach(ra -> {
-                AnswersForUser answersForUser = new AnswersForUser();
+
                 try {
-                    answersForUser.setGeneratedId(aes256Util.aesEncode("R_" + ra.getId()));
+                    AnswersForUser answersForUser = new AnswersForUser();
+                    answersForUser.setGeneratedId(aes256Util.aesEncode(Math.random() + "_R_" + ra.getId()));
+                    answersForUser.setOptionText(ra.getOptionText());
+                    answersForUserSet.add(answersForUser);
                 } catch (Exception e) {
                     log.error("Exception while encrypt rightAnswer: ", e);
                 }
-                answersForUser.setOptionText(ra.getOptionText());
-                answersForUserSet.add(answersForUser);
             });
 
             questionMaster.getWrongAnswers().forEach(wa -> {
-                AnswersForUser answersForUser = new AnswersForUser();
                 try {
-                    answersForUser.setGeneratedId(aes256Util.aesEncode("W_" + wa.getId()));
+                    AnswersForUser answersForUser = new AnswersForUser();
+                    answersForUser.setGeneratedId(aes256Util.aesEncode(Math.random() + "_W_" + wa.getId()));
+                    answersForUser.setOptionText(wa.getOptionText());
+                    answersForUserSet.add(answersForUser);
                 } catch (Exception e) {
                     log.error("Exception while encrypt rightAnswer: ", e);
                 }
-                answersForUser.setOptionText(wa.getOptionText());
-                answersForUserSet.add(answersForUser);
             });
 
             questionMaster.setAnswersForUsersSet(answersForUserSet);
@@ -132,6 +135,9 @@ public class TryQuestionResource {
 
             questionMaster.setWrongAnswers(null);
             questionMaster.setRightAnswers(null);
+            questionMaster.setDelYn(null);
+            questionMaster.cTime(null);
+            questionMaster.setStatus(null);
 
             questionMasterList.add(questionMaster);
 
@@ -140,68 +146,6 @@ public class TryQuestionResource {
         questionMasterForUser.setQuestionMasterList(questionMasterList);
 
         return questionMasterForUser;
-    }
-
-
-    private List<QuestionMaster> getSampleQuestionMasterList() {
-        List<QuestionMaster> sampleQuestionMasterList = new ArrayList<>();
-
-        CommonCode code1 = new CommonCode();
-        CommonCode code2 = new CommonCode();
-        CommonCode code3 = new CommonCode();
-
-        code1.setId(100l);
-        code2.setId(202l);
-        code3.setId(1201l);
-        code1.setCdId("DEVELOPER");
-        code2.setCdId("BIGDATA");
-        code3.setCdId("HIVE");
-        code1.setCdNm("개발자");
-        code2.setCdNm("빅데이터\t");
-        code3.setCdNm("Apache Hive");
-
-        for (int i = 0; i < 7; i++) {
-            QuestionMaster questionMaster = new QuestionMaster();
-            questionMaster.setDelYn("N");
-            questionMaster.setTitle("테스트용 문제 조금 길게 다시 변형해서 이정도 문제가 나오면 되겠지? " + i + "번");
-            questionMaster.setCategory1(code1);
-            questionMaster.setCategory2(code2);
-            questionMaster.setCategory3(code3);
-            questionMaster.setStatus("RUNNING");
-
-            questionMaster.setRightAnswers(getRightAnswerSet());
-            questionMaster.setWrongAnswers(getWrongAnswerSet());
-
-            sampleQuestionMasterList.add(questionMaster);
-        }
-
-        return sampleQuestionMasterList;
-    }
-
-    private Set<RightAnswer> getRightAnswerSet() {
-        Set<RightAnswer> rightAnswerSet = new HashSet<>();
-
-        RightAnswer rightAnswer = new RightAnswer();
-        rightAnswer.setDelYn("N");
-        rightAnswer.setId(1l);
-        rightAnswer.setOptionText("정답도 옵션에서 조금 길게 나와야 눈에 보입니다");
-
-        rightAnswerSet.add(rightAnswer);
-        return rightAnswerSet;
-    }
-
-    private Set<WrongAnswer> getWrongAnswerSet() {
-        Set<WrongAnswer> wrongAnswerSet = new HashSet<>();
-
-        for (long i = 0; i < 4; i++) {
-            WrongAnswer wrongAnswer = new WrongAnswer();
-            wrongAnswer.setDelYn("N");
-            wrongAnswer.setId(i);
-            wrongAnswer.setOptionText("오답도 옵션에서 조금 길게 나와야 눈에 보입니다" + i);
-
-            wrongAnswerSet.add(wrongAnswer);
-        }
-        return wrongAnswerSet;
     }
 }
 

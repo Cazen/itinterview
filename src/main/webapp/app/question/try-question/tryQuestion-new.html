@@ -4,7 +4,7 @@
         <div id="form-container">
 
             <div class="page-header text-center">
-                <h2>문제를 풀고 친구들과 공유하세요</h2>
+                <h2>남은시간 : <timer countdown="300" interval="1000" finish-callback="timerFinished()">{{seconds}} </timer> </h2>
 
                 <!-- the links to our nested states using relative paths -->
                 <!-- add the active class if the state matches our ui-sref -->
@@ -20,7 +20,9 @@
             </div>
 
             <!-- use ng-submit to catch the form submission and use our Angular function -->
-            <form id="signup-form" ng-submit="processForm()">
+            <form id="tryQuestionForm" ng-submit="processForm()">
+                <input type="hidden" ng-model="formData.generatedId" value="{{vm.questionMasterForUser.generatedId}}" ng-init="formData.generatedId=vm.questionMasterForUser.generatedId"/>
+                <input type="hidden" ng-model="formData.startTime" value="{{vm.questionMasterForUser.startTime}}" ng-init="formData.startTime=vm.questionMasterForUser.generatedId"/>
                 <!-- our nested state views will be injected here -->
                 <div id="form-views" ui-view>
                     <section class="panel panel-with-borders">
@@ -56,7 +58,7 @@
 
         <div align="center" ng-show="formData.answerone != null && formData.answertwo != null && formData.answerthree != null &&
             formData.answerfour != null && formData.answerfive != null && formData.answersix != null && formData.answerseven != null">
-            <button type="submit" class="btn btn-block btn-info">정답 제출    <span class="glyphicon glyphicon-ok"></span></button>
+            <button type="submit" form="tryQuestionForm" class="btn btn-block btn-info">정답 제출    <span class="glyphicon glyphicon-ok"></span></button>
         </div>
 
         <p>

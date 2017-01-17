@@ -15,7 +15,14 @@
                 url: 'api/question/tryquestionnew/',
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json; charset=UTF-8'},
-                data: {category3SelectboxVal: '@category3SelectboxVal'}
+                data: {category3SelectboxVal: '@category3SelectboxVal'},
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                        data.startTime = DateUtils.convertDateTimeFromServer(data.startTime);
+                    }
+                    return data;
+                }
             }
         });
 
