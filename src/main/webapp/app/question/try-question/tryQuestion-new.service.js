@@ -10,7 +10,6 @@
         var resourceUrl =  'api/question/tryquestionnew/';
 
         return $resource(resourceUrl, {}, {
-
             'postQuestionListbyCategory3': {
                 url: 'api/question/tryquestionnew/',
                 method: 'POST',
@@ -23,6 +22,12 @@
                     }
                     return data;
                 }
+            },
+            'postSubmitTryQuestionForm': {
+                url: 'api/question/tryQuestionAnswer/',
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json; charset=UTF-8'},
+                data: {submitTryQuestionForUser: '@formData'}
             }
         });
 

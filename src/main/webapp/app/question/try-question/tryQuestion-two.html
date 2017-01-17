@@ -3,8 +3,8 @@
 <div ng-repeat="questionOption in vm.questionMasterForUser.questionMasterList[1].answersForUsersSet track by questionOption.generatedId">
     <p>
     <div style="width: 100%" class="btn-group" data-toggle="buttons">
-        <label style="width: 100%" ng-class="(formData.answertwo == questionOption.generatedId ? 'btn btn-default-outline active' : 'btn btn-default-outline')">
-            <input type="radio" ng-model='formData.answertwo' ng-value="questionOption.generatedId" ui-sref="tryQuestionNew.three">
+        <label style="width: 100%" ng-class="(formData.answerTwo == questionOption.generatedId ? 'btn btn-default-outline active' : 'btn btn-default-outline')">
+            <input type="radio" ng-model='formData.answerTwo' ng-value="questionOption.generatedId" ui-sref="tryQuestionNew.three">
             {{ questionOption.optionText }}
         </label>
     </div>

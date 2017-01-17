@@ -1,9 +1,6 @@
 package com.cazen.iti.web.rest;
 
-import com.cazen.iti.domain.AnswersForUser;
-import com.cazen.iti.domain.CommonCode;
-import com.cazen.iti.domain.QuestionMaster;
-import com.cazen.iti.domain.QuestionMasterForUser;
+import com.cazen.iti.domain.*;
 import com.cazen.iti.service.CommonCodeService;
 import com.cazen.iti.service.QuestionMasterService;
 import com.cazen.iti.service.TryQustionService;
@@ -17,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -56,7 +54,7 @@ public class TryQuestionResource {
     }
 
     /**
-     * * GET  /tryquestionnew : Create a new QuestionList and return to solving pages.
+     * * POST  /tryquestionnew : Create a new QuestionList and return to solving pages.
      * *
      * * @param category3SelectboxVal selected category3Id
      * * @return the ResponseEntity with status 201 (Created) and with body the new QuestionMasterList, or with status 400 (Bad Request) if the category3Selectbox does not exists
@@ -80,6 +78,26 @@ public class TryQuestionResource {
 
         return new ResponseEntity<>(questionMasterForUser, HttpStatus.OK);
     }
+
+    /**
+     * * POST  /tryQuestionAnswer : Submit a answer and return a result
+     * *
+     * * @param category3SelectboxVal selected category3Id
+     * * @return the ResponseEntity with status 201 (Created) and with body the new QuestionMasterList, or with status 400 (Bad Request) if the category3Selectbox does not exists
+     * * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/tryQuestionAnswer")
+    @Timed
+    public ResponseEntity<QuestionMasterForUser> submitTryQuestion(@RequestBody SubmitTryQuestionForUser submitTryQuestionForUser) throws URISyntaxException {
+
+        log.debug("REST(POST) request to get tryQuestionNew : {}", submitTryQuestionForUser.getStartTime() + "_" + submitTryQuestionForUser.getAnswerOne());
+
+        return ResponseEntity.created(new URI("/app/question/tryQuestionAnswer"))
+            .headers(HeaderUtil.createEntityCreationAlert("tryQuestionAnswer", "test"))
+            .body(null);
+
+    }
+
 
     private QuestionMasterForUser assembleQuestionMasterForUser(List<Long> questionMasterIdList) {
         QuestionMasterForUser questionMasterForUser = new QuestionMasterForUser();

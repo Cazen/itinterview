@@ -31,8 +31,11 @@
         // we will store all of our form data in this object
         $scope.formData = {};
         // function to process the form
-        $scope.processForm = function() {
-            alert('awesome!');
+        $scope.submitTryQuestionForm = function() {
+            $scope.formData.startTime = vm.questionMasterForUser.startTime;
+            $scope.formData.generatedId = vm.questionMasterForUser.generatedId;
+
+            TryQuestionNew.postSubmitTryQuestionForm($scope.formData);
         };
 
         $scope.timerFinished = function (){
