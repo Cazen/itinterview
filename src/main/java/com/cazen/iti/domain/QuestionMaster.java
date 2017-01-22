@@ -60,9 +60,29 @@ public class QuestionMaster implements Serializable {
     @ManyToOne
     private User author;
 
-    @OneToOne
+    @OneToOne(cascade={CascadeType.ALL})
     @JoinColumn(unique = true)
     private QuestionMasterStatics questionMasterStatics;
+
+    @Transient
+    @JsonSerialize
+    private String generatedId;
+
+    @Transient
+    @JsonSerialize
+    private String rightWrongString;
+
+    @Transient
+    @JsonSerialize
+    private String selectedAnswerString;
+
+    public String getSelectedAnswerString() {
+        return selectedAnswerString;
+    }
+
+    public void setSelectedAnswerString(String selectedAnswerString) {
+        this.selectedAnswerString = selectedAnswerString;
+    }
 
     public String getGeneratedId() {
         return generatedId;
@@ -71,9 +91,14 @@ public class QuestionMaster implements Serializable {
     public void setGeneratedId(String generatedId) {
         this.generatedId = generatedId;
     }
-    @Transient
-    @JsonSerialize
-    private String generatedId;
+
+    public String getRightWrongString() {
+        return rightWrongString;
+    }
+
+    public void setRightWrongString(String rightWrongString) {
+        this.rightWrongString = rightWrongString;
+    }
 
     public Set<AnswersForUser> getAnswersForUsersSet() {
         return answersForUsersSet;

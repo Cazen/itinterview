@@ -1,5 +1,6 @@
 package com.cazen.iti.service.util;
 
+import com.cazen.iti.domain.SubmitTryQuestionForUser;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class AES256Util {
         byte[] keyBytes = new byte[16];
         byte[] b = "ItInterviewSecr!".getBytes("UTF-8");
         int len = b.length;
-        if(len > keyBytes.length)
+        if (len > keyBytes.length)
             len = keyBytes.length;
         System.arraycopy(b, 0, keyBytes, 0, len);
         SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
@@ -59,6 +60,24 @@ public class AES256Util {
 
         byte[] byteStr = Base64.decodeBase64(str.getBytes());
 
-        return new String(c.doFinal(byteStr),"UTF-8");
+        return new String(c.doFinal(byteStr), "UTF-8");
+    }
+
+    public SubmitTryQuestionForUser decryptSubmitTryQuestionForUser(SubmitTryQuestionForUser submitTryQuestionForUser)
+        throws java.io.UnsupportedEncodingException, NoSuchAlgorithmException,
+        NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException,
+        IllegalBlockSizeException, BadPaddingException {
+
+        //Didn't create new entity cause using question Id
+        submitTryQuestionForUser.setGeneratedId(this.aesDecode(submitTryQuestionForUser.getGeneratedId()));
+        submitTryQuestionForUser.setAnswerOne(this.aesDecode(submitTryQuestionForUser.getAnswerOne()));
+        submitTryQuestionForUser.setAnswerTwo(this.aesDecode(submitTryQuestionForUser.getAnswerTwo()));
+        submitTryQuestionForUser.setAnswerThree(this.aesDecode(submitTryQuestionForUser.getAnswerThree()));
+        submitTryQuestionForUser.setAnswerFour(this.aesDecode(submitTryQuestionForUser.getAnswerFour()));
+        submitTryQuestionForUser.setAnswerFive(this.aesDecode(submitTryQuestionForUser.getAnswerFive()));
+        submitTryQuestionForUser.setAnswerSix(this.aesDecode(submitTryQuestionForUser.getAnswerSix()));
+        submitTryQuestionForUser.setAnswerSeven(this.aesDecode(submitTryQuestionForUser.getAnswerSeven()));
+
+        return submitTryQuestionForUser;
     }
 }

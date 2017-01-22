@@ -16,6 +16,26 @@ public class QuestionMasterForUser {
 
     private String generatedId;
 
+    private String rightWrong;
+
+    private int erningPoint;
+
+    public int getErningPoint() {
+        return erningPoint;
+    }
+
+    public void setErningPoint(int erningPoint) {
+        this.erningPoint = erningPoint;
+    }
+
+    public String getRightWrong() {
+        return rightWrong;
+    }
+
+    public void setRightWrong(String rightWrong) {
+        this.rightWrong = rightWrong;
+    }
+
     public List<QuestionMaster> getQuestionMasterList() {
         return questionMasterList;
     }

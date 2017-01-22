@@ -1,8 +1,11 @@
 package com.cazen.iti.web.rest;
 
 import com.cazen.iti.domain.*;
+import com.cazen.iti.repository.QuestionMasterRepository;
+import com.cazen.iti.repository.QuestionMasterStaticsRepository;
+import com.cazen.iti.repository.RightAnswerRepository;
+import com.cazen.iti.repository.WrongAnswerRepository;
 import com.cazen.iti.service.CommonCodeService;
-import com.cazen.iti.service.QuestionMasterService;
 import com.cazen.iti.service.TryQustionService;
 import com.cazen.iti.service.util.AES256Util;
 import com.cazen.iti.web.rest.util.HeaderUtil;
@@ -14,8 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
-import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -32,7 +35,13 @@ public class TryQuestionResource {
     @Inject
     private CommonCodeService commonCodeService;
     @Inject
-    private QuestionMasterService questionMasterService;
+    private QuestionMasterRepository questionMasterRepository;
+    @Inject
+    private RightAnswerRepository rightAnswerRepository;
+    @Inject
+    private WrongAnswerRepository wrongAnswerRepository;
+    @Inject
+    private QuestionMasterStaticsRepository questionMasterStaticsRepository;
     @Inject
     private AES256Util aes256Util;
 
@@ -65,16 +74,13 @@ public class TryQuestionResource {
     public ResponseEntity<QuestionMasterForUser> getQuestionListbyCategory3(@RequestBody Map<String, String> category3SelectboxVal) throws URISyntaxException {
 
         log.debug("REST(POST) request to get tryQuestionNew : {}", category3SelectboxVal.get("category3SelectboxVal"));
-        log.debug("category3SelectboxVal = " + category3SelectboxVal);
         if (category3SelectboxVal == null || category3SelectboxVal.get("category3SelectboxVal").length() == 0) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("category3Selectbox", "notextists", "카테고리를 선택해 주세요")).body(null);
         }
 
         List<Long> questionMasterIdList =
             tryQuestionService.getQuestionMasterIdList7Randomly(commonCodeService.findByCd_Id(category3SelectboxVal.get("category3SelectboxVal")).getId());
-        QuestionMasterForUser questionMasterForUser = assembleQuestionMasterForUser(questionMasterIdList);
-
-        log.debug("working working questionMasterForUser.getQuestionMasterList().size() = " + questionMasterForUser.getQuestionMasterList().size());
+        QuestionMasterForUser questionMasterForUser = assembleQuestionMasterForUserForTryPages(questionMasterIdList);
 
         return new ResponseEntity<>(questionMasterForUser, HttpStatus.OK);
     }
@@ -90,16 +96,109 @@ public class TryQuestionResource {
     @Timed
     public ResponseEntity<QuestionMasterForUser> submitTryQuestion(@RequestBody SubmitTryQuestionForUser submitTryQuestionForUser) throws URISyntaxException {
 
-        log.debug("REST(POST) request to get tryQuestionNew : {}", submitTryQuestionForUser.getStartTime() + "_" + submitTryQuestionForUser.getAnswerOne());
+        QuestionMasterForUser questionMasterForUser;
+        try {
+            SubmitTryQuestionForUser decryptedSubmitEntity = aes256Util.decryptSubmitTryQuestionForUser(submitTryQuestionForUser);
+            String[] generatedId = decryptedSubmitEntity.getGeneratedId().split("_");
 
-        return ResponseEntity.created(new URI("/app/question/tryQuestionAnswer"))
-            .headers(HeaderUtil.createEntityCreationAlert("tryQuestionAnswer", "test"))
-            .body(null);
+            //Compare submitTime - startTime > 5min 5sec then raise exception
+            ZonedDateTime startTime = ZonedDateTime.of(Integer.parseInt(generatedId[0]), Integer.parseInt(generatedId[1]), Integer.parseInt(generatedId[2]), Integer.parseInt(generatedId[3])
+                , Integer.parseInt(generatedId[4]), Integer.parseInt(generatedId[5]), Integer.parseInt(generatedId[6]), ZoneId.systemDefault());
+            startTime = startTime.plusMinutes(5).plusSeconds(5);
+            ZonedDateTime now = ZonedDateTime.now().withNano(0);
 
+            if(startTime.isBefore(now)) {
+                log.error("Time Limit exceed: ", startTime);
+                return new ResponseEntity<>(new QuestionMasterForUser(), HttpStatus.BAD_REQUEST);
+            }
+
+
+            questionMasterForUser = setQuestionMasterStaticsAndGetQMForUser(decryptedSubmitEntity);
+
+        } catch (Exception e) {
+            log.error("Exception while decryptedSubmitEntity: ", e);
+            return new ResponseEntity<>(new QuestionMasterForUser(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(questionMasterForUser, HttpStatus.OK);
     }
 
+    private QuestionMasterForUser setQuestionMasterStaticsAndGetQMForUser(SubmitTryQuestionForUser decryptedSubmitEntity) {
 
-    private QuestionMasterForUser assembleQuestionMasterForUser(List<Long> questionMasterIdList) {
+        QuestionMasterForUser questionMasterForUser = new QuestionMasterForUser();
+        List<QuestionMaster> questionMasterList = new ArrayList<>();
+        questionMasterForUser.setQuestionMasterList(questionMasterList);
+
+        QuestionMasterStatics questionMasterStatics;
+
+        List<Long> questionMasterIdList = new ArrayList<>();
+        questionMasterIdList.add(Long.parseLong(decryptedSubmitEntity.getQuestionOne()));
+        questionMasterIdList.add(Long.parseLong(decryptedSubmitEntity.getQuestionTwo()));
+        questionMasterIdList.add(Long.parseLong(decryptedSubmitEntity.getQuestionThree()));
+        questionMasterIdList.add(Long.parseLong(decryptedSubmitEntity.getQuestionFour()));
+        questionMasterIdList.add(Long.parseLong(decryptedSubmitEntity.getQuestionFive()));
+        questionMasterIdList.add(Long.parseLong(decryptedSubmitEntity.getQuestionSix()));
+        questionMasterIdList.add(Long.parseLong(decryptedSubmitEntity.getQuestionSeven()));
+
+        List<String> rightWrongList = new ArrayList<>();
+        rightWrongList.add(decryptedSubmitEntity.getAnswerOne());
+        rightWrongList.add(decryptedSubmitEntity.getAnswerTwo());
+        rightWrongList.add(decryptedSubmitEntity.getAnswerThree());
+        rightWrongList.add(decryptedSubmitEntity.getAnswerFour());
+        rightWrongList.add(decryptedSubmitEntity.getAnswerFive());
+        rightWrongList.add(decryptedSubmitEntity.getAnswerSix());
+        rightWrongList.add(decryptedSubmitEntity.getAnswerSeven());
+
+        //Will be replace to apply ELO rating
+        int erningPoint = 0;
+        for(int i = 0 ; i < 7 ; i++) {
+            QuestionMaster questionMaster = questionMasterRepository.findOne(questionMasterIdList.get(i));
+            questionMaster.setWrongAnswers(null);
+            questionMaster.setRightAnswers(null);
+
+            if (questionMaster.getQuestionMasterStatics() == null) {
+                questionMasterStatics = new QuestionMasterStatics();
+
+
+                questionMasterStatics.setDownVoteCount(0);
+                questionMasterStatics.setQuestionMaster(questionMaster);
+                questionMasterStatics.setRightCount(0);
+                questionMasterStatics.setUpVoteCount(0);
+                questionMasterStatics.setWrongCount(0);
+
+                questionMaster.setQuestionMasterStatics(questionMasterStatics);
+                questionMasterRepository.saveAndFlush(questionMaster);
+            } else {
+                questionMasterStatics = questionMasterStaticsRepository.findOne(questionMaster.getQuestionMasterStatics().getId());
+            }
+
+            if ("W".equals(rightWrongList.get(i).split("_")[1])) {
+                int wrongCount = questionMasterStatics.getWrongCount();
+                questionMasterStatics.setWrongCount(++wrongCount);
+                erningPoint--;
+                questionMaster.setSelectedAnswerString(wrongAnswerRepository.findOne(Long.parseLong(rightWrongList.get(i).split("_")[2])).getOptionText());
+            } else if ("R".equals(rightWrongList.get(i).split("_")[1])) {
+                int rightCount = questionMasterStatics.getRightCount();
+                questionMasterStatics.setRightCount(++rightCount);
+                erningPoint++;
+                questionMaster.setSelectedAnswerString(rightAnswerRepository.findOne(Long.parseLong(rightWrongList.get(i).split("_")[2])).getOptionText());
+            }
+
+            questionMasterStaticsRepository.saveAndFlush(questionMasterStatics);
+
+
+            //Set QuestionMasterForUser's questionMaster;
+            questionMaster.setRightWrongString(rightWrongList.get(i).split("_")[1]);
+            questionMaster.setQuestionMasterStatics(questionMasterStatics);
+            List<QuestionMaster> tempQMList = questionMasterForUser.getQuestionMasterList();
+            tempQMList.add(questionMaster);
+            questionMasterForUser.setQuestionMasterList(tempQMList);
+        }
+
+        questionMasterForUser.setErningPoint(erningPoint);
+        return questionMasterForUser;
+    }
+
+    private QuestionMasterForUser assembleQuestionMasterForUserForTryPages(List<Long> questionMasterIdList) {
         QuestionMasterForUser questionMasterForUser = new QuestionMasterForUser();
         ArrayList<QuestionMaster> questionMasterList = new ArrayList<>();
 
@@ -116,7 +215,7 @@ public class TryQuestionResource {
         }
 
         questionMasterIdList.forEach(questionMasterId -> {
-            QuestionMaster questionMaster = questionMasterService.findOne(questionMasterId);
+            QuestionMaster questionMaster = questionMasterRepository.findOne(questionMasterId);
 
             Set<AnswersForUser> answersForUserSet = new HashSet<>();
 

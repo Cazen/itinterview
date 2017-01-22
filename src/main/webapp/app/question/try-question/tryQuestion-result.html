@@ -1,0 +1,100 @@
+<div class="page-content-inner">
+    <div class="panel-body">
+        <div class="margin-bottom-50">
+            <div class="invoice-block">
+                <div class="row">
+                    <div class="col-md-6" >
+                        <br/>
+                        <!-- Example State Default -->
+                        <div class="step-block step-success">
+                            <span class="step-digit">92.7</span>
+                            <div class="step-desc">
+                                <span class="step-title">{{vm.account.login}} 님은 Hive Category에서</span>
+                                <p>상위 2.25% 입니다</p>
+                            </div>
+                        </div>
+                        <!-- End Example State Default -->
+
+                        <!-- Example State Error -->
+                        <div class="step-block step-primary">
+                            <span class="step-digit">{{ vm.resultData.erningPoint }}</span>
+                            <div class="step-desc">
+                                <span class="step-title">이번 문제풀이에서 획득한 점수는</span>
+                                <p>{{ vm.resultData.erningPoint }} 점 입니다</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-right" >
+                        <br/>
+                        <!-- End Example State Error -->
+                        <!-- Example State Current -->
+                        <div class="step-block step-danger">
+                            <span class="step-digit">3</span>
+                            <div class="step-desc">
+                                <span class="step-title">Block Title</span>
+                                <p>Waiting for review</p>
+                            </div>
+                            <!-- End Example State Current -->
+                        </div>
+                        <!-- Example State Disabled -->
+                        <div class="step-block step-secondary">
+                            <span class="step-digit">14</span>
+                            <div class="step-desc">
+                                <span class="step-title">Disabled</span>
+                                <p>Waiting for review</p>
+                            </div>
+                            <!-- End Example State Disabled -->
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover text-right">
+                        <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th>문제</th>
+                            <th class="text-right">선택답안</th>
+                            <th class="text-right">결과</th>
+                            <th class="text-right">정답률</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="questionMaster in vm.resultData.questionMasterList track by questionMaster.id">
+                            <td class="text-center">{{ questionMaster.id }}</td>
+                            <td class="text-left">{{ questionMaster.title }}</td>
+                            <td>{{ questionMaster.selectedAnswerString }}</td>
+                            <td ng-if="questionMaster.rightWrongString === 'R'">O</td>
+                            <td ng-if="questionMaster.rightWrongString === 'W'">X</td>
+                            <td>{{ questionMaster.questionMasterStatics.rightCount * 100 / (questionMaster.questionMasterStatics.rightCount + questionMaster.questionMasterStatics.wrongCount) | number:2 }} %</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-right clearfix">
+                    <div class="pull-right">
+                        <p>
+                            Sub - Total amount: <strong><span>$5,700.00</span></strong>
+                        </p>
+                        <p>
+                            VAT: <strong><span>$57.00</span></strong>
+                        </p>
+                        <p class="page-invoice-amount">
+                            <strong>Grand Total: <span>$5,757.00</span></strong>
+                        </p>
+                        <br/>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="icmn-checkmark margin-right-5"></i>
+
+                    </button>
+                    <button type="button" class="btn btn-default">
+                        <i class="icmn-printer margin-right-5"></i>
+                        Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

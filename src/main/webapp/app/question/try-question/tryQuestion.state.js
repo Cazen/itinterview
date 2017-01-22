@@ -47,6 +47,14 @@
                 resolve: {
                     category3SelectboxVal: ['$stateParams', function($stateParams) {
                         return $stateParams.category3SelectboxVal;
+                    }],
+                    previousState: ["$state", function ($state) {
+                        var currentStateData = {
+                            name: $state.current.name || 'tryQuestion',
+                            params: $state.params,
+                            url: $state.href($state.current.name, $state.params)
+                        };
+                        return currentStateData;
                     }]
                 }
 
@@ -113,6 +121,32 @@
                     pageTitle: '문제풀기 - 7번문제'
                 },
                 templateUrl: 'app/question/try-question/tryQuestion-seven.html'
+            })
+            .state('tryQuestionNew.result', {
+                parent: 'tryQuestionNew',
+                url: '/tryQuestionNew-result',
+                data: {
+                    authorities: ['ROLE_USER'],
+                    pageTitle: '문제 풀이 결과 보기'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'app/question/try-question/tryQuestion-result.html',
+                        controller: 'TryQuestionResultController',
+                        controllerAs: 'vm'
+                    }
+                },
+                params: {resultData: null},
+                resolve: {
+                    previousState: ["$state", function ($state) {
+                        var currentStateData = {
+                            name: $state.current.name || 'tryQuestionNew.seven',
+                            params: $state.params,
+                            url: $state.href($state.current.name, $state.params)
+                        };
+                        return currentStateData;
+                    }]
+                }
             })
         ;
     }

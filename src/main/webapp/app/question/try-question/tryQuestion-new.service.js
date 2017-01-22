@@ -22,13 +22,16 @@
                     }
                     return data;
                 }
-            },
+            }/*,
             'postSubmitTryQuestionForm': {
                 url: 'api/question/tryQuestionAnswer/',
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json; charset=UTF-8'},
-                data: {submitTryQuestionForUser: '@formData'}
-            }
+                data: {submitTryQuestionForUser: '@formData'},
+                transformResponse: function (data) {
+                    return data;
+                }
+            }*/
         });
 
     }

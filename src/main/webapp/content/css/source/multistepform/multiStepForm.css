@@ -21,7 +21,7 @@ pre                             { margin-bottom:10px; }
 
 /* ANIMATION STYLINGS
 ============================================================================= */
-#signup-form            { position:relative; min-height:300px; overflow:hidden; padding:30px; }
+#tryQuestionForm            { position:relative; min-height:300px; overflow:hidden; padding:30px; }
 
 /* basic styling for entering and leaving */
 /* left and right added to ensure full width */
