@@ -1,13 +1,33 @@
 option_text;del_yn;status_id;question_master_id
 
-
-A\npache License 2.0;N;2;1000
-O\nLTP(Online transaction processing) 업무에 주로 사용된다;N;2;1001
-C\nommit과 Rollback기능을 바탕으로 기존 RDB Transaction과 유사하게 사용이 가능하다;N;2;1002
-O\nutput은 분산 처리 특징 상 Local file system에 출력할 수 없고 HDFS등을 이용한다;N;2;1003
-O\nRDER BY 구문을 통해 정렬 시 Reducer가 반드시 1개만 수행된다;N;2;1004
+Apache License 2.0;N;2;1000
+OLTP(Online transaction processing) 업무에 주로 사용된다;N;2;1001
+Commit과 Rollback기능을 바탕으로 기존 RDB Transaction과 유사하게 사용이 가능하다;N;2;1002
+Output은 분산 처리 특징 상 Local file system에 출력할 수 없고 HDFS등을 이용한다;N;2;1003
+ORDER BY 구문을 통해 정렬 시 Reducer가 반드시 1개만 수행된다;N;2;1004
 Directory 내부의 File의 단위 Input Output이 가능하다;N;2;1005
 INSERT OVERWRITE WITH MAPONLY TABLE ${destTable} SELECT * FROM ${srcTable};N;2;1006
 Data를 물리적으로 분리하여 저장하고, 검색조건에 따라 Full Scan을 방지한다;N;2;1007
 Partition Booster의 사용이 가능하다;N;2;1008
-Index를 지정하여 성능 향상이 가능하다;N;2;1009
+S3를 이용하여 성능 향상이 가능하다;N;2;1009
+Dynamic Partition은 Static Partition 앞쪽에 위치가 가능하다;N;2;1010
+지정한 Column의 값이 같은 것은 동일한 Reducer로 처리가 가능하다;N;2;1011
+DFS;N;2;1012
+MetaStore;N;2;1013
+hive-site.xml;N;2;1014
+hive -f;N;2;1015
+hive -e;N;2;1016
+BLOB;N;2;1017
+FIELD TERMINATED BY '\t';N;2;1018
+CREATE TABLE IF NOT EXISTS TEST;N;2;1019
+show databases;N;2;1020
+desc extended tableName;N;2;1021
+Managed는 테이블 삭제 시 Data를 삭제하지만 External은 삭제하지 않는다;N;2;1022
+Data를 물리적으로 구분된 하위 Directory에 구분하여 저장한다;N;2;1023
+INSERT STATEMENT 사용 시 지정한다;N;2;1024
+Managed Table에서 Partition Drop 시 데이터와 메타데이터가 동시에 삭제된다;N;2;1025
+Runtime-based Insert Statements를 지원한다;N;2;1026
+COMPARE TO;N;2;1027
+Partition을 잘게 쪼갤 수록, Scan 범위가 좁아지기 때문에 많은 Group을 생성하도록 설계한다;N;2;1028
+Map-side Join을 제외한 Join을 수행할 수 없다;N;2;1029
+Gzip 등 Block단위 압축을 지원하지 않는 경우에도 Hive의 Mapper 연산을 통해 Record의 경계를 탐색하여 동작한다;N;2;1030
