@@ -50,5 +50,7 @@
 
     <cache alias="com.cazen.iti.domain.QuestionMasterStatics" uses-template="simple"/>
 
+    <cache alias="com.cazen.iti.domain.UserStatics" uses-template="simple"/>
+
     <!-- jhipster-needle-ehcache-add-entry -->
 </config>
