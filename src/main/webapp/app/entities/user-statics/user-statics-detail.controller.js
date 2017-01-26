@@ -5,9 +5,9 @@
         .module('itinterviewApp')
         .controller('UserStaticsDetailController', UserStaticsDetailController);
 
-    UserStaticsDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'UserStatics', 'User'];
+    UserStaticsDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'UserStatics', 'User', 'CommonCode'];
 
-    function UserStaticsDetailController($scope, $rootScope, $stateParams, previousState, entity, UserStatics, User) {
+    function UserStaticsDetailController($scope, $rootScope, $stateParams, previousState, entity, UserStatics, User, CommonCode) {
         var vm = this;
 
         vm.userStatics = entity;

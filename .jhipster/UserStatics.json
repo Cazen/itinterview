@@ -7,6 +7,12 @@
             "relationshipType": "many-to-one",
             "otherEntityField": "id",
             "ownerSide": true
+        },
+        {
+            "relationshipName": "category3",
+            "otherEntityName": "commonCode",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "fields": [

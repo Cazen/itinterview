@@ -5,15 +5,16 @@
         .module('itinterviewApp')
         .controller('UserStaticsDialogController', UserStaticsDialogController);
 
-    UserStaticsDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'UserStatics', 'User'];
+    UserStaticsDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'UserStatics', 'User', 'CommonCode'];
 
-    function UserStaticsDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, UserStatics, User) {
+    function UserStaticsDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, UserStatics, User, CommonCode) {
         var vm = this;
 
         vm.userStatics = entity;
         vm.clear = clear;
         vm.save = save;
         vm.users = User.query();
+        vm.commoncodes = CommonCode.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

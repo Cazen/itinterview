@@ -27,6 +27,9 @@ public class UserStatics implements Serializable {
     @ManyToOne
     private User user;
 
+    @ManyToOne
+    private CommonCode category3;
+
     public Long getId() {
         return id;
     }
@@ -59,6 +62,19 @@ public class UserStatics implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public CommonCode getCategory3() {
+        return category3;
+    }
+
+    public UserStatics category3(CommonCode commonCode) {
+        this.category3 = commonCode;
+        return this;
+    }
+
+    public void setCategory3(CommonCode commonCode) {
+        this.category3 = commonCode;
     }
 
     @Override
