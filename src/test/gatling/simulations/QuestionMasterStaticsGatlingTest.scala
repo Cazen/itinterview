@@ -67,7 +67,7 @@ class QuestionMasterStaticsGatlingTest extends Simulation {
             .exec(http("Create new questionMasterStatics")
             .post("/api/question-master-statics")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "rightCount":"0", "wrongCount":"0", "upVoteCount":"0", "downVoteCount":"0"}""")).asJSON
+            .body(StringBody("""{"id":null, "rightCount":"0", "wrongCount":"0", "upVoteCount":"0", "downVoteCount":"0", "eloRating":"0"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_questionMasterStatics_url"))).exitHereIfFailed
             .pause(10)

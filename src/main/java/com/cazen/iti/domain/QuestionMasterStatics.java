@@ -34,6 +34,9 @@ public class QuestionMasterStatics implements Serializable {
     @Column(name = "down_vote_count")
     private Integer downVoteCount;
 
+    @Column(name = "elo_rating")
+    private Integer eloRating;
+
     @OneToOne(mappedBy = "questionMasterStatics")
     @JsonIgnore
     private QuestionMaster questionMaster;
@@ -98,6 +101,19 @@ public class QuestionMasterStatics implements Serializable {
         this.downVoteCount = downVoteCount;
     }
 
+    public Integer getEloRating() {
+        return eloRating;
+    }
+
+    public QuestionMasterStatics eloRating(Integer eloRating) {
+        this.eloRating = eloRating;
+        return this;
+    }
+
+    public void setEloRating(Integer eloRating) {
+        this.eloRating = eloRating;
+    }
+
     public QuestionMaster getQuestionMaster() {
         return questionMaster;
     }
@@ -139,6 +155,7 @@ public class QuestionMasterStatics implements Serializable {
             ", wrongCount='" + wrongCount + "'" +
             ", upVoteCount='" + upVoteCount + "'" +
             ", downVoteCount='" + downVoteCount + "'" +
+            ", eloRating='" + eloRating + "'" +
             '}';
     }
 }

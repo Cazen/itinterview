@@ -99,6 +99,7 @@
                                 wrongCount: null,
                                 upVoteCount: null,
                                 downVoteCount: null,
+                                eloRating: null,
                                 id: null
                             };
                         }

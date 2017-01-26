@@ -25,6 +25,10 @@
         {
             "fieldName": "downVoteCount",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "eloRating",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20170110154825",

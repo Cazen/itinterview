@@ -49,6 +49,9 @@ public class QuestionMasterStaticsResourceIntTest {
     private static final Integer DEFAULT_DOWN_VOTE_COUNT = 1;
     private static final Integer UPDATED_DOWN_VOTE_COUNT = 2;
 
+    private static final Integer DEFAULT_ELO_RATING = 1;
+    private static final Integer UPDATED_ELO_RATING = 2;
+
     @Inject
     private QuestionMasterStaticsRepository questionMasterStaticsRepository;
 
@@ -86,7 +89,8 @@ public class QuestionMasterStaticsResourceIntTest {
                 .rightCount(DEFAULT_RIGHT_COUNT)
                 .wrongCount(DEFAULT_WRONG_COUNT)
                 .upVoteCount(DEFAULT_UP_VOTE_COUNT)
-                .downVoteCount(DEFAULT_DOWN_VOTE_COUNT);
+                .downVoteCount(DEFAULT_DOWN_VOTE_COUNT)
+                .eloRating(DEFAULT_ELO_RATING);
         return questionMasterStatics;
     }
 
@@ -115,6 +119,7 @@ public class QuestionMasterStaticsResourceIntTest {
         assertThat(testQuestionMasterStatics.getWrongCount()).isEqualTo(DEFAULT_WRONG_COUNT);
         assertThat(testQuestionMasterStatics.getUpVoteCount()).isEqualTo(DEFAULT_UP_VOTE_COUNT);
         assertThat(testQuestionMasterStatics.getDownVoteCount()).isEqualTo(DEFAULT_DOWN_VOTE_COUNT);
+        assertThat(testQuestionMasterStatics.getEloRating()).isEqualTo(DEFAULT_ELO_RATING);
     }
 
     @Test
@@ -151,7 +156,8 @@ public class QuestionMasterStaticsResourceIntTest {
             .andExpect(jsonPath("$.[*].rightCount").value(hasItem(DEFAULT_RIGHT_COUNT)))
             .andExpect(jsonPath("$.[*].wrongCount").value(hasItem(DEFAULT_WRONG_COUNT)))
             .andExpect(jsonPath("$.[*].upVoteCount").value(hasItem(DEFAULT_UP_VOTE_COUNT)))
-            .andExpect(jsonPath("$.[*].downVoteCount").value(hasItem(DEFAULT_DOWN_VOTE_COUNT)));
+            .andExpect(jsonPath("$.[*].downVoteCount").value(hasItem(DEFAULT_DOWN_VOTE_COUNT)))
+            .andExpect(jsonPath("$.[*].eloRating").value(hasItem(DEFAULT_ELO_RATING)));
     }
 
     @Test
@@ -168,7 +174,8 @@ public class QuestionMasterStaticsResourceIntTest {
             .andExpect(jsonPath("$.rightCount").value(DEFAULT_RIGHT_COUNT))
             .andExpect(jsonPath("$.wrongCount").value(DEFAULT_WRONG_COUNT))
             .andExpect(jsonPath("$.upVoteCount").value(DEFAULT_UP_VOTE_COUNT))
-            .andExpect(jsonPath("$.downVoteCount").value(DEFAULT_DOWN_VOTE_COUNT));
+            .andExpect(jsonPath("$.downVoteCount").value(DEFAULT_DOWN_VOTE_COUNT))
+            .andExpect(jsonPath("$.eloRating").value(DEFAULT_ELO_RATING));
     }
 
     @Test
@@ -192,7 +199,8 @@ public class QuestionMasterStaticsResourceIntTest {
                 .rightCount(UPDATED_RIGHT_COUNT)
                 .wrongCount(UPDATED_WRONG_COUNT)
                 .upVoteCount(UPDATED_UP_VOTE_COUNT)
-                .downVoteCount(UPDATED_DOWN_VOTE_COUNT);
+                .downVoteCount(UPDATED_DOWN_VOTE_COUNT)
+                .eloRating(UPDATED_ELO_RATING);
 
         restQuestionMasterStaticsMockMvc.perform(put("/api/question-master-statics")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -207,6 +215,7 @@ public class QuestionMasterStaticsResourceIntTest {
         assertThat(testQuestionMasterStatics.getWrongCount()).isEqualTo(UPDATED_WRONG_COUNT);
         assertThat(testQuestionMasterStatics.getUpVoteCount()).isEqualTo(UPDATED_UP_VOTE_COUNT);
         assertThat(testQuestionMasterStatics.getDownVoteCount()).isEqualTo(UPDATED_DOWN_VOTE_COUNT);
+        assertThat(testQuestionMasterStatics.getEloRating()).isEqualTo(UPDATED_ELO_RATING);
     }
 
     @Test
