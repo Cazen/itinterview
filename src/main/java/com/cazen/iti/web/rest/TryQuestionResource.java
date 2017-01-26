@@ -149,7 +149,8 @@ public class TryQuestionResource {
         rightWrongList.add(decryptedSubmitEntity.getAnswerSeven());
 
         //Will be replace to apply ELO rating
-        int erningPoint = 0;
+        int tryErningPoint = 0;
+        int tryRightCount = 0;
         for(int i = 0 ; i < 7 ; i++) {
             QuestionMaster questionMaster = questionMasterRepository.findOne(questionMasterIdList.get(i));
             questionMaster.setWrongAnswers(null);
@@ -157,7 +158,6 @@ public class TryQuestionResource {
 
             if (questionMaster.getQuestionMasterStatics() == null) {
                 questionMasterStatics = new QuestionMasterStatics();
-
 
                 questionMasterStatics.setDownVoteCount(0);
                 questionMasterStatics.setQuestionMaster(questionMaster);
@@ -174,17 +174,17 @@ public class TryQuestionResource {
             if ("W".equals(rightWrongList.get(i).split("_")[1])) {
                 int wrongCount = questionMasterStatics.getWrongCount();
                 questionMasterStatics.setWrongCount(++wrongCount);
-                erningPoint--;
+                tryErningPoint--;
                 questionMaster.setSelectedAnswerString(wrongAnswerRepository.findOne(Long.parseLong(rightWrongList.get(i).split("_")[2])).getOptionText());
             } else if ("R".equals(rightWrongList.get(i).split("_")[1])) {
                 int rightCount = questionMasterStatics.getRightCount();
                 questionMasterStatics.setRightCount(++rightCount);
-                erningPoint++;
+                tryErningPoint++;
+                tryRightCount++;
                 questionMaster.setSelectedAnswerString(rightAnswerRepository.findOne(Long.parseLong(rightWrongList.get(i).split("_")[2])).getOptionText());
             }
 
             questionMasterStaticsRepository.saveAndFlush(questionMasterStatics);
-
 
             //Set QuestionMasterForUser's questionMaster;
             questionMaster.setRightWrongString(rightWrongList.get(i).split("_")[1]);
@@ -194,7 +194,8 @@ public class TryQuestionResource {
             questionMasterForUser.setQuestionMasterList(tempQMList);
         }
 
-        questionMasterForUser.setErningPoint(erningPoint);
+        questionMasterForUser.setRightCount(tryRightCount);
+        questionMasterForUser.setErningPoint(tryErningPoint);
         return questionMasterForUser;
     }
 

@@ -20,6 +20,12 @@ public class QuestionMasterForUser {
 
     private int erningPoint;
 
+    private int rightCount;
+
+    public int getRightCount() { return rightCount; }
+
+    public void setRightCount(int rightCount) { this.rightCount = rightCount; }
+
     public int getErningPoint() {
         return erningPoint;
     }
@@ -62,8 +68,10 @@ public class QuestionMasterForUser {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         QuestionMasterForUser that = (QuestionMasterForUser) o;
 
