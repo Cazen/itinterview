@@ -51,6 +51,7 @@
 }
 
 .btn.btn-icon {
+    float:right;
     padding: 10px;
     line-height: 1rem;
     text-decoration: none !important;
