@@ -44,6 +44,7 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
             'src/main/webapp/bower_components/angular-animate/angular-animate.js',
             'src/main/webapp/bower_components/angular-timer/dist/angular-timer.js',
+            'src/main/webapp/bower_components/angular-google-analytics/dist/angular-google-analytics.min.js',
             'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',
             // endbower
             'src/main/webapp/app/app.module.js',
