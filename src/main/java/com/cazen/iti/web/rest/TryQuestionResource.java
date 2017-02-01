@@ -210,7 +210,7 @@ public class TryQuestionResource {
                 questionMaster.setSelectedAnswerString(rightAnswerRepository.findOne(Long.parseLong(rightWrongList.get(i).split("_")[2])).getOptionText());
             }
 
-            questionMasterStaticsRepository.saveAndFlush(questionMasterStatics);
+            //questionMasterStaticsRepository.saveAndFlush(questionMasterStatics);
 
             //Set QuestionMasterForUser's questionMaster;
             questionMaster.setRightWrongString(rightWrongList.get(i).split("_")[1]);

@@ -217,7 +217,7 @@ Stack에서 주기적으로 gabage collection이 일어난다;N;2;1053
 Main method는 항상 static으로 지정한다;N;2;1054
 Class를 instance화 하지 않고도 사용이 가능하다;N;2;1054
 Static method에서는 instance variable을 사용할 수 없다;N;2;1054
-Static method의 대표적인 예로 Math method가 있다;N;2;1054
+Static method의 대표적인 예로 Math 관련 method가 있다;N;2;1054
 Try-catch statement로 감싸 처리한다;N;2;1055
 throws로 method를 call한곳으로 던져 처리한다;N;2;1055
 Exception도 객체이다;N;2;1055
