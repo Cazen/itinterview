@@ -62,10 +62,10 @@ var myApp = angular.module('myModule', ['angular-google-analytics']);
 ### 3- Set your Google Analytics account and start tracking:
 
 ```JavaScript
-myApp.config(['AnalyticsProvider', function (AnalyticsProvider) {
+myApp.config(function (AnalyticsProvider) {
    // Add configuration code as desired
    AnalyticsProvider.setAccount('UU-XXXXXXX-X');  //UU-XXXXXXX-X should be your tracking code
-}]).run(['Analytics', function(Analytics) { }]);
+}).run(['Analytics'], function(Analytics) { });
 ```
 Congratulations! [angular-google-analytics](https://github.com/revolunet/angular-google-analytics) is ready and Google Analytics will track your page views once the application is run
 
@@ -662,7 +662,7 @@ Users who are already concatenating and minifying their scripts should not notic
 Chrome Extension: [Google Analytics Debugger](https://chrome.google.com/webstore/detail/google-analytics-debugger/jnkmfdileelhofjcijamephohjechhna)
 Firefox Add-on: [Google Analytics Debugger](https://addons.mozilla.org/en-US/firefox/addon/gadebugger/)
 
-## License
+## Licence
 
 As AngularJS itself, this module is released under the permissive [MIT License](http://revolunet.mit-license.org). Your contributions are always welcome.
 

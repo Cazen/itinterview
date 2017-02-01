@@ -302,22 +302,6 @@
          * Private Methods
          */
 
-        var _getProtocol = function (httpPostfix, httpsPostfix) {
-          var protocol = '',
-              isSslEnabled = document.location.protocol === 'https:',
-              isChromeExtension = document.location.protocol === 'chrome-extension:',
-              isHybridApplication = analyticsJS === true && hybridMobileSupport === true;
-          httpPostfix = angular.isString(httpPostfix) ? httpPostfix : '';
-          httpsPostfix = angular.isString(httpsPostfix) ? httpsPostfix : '';
-          if (httpPostfix !== '') {
-            protocol = 'http:' + httpPostfix;
-          }
-          if (isChromeExtension || isHybridApplication || (isSslEnabled && httpsPostfix !== '')) {
-            protocol = 'https:' + httpsPostfix;
-          }
-          return protocol;
-        };
-
         var _gaJs = function (fn) {
           if (!analyticsJS && $window._gaq && typeof fn === 'function') {
             fn();
@@ -428,7 +412,7 @@
 
         this._registerScriptTags = function () {
           var document = $document[0],
-              protocol = _getProtocol(),
+              protocol = '',
               scriptSource;
 
           if (created === true) {
@@ -447,6 +431,7 @@
           // Universal Analytics
           //
           if (analyticsJS === true) {
+            protocol = hybridMobileSupport === true ? 'https:' : '';
             scriptSource = protocol + '//www.google-analytics.com/' + (debugMode ? 'analytics_debug.js' : 'analytics.js');
             if (testMode !== true) {
               // If not in test mode inject the Google Analytics tag
@@ -477,9 +462,9 @@
           // Classic Analytics
           //
           } else {
-            scriptSource = _getProtocol('//www', '//ssl') + '.google-analytics.com/ga.js';
+            scriptSource = ('https:' === document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             if (displayFeatures === true) {
-              scriptSource = protocol + '//stats.g.doubleclick.net/dc.js';
+              scriptSource = '//stats.g.doubleclick.net/dc.js';
             }
 
             if (testMode !== true) {

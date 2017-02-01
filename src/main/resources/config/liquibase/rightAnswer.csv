@@ -31,3 +31,28 @@ COMPARE TO;N;2;1027
 Partition을 잘게 쪼갤 수록, Scan 범위가 좁아지기 때문에 많은 Group을 생성하도록 설계한다;N;2;1028
 Map-side Join을 제외한 Join을 수행할 수 없다;N;2;1029
 Gzip 등 Block단위 압축을 지원하지 않는 경우에도 Hive의 Mapper 연산을 통해 Record의 경계를 탐색하여 동작한다;N;2;1030
+98;N;2;1031
+-1;N;2;1032
+0.09999999999999998;N;2;1033
+0;N;2;1034
+131;N;2;1035
+1;N;2;1036
+false;N;2;1037
+NaN;N;2;1038
+4;N;2;1039
+동적 로딩(Dynamic Loading)은 지원하지 않는다;N;2;1040
+Object를 통해 Class의 정보를 알아내는 방법;N;2;1041
+Class cls = Class.forName("java.lang.String");N;2;1042
+Set;N;2;1043
+사용할 Object를 미리 명시하여 형변환을 하지 않고 사용할 수 있게 하는 것;N;2;1044
+Map;N;2;1045
+JavaScript는 Java를 Web에서 사용하기 위하여 만들어진 언어이다;N;2;1046
+Class는 Method 내부에 위치한다;N;2;1047
+method를 return할 수 있다;N;2;1048
+java.lang;N;2;1049
+다중 상속이 가능하다;N;2;1050
+Method의 인자와 Return type은 상위 class의 인자와 Return type과 같아야 한다;N;2;1051
+abstract class를 instance화 할 경우 final로 선언된다;N;2;1052
+모든 객체는 heap에 저장된다;N;2;1053
+Static method는 static class에서만 호출할 수 있다;N;2;1054
+RuntimeException은 실행시점에 compiler가 확인한다;N;2;1055

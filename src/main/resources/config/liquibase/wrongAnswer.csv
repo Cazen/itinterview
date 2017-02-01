@@ -122,3 +122,103 @@ hive.exec.compress.intermediate Option을 통해 중간 파일의 압축 여부�
 hive.exec.compress.output Option을 통해 중간 파일의 압축 여부를 결정할 수 있다;N;2;1030
 압축속도와 압축률은 대부분 반비례 관계이기 때문에 특성에 맞는 압축 방식을 사용해야 한다;N;2;1030
 snappy 압축방식의 경우 CPU usage가 낮고, 성능이 좋아 중간 파일의 압축에 많이 사용된다;N;2;1030
+1a;N;2;1031
+1'a';N;2;1031
+b;N;2;1031
+2;N;2;1031
+0;N;2;1032
+2;N;2;1032
+1;N;2;1032
+Runtime Error;N;2;1032
+0.1;N;2;1033
+0.10;N;2;1033
+0.0;N;2;1033
+Runtime Error;N;2;1033
+0;N;2;1033
+1;N;2;1034
+-1;N;2;1034
+2;N;2;1034
+Runtime Error;N;2;1034
+Runtime Error;N;2;1035
+AB;N;2;1035
+0;N;2;1035
+C;N;2;1035
+2;N;2;1036
+0;N;2;1036
+-1;N;2;1036
+Runtime Error;N;2;1036
+Runtime Error;N;2;1037
+true;N;2;1037
+NaN;N;2;1037
+0;N;2;1038
+1;N;2;1038
+-1;N;2;1038
+99999999999.099;N;2;1038
+Runtime Error;N;2;1038
+Runtime Error;N;2;1039
+0;N;2;1039
+1;N;2;1039
+2;N;2;1039
+Object Oriented Programming Language 이다;N;2;1040
+Garbage Collection을 지원한다;N;2;1040
+Write once, run anywhere;N;2;1040
+Multi-Thread를 지원한다;N;2;1040
+Collection 내부의 Item을 순차적으로 처리할 수 있도록 하는 방법;N;2;1041
+작성한 Code를 다른 Method에 반영하는 방법;N;2;1041
+다른 Platform으로 이식 시, 코드의 추가 수정 없이 동작하도록 하는 방법;N;2;1041
+test.forEach(t -> System.out.println(t));N;2;1042
+@Override;N;2;1042
+private Test<?> testObjectList;N;2;1042
+public interface InterfaceClass extends AnyClass;N;2;1042
+List;N;2;1043
+Map;N;2;1043
+Array;N;2;1043
+Stack;N;2;1043
+Class의 Name을 바탕으로 Class의 Infomation을 획득하는 것;N;2;1044
+다중 상속을 우회하여 사용할 수 있도록 지원하는 것;N;2;1044
+Native C Library를 사용할 수 있게 하는 것;N;2;1044
+Stop the world 시 발생하는 오차를 보정하는 것;N;2;1044
+Stack;N;2;1045
+ArrayList;N;2;1045
+Vector;N;2;1045
+Set;N;2;1045
+현재 Version의 Java는 Lambda를 지원한다;N;2;1046
+Gabage collection을 자동으로 지원한다;N;2;1046
+James Arthur Gosling은 Java의 창시자 중 한명이다;N;2;1046
+최초 Sun Microsystems 에서 개발되었다;N;2;1046
+Application에는 1개 이상의 Main method가 필요하다;N;2;1047
+단순 입출력의 경우에도 Class 내부에 구현을 명시해야 한다;N;2;1047
+Object-Oriented 방식으로 구현한다;N;2;1047
+변수의 첫 문자를 숫자로 지정할 수 없다;N;2;1047
+null을 return할 수 있다;N;2;1048
+object를 return할 수 있다;N;2;1048
+아무것도 return하지 않을 수 있다;N;2;1048
+기본 자료형을 return할 수 있다;N;2;1048
+java.system;N;2;1049
+java.inout;N;2;1049
+java.default;N;2;1049
+java.include;N;2;1049
+java.awt;N;2;1049
+상속받은 class는 모든 public 변수와 method를 상속한다;N;2;1050
+하위 class는 상위 class를 구체화 한다;N;2;1050
+final class는 상속이 불가능하;N;2;1050
+공통 기능을 상위 class에 구현할 수 있기 때문에 코드가 간결해진다;N;2;1050
+public method를 private로 override할 수 있다;N;2;1051
+Method overloading과 동일한 개념이다;N;2;1051
+Method 인자는 상위 class와 같게 하고 Return Type은 사용자가 정할 수 있다;N;2;1051
+Method 인자는 상위 class와 다를 수 있지만 Return Type은 동일해야 한다;N;2;1052
+method도 abstract로 지정할 수 있다;N;2;1052
+abstract method는 abstract class 내부에만 구현할 수 있다;N;2;1052
+abstract method로 선언된 것은 하위 class에서 모두 구현해야 한다;N;2;1052
+모든 method 호출은 heap에 저장된다;N;2;1053
+모든 local variable은 heap에 저장된다;N;2;1053
+Stack에서 주기적으로 gabage collection이 일어난다;N;2;1053
+원시자료형은 모두 stack에 저장된다;N;2;1053
+Main method는 항상 static으로 지정한다;N;2;1054
+Class를 instance화 하지 않고도 사용이 가능하다;N;2;1054
+Static method에서는 instance variable을 사용할 수 없다;N;2;1054
+Static method의 대표적인 예로 Math method가 있다;N;2;1054
+Try-catch statement로 감싸 처리한다;N;2;1055
+throws로 method를 call한곳으로 던져 처리한다;N;2;1055
+Exception도 객체이다;N;2;1055
+throws statement에서 여러개의 Exception을 선언할 수 있다;N;2;1055

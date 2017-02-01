@@ -31,6 +31,28 @@ id;title;del_yn;status;category1_id;category2_id;category3_id;author_id;question
 1028;Hive Partition을 생성 시 고려해야 할 사항으로 적합하지 않은 것은?;N;TEST;100;202;1201;3;NULL
 1029;Hive를 strict mode로 설정 시(hive.mapred.mode=strict), 다음 중 틀린 설명은?;N;TEST;100;202;1201;3;NULL
 1030;Hive의 Compression에 대한 다음 설명 중 틀린것은?;N;TEST;100;202;1201;3;NULL
-
-
-
+1031;System.out.println(1+'a')의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1032;System.out.println(-1%2)의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1033;System.out.println(2.0-1.1)의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1034;System.out.println(1^1)의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1035;System.out.println('A' + 'B')의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1036;System.out.println("\n".length())의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1037;System.out.println(Float.NaN == Float.NaN)의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1038;System.out.println(Float.NaN - Float.NaN)의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1039;System.out.println(2 << 1)의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1040;다음 중, Java 언어의 특징이 아닌것은?;N;TEST;100;200;1000;3;NULL
+1041;Java Reflection이란?;N;TEST;100;200;1000;3;NULL
+1042;Java Reflection의 사용 예로 적절한 것은?;N;TEST;100;200;1000;3;NULL
+1043;Java 자료 구조 중, 중복을 제거할 수 있는 자료 구조는?;N;TEST;100;200;1000;3;NULL
+1044;Java Generics에 대한 설명으로 옳은 것은?;N;TEST;100;200;1000;3;NULL
+1045;다음 중 검색이 가장 빠른 자료구조는?;N;TEST;100;200;1000;3;NULL
+1046;다음 설명 중 틀린것은?;N;TEST;100;200;1000;3;NULL
+1047;Java 프로그램에 대한 설명 중 틀린 것은?;N;TEST;100;200;1000;3;NULL
+1048;다음 return에 대한 설명 중 틀린 것은?;N;TEST;100;200;1000;3;NULL
+1049;import문으로 불러오지 않아도 사용이 가능한 Java의 Class는?;N;TEST;100;200;1000;3;NULL
+1050;상속에 대한 설명으로 틀린 것은?;N;TEST;100;200;1000;3;NULL
+1051;Override에 대한 설명 중 옳은 것은?;N;TEST;100;200;1000;3;NULL
+1052;다음 abstract class에 대한 설명 중 틀린 것은?;N;TEST;100;200;1000;3;NULL
+1053;Java에서의 stack과 heap에 대한 설명 중 옳은 것은?;N;TEST;100;200;1000;3;NULL
+1054;Static method에 대한 다음 설명 중 틀린 것은?;N;TEST;100;200;1000;3;NULL
+1055;Exception에 대한 다음 설명 중 옳지 않은 것은?;N;TEST;100;200;1000;3;NULL
