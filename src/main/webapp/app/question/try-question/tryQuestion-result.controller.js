@@ -13,6 +13,7 @@
         vm.account = null;
         vm.isAuthenticated = null;
         vm.resultData = $state.params.resultData;
+        vm.category3SelectboxVal = $state.params.category3SelectboxVal;
 
         if(previousState.name.split(".")[0] != 'tryQuestionNew') {
             alert("잘못된 접근입니다");
