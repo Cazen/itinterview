@@ -1,13 +1,14 @@
 <div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h2>User settings for [<b>{{vm.settingsAccount.login}}</b>]</h2>
+            <h2>[<b>{{vm.settingsAccount.login}}</b>] 님의 사용자 정보를 변경합니다</h2>
+            <h3>Discourse 게시판의 정보는 따로 변경하셔야 합니다</h3>
 
             <div class="alert alert-success" ng-show="vm.success">
-                <strong>Settings saved!</strong>
+                <strong>성공적으로 저장되었습니다!</strong>
             </div>
 
-           <jhi-alert-error></jhi-alert-error>
+           <jhi-alert-error>오류가 발생했습니다 관리자에게 문의해 주세요</jhi-alert-error>
 
             <form name="form" role="form" novalidate ng-submit="vm.save()" show-validation>
 
@@ -18,15 +19,15 @@
                     <div ng-show="form.firstName.$dirty && form.firstName.$invalid">
                         <p class="help-block"
                                ng-show="form.firstName.$error.required">
-                            Your first name is required.
+                            First name을 입력해 주세요
                         </p>
                         <p class="help-block"
                                ng-show="form.firstName.$error.minlength">
-                            Your first name is required to be at least 1 character.
+                            First name은 최소 1문자 이상 필요합니다
                         </p>
                         <p class="help-block"
                                ng-show="form.firstName.$error.maxlength">
-                            Your first name cannot be longer than 50 characters.
+                            First name은 50문자 이내로 작성해 주세요
                         </p>
                     </div>
                 </div>
@@ -37,15 +38,15 @@
                     <div ng-show="form.lastName.$dirty && form.lastName.$invalid">
                         <p class="help-block"
                                ng-show="form.lastName.$error.required">
-                            Your last name is required.
+                            Last name을 입력해 주세요
                         </p>
                         <p class="help-block"
                                ng-show="form.lastName.$error.minlength">
-                            Your last name is required to be at least 1 character.
+                            Last name은 최소 1글자 이상 필요합니다
                         </p>
                         <p class="help-block"
                                ng-show="form.lastName.$error.maxlength">
-                            Your last name cannot be longer than 50 characters.
+                            Last name은 50문자 이내로 작성해 주세요
                         </p>
                     </div>
                 </div>
@@ -56,19 +57,19 @@
                     <div ng-show="form.email.$dirty && form.email.$invalid">
                         <p class="help-block"
                                ng-show="form.email.$error.required">
-                            Your e-mail is required.
+                            E-mail을 입력해 주세요
                         </p>
                         <p class="help-block"
                                ng-show="form.email.$error.email">
-                            Your e-mail is invalid.
+                            E-mail 정보가 잘못되었습니다
                         </p>
                         <p class="help-block"
                                ng-show="form.email.$error.minlength">
-                            Your e-mail is required to be at least 5 characters.
+                            E-mail은 최소 5문자 이상 입력이 필요합니다
                         </p>
                         <p class="help-block"
                                ng-show="form.email.$error.maxlength">
-                            Your e-mail cannot be longer than 100 characters.
+                            E-mail은 100문자 이내로 작성해 주세요
                         </p>
                     </div>
                 </div>

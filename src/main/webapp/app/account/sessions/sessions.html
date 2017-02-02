@@ -1,11 +1,11 @@
 <div>
-    <h2>Active sessions for [<b>{{vm.account.login}}</b>]</h2>
+    <h2> [<b>{{vm.account.login}} 님이 사용중인 세션 정보</b>]</h2>
 
     <div class="alert alert-success" ng-show="vm.success">
-        <strong>Session invalidated!</strong>
+        <strong>세션이 무효화 되었습니다!</strong>
     </div>
     <div class="alert alert-danger" ng-show="vm.error">
-        <strong>An error has occured!</strong> The session could not be invalidated.
+        <strong>오류가 발생했습니다!</strong> 세션을 무효화 할 수 없습니다
     </div>
 
     <div class="table-responsive">
@@ -27,7 +27,7 @@
                         <button type="submit"
                                 class="btn btn-primary"
                                 ng-click="vm.invalidate(session.series)">
-                                 Invalidate
+                                 무효화
                         </button>
                     </td>
                 </tr>

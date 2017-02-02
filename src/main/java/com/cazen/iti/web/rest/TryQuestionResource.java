@@ -22,8 +22,8 @@ import java.time.ZonedDateTime;
 import java.util.*;
 
 /**
- *  * * REST controller for managing UploadQuestionMaster.
- *   */
+ * * * REST controller for managing UploadQuestionMaster.
+ */
 @RestController
 @RequestMapping("/api/question")
 public class TryQuestionResource {
@@ -51,11 +51,11 @@ public class TryQuestionResource {
     private AES256Util aes256Util;
 
     /**
- *      * * GET  /tryQuestion : get all category 123 Code.
- *           * *
- *                * * @return the ResponseEntity with status 200 (OK) and the list of upQuestionMasters in body
- *                     * * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
- *                          */
+     * * * GET  /tryQuestion : get all category 123 Code.
+     * * *
+     * * * @return the ResponseEntity with status 200 (OK) and the list of upQuestionMasters in body
+     * * * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
+     */
     @GetMapping("/tryquestion")
     @Timed
     public ResponseEntity<List<CommonCode>> getAllUpQuestionMasters() throws URISyntaxException {
@@ -68,12 +68,12 @@ public class TryQuestionResource {
     }
 
     /**
- *      * * POST  /tryquestionnew : Create a new QuestionList and return to solving pages.
- *           * *
- *                * * @param category3SelectboxVal selected category3Id
- *                     * * @return the ResponseEntity with status 201 (Created) and with body the new QuestionMasterList, or with status 400 (Bad Request) if the category3Selectbox does not exists
- *                          * * @throws URISyntaxException if the Location URI syntax is incorrect
- *                               */
+     * * * POST  /tryquestionnew : Create a new QuestionList and return to solving pages.
+     * * *
+     * * * @param category3SelectboxVal selected category3Id
+     * * * @return the ResponseEntity with status 201 (Created) and with body the new QuestionMasterList, or with status 400 (Bad Request) if the category3Selectbox does not exists
+     * * * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
     @PostMapping("/tryquestionnew")
     @Timed
     public ResponseEntity<QuestionMasterForUser> getQuestionListbyCategory3(@RequestBody Map<String, String> category3SelectboxVal) throws URISyntaxException {
@@ -91,12 +91,12 @@ public class TryQuestionResource {
     }
 
     /**
- *      * * POST  /tryQuestionAnswer : Submit a answer and return a result
- *           * *
- *                * * @param category3SelectboxVal selected category3Id
- *                     * * @return the ResponseEntity with status 201 (Created) and with body the new QuestionMasterList, or with status 400 (Bad Request) if the category3Selectbox does not exists
- *                          * * @throws URISyntaxException if the Location URI syntax is incorrect
- *                               */
+     * * * POST  /tryQuestionAnswer : Submit a answer and return a result
+     * * *
+     * * * @param category3SelectboxVal selected category3Id
+     * * * @return the ResponseEntity with status 201 (Created) and with body the new QuestionMasterList, or with status 400 (Bad Request) if the category3Selectbox does not exists
+     * * * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
     @PostMapping("/tryQuestionAnswer")
     @Timed
     public ResponseEntity<QuestionMasterForUser> submitTryQuestion(@RequestBody SubmitTryQuestionForUser submitTryQuestionForUser) throws URISyntaxException {
@@ -107,16 +107,16 @@ public class TryQuestionResource {
             String[] generatedId = decryptedSubmitEntity.getGeneratedId().split("_");
 
             /*Compare submitTime - startTime > 5min 5sec then raise exception*/
-            ZonedDateTime startTime = ZonedDateTime.of(Integer.parseInt(generatedId[0]), Integer.parseInt(generatedId[1]), Integer.parseInt(generatedId[2]), Integer.parseInt(generatedId[3])
-                , Integer.parseInt(generatedId[4]), Integer.parseInt(generatedId[5]), Integer.parseInt(generatedId[6]), ZoneId.systemDefault());
+            ZonedDateTime startTime = ZonedDateTime
+                .of(Integer.parseInt(generatedId[0]), Integer.parseInt(generatedId[1]), Integer.parseInt(generatedId[2]), Integer.parseInt(generatedId[3]),
+                    Integer.parseInt(generatedId[4]), Integer.parseInt(generatedId[5]), Integer.parseInt(generatedId[6]), ZoneId.systemDefault());
             startTime = startTime.plusMinutes(5).plusSeconds(5);
             ZonedDateTime now = ZonedDateTime.now().withNano(0);
 
-            if(startTime.isBefore(now)) {
+            if (startTime.isBefore(now)) {
                 log.error("Time Limit exceed: ", startTime);
                 return new ResponseEntity<>(new QuestionMasterForUser(), HttpStatus.BAD_REQUEST);
             }
-
 
             questionMasterForUser = setQuestionMasterStaticsAndGetQMForUser(decryptedSubmitEntity);
 
@@ -151,23 +151,21 @@ public class TryQuestionResource {
         rightWrongList.add(decryptedSubmitEntity.getAnswerSix());
         rightWrongList.add(decryptedSubmitEntity.getAnswerSeven());
 
-        int tryErningPoint = 0;
-        int tryRightCount = 0;
-
-        CommonCode currentCategory =  questionMasterRepository.findOne(questionMasterIdList.get(0)).getCategory3();
+        CommonCode currentCategory = questionMasterRepository.findOne(questionMasterIdList.get(0)).getCategory3();
         UserStatics userStaticsInThisCategory = userStaticsRepository.findByCategory3Id(currentCategory.getId());
-        if(userStaticsInThisCategory == null) {
+        if (userStaticsInThisCategory == null) {
             UserStatics userStatics = new UserStatics();
             userStatics.setEloRating(1500);
             userStatics.setCategory3(currentCategory);
             userStatics.setUser(userService.getUserWithAuthorities());
             userStaticsInThisCategory = userStatics;
         }
-        
-
 
         QuestionMasterStatics questionMasterStatics;
-        for(int i = 0 ; i < 7 ; i++) {
+        int tryErningPoint = 0;
+        int tryRightCount = 0;
+
+        for (int i = 0; i < 7; i++) {
             QuestionMaster questionMaster = questionMasterRepository.findOne(questionMasterIdList.get(i));
             int myCategoryElo = userStaticsInThisCategory.getEloRating();
             questionMaster.setWrongAnswers(null);
@@ -224,9 +222,9 @@ public class TryQuestionResource {
     }
 
     private int getEloFromUserStaticsList(List<UserStatics> userStaticsList, long category3Id) {
-        for(int i = 0 ; i < userStaticsList.size() ; i++) {
+        for (int i = 0; i < userStaticsList.size(); i++) {
             UserStatics userStatics = userStaticsList.get(i);
-            if(userStatics.getCategory3().getId() == category3Id) {
+            if (userStatics.getCategory3().getId() == category3Id) {
                 return userStatics.getEloRating();
             }
         }
@@ -292,7 +290,6 @@ public class TryQuestionResource {
             questionMaster.setStatus(null);
 
             questionMasterList.add(questionMaster);
-
         });
 
         questionMasterForUser.setQuestionMasterList(questionMasterList);

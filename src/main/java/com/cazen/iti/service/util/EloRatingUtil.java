@@ -32,7 +32,12 @@ public class EloRatingUtil {
         return myElo + (int) (kFactor * (-expectedScore));
     }
 
+    public double calcELOWinPercentage(int myElo, int opponentsElo) {
+        return Math.pow(10, (double)myElo/400)/(Math.pow(10, (double)myElo /400) + Math.pow(10, (double)opponentsElo /400));
+    }
+
     private double getExpectRating(int myElo, int opponentsElo) {
         return 1.0 / (1.0 + Math.pow(10.0, ((double) (opponentsElo - myElo) / 400.0)));
     }
+
 }
