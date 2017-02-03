@@ -9,68 +9,35 @@
 
 # Init main instance setting
 
-Install git
-```
-sudo yum -y install git
-```
-
 Install npm
 ```
-sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-sudo yum -y install npm
-```
-
-Install nodejs and related resources
-```
-sudo yum -y install nodejs
+sudo apt-get update
+sudo apt-get -y install nodejs
+sudo apt-get -y install npm
+sudo apt-get install nodejs-legacy
 npm install extract
 npm install bzip2
-sudo yum -y install bzip2
 npm install phantomjs
 
 ```
 
 Install JDK 1.8
 ```
-sudo yum -y install wget
-wget --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-linux-x64.rpm
-sudo yum -y localinstall jdk-8u102-linux-x64.rpm
-rm jdk-8u102-linux-x64.rpm
+sudo apt-get purge openjdk*
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+
 ```
 
 Install Docker & Docker compose
 ```
-sudo yum -y update
-sudo tee /etc/yum.repos.d/docker.repo <<-'EOF'
-[dockerrepo]
-name=Docker Repository
-baseurl=https://yum.dockerproject.org/repo/main/centos/7/
-enabled=1
-gpgcheck=1
-gpgkey=https://yum.dockerproject.org/gpg
-EOF
-sudo yum -y install docker-engine
-sudo systemctl enable docker.service
-sudo systemctl start docker
-sudo docker run --rm hello-world
-sudo curl -L "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-docker-compose --version
-sudo groupadd docker
-sudo gpasswd -a ${USER} docker
-
-vi ~/.bashrc
-export DOCKER_HOST=tcp://127.0.0.1:2375
-
-sudo vi /usr/lib/systemd/system/docker.service
-And edit this rule to expose the API :
-ExecStart=/usr/bin/docker daemon -H unix:// -H tcp://localhost:2375
-sudo service docker restart
+wget -qO- https://get.docker.com/ | sh
 ```
 
 Install nginxProxy
 ```
-docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro jwilder/nginx-proxy
+sudo docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro jwilder/nginx-proxy
 ```
 
 
