@@ -33,11 +33,15 @@ sudo apt-get install oracle-java8-installer
 Install Docker & Docker compose
 ```
 wget -qO- https://get.docker.com/ | sh
+sudo usermod -a -G docker cazen
 ```
 
 Install nginxProxy
 ```
-sudo docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro jwilder/nginx-proxy
+docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro jwilder/nginx-proxy
+sudo usermod -a -G docker cazen
+sudo service docker restart
+
 ```
 
 
@@ -71,4 +75,35 @@ Checking the docker server(prd env)
 ```
 ./gradlew bootRepackage -Pprod buildDocker
 docker-compose -f src/main/docker/app.yml up
+```
+
+
+
+
+#Discourse 세팅문서
+```
+https://github.com/discourse/discourse/blob/master/docs/INSTALL-cloud.md
+wget -qO- https://get.docker.com/ | sh
+sudo -s
+useradd discourse
+mkdir /var/discourse
+git clone https://github.com/discourse/discourse_docker.git /var/discourse
+cd /var/discourse
+./discourse-setup
+sudo yum install -y net-tools
+ln -s /usr/bin/docker /usr/bin/docker.io
+```
+
+```
+discourse.itinterview.co.kr
+wannahelp@itinterview.co.kr
+smtp.sparkpostmail.com
+2525
+SMTP_Injection
+971aed62553b999269cb823273549b704152cbf6
+```
+
+```
+innodb_autoinc_lock_mode=0
+lower_case_table_names=1
 ```
