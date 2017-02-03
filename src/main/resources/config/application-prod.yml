@@ -45,7 +45,7 @@ spring:
             config: ehcache.xml
     mail:
         host: smtp.sparkpostmail.com
-        port: 587
+        port: 2525
         username: SMTP_Injection
         password: 971aed62553b999269cb823273549b704152cbf6
         protocol: smtp
