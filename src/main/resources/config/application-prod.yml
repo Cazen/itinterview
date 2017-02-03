@@ -19,7 +19,7 @@ spring:
             enabled: false
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://104.198.116.192:3306/itinterview?useUnicode=true&characterEncoding=utf8&useSSL=false
+        url: jdbc:mysql://104.198.87.239:3306/itinterview?useUnicode=true&characterEncoding=utf8&useSSL=false
         name:
         username: cazen
         password: magic12#
