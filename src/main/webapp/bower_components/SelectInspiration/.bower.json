@@ -1,11 +1,11 @@
 {
   "name": "SelectInspiration",
   "homepage": "https://github.com/codrops/SelectInspiration",
-  "_release": "80680b9c6e",
+  "_release": "ce5a53b6f9",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "80680b9c6e65843e209c7aa4e3271d3320f8cb10"
+    "commit": "ce5a53b6f913c1ed5bfdd458a0f3fedac94a9266"
   },
   "_source": "https://github.com/codrops/SelectInspiration.git",
   "_target": "*",

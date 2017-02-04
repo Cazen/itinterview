@@ -32,7 +32,7 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="c_time" type="timestamp">
+            <column name="c_time" type="timestamp" defaultValueDate="${now}">
                 <constraints nullable="true" />
             </column>
             
@@ -60,7 +60,6 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="question_master" columnName="c_time" columnDataType="datetime"/>
         
     </changeSet>
 </databaseChangeLog>
