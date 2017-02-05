@@ -59,12 +59,10 @@ public class DiscourseSSOResource {
         String payload = request.getParameter("sso");
         String sig = request.getParameter("sig");
         if (payload == null || sig == null) {
-            log.error("payload : {}", payload, ", sig : {}", sig);
             response.getWriter().println("error parameter");
             return new RedirectView("http://itinterview.co.kr/#/register");
         }
         if (!checksum(secretKey, payload).equals(sig)) {
-            log.error("secretKey : {}", secretKey, ", payload : {}", payload, ", sig : {}", sig);
             response.getWriter().println("checksum failed");
             return new RedirectView("http://itinterview.co.kr/#/register");
         }
@@ -72,14 +70,13 @@ public class DiscourseSSOResource {
         String nonce = new String(Base64.decodeBase64(urlDecode));
         User signedInUser = userService.getUserWithAuthorities();
         if (signedInUser == null){
-            log.error("signedInUser is null");
             response.getWriter().println("no user founded");
             return new RedirectView("http://itinterview.co.kr/#/register");
         }
 
         log.error("SSO Called with signedInUser: " + signedInUser.toString());
         String urlEncode = nonce
-            + "&name=" + URLEncoder.encode(signedInUser.getLogin(), "UTF-8")
+            + "&name=" + URLEncoder.encode(signedInUser.getFirstName(), "UTF-8")
             + "&username=" + URLEncoder.encode(signedInUser.getFirstName(), "UTF-8")
             + "&email=" + URLEncoder.encode(signedInUser.getEmail(), "UTF-8")
             + "&external_id=" + URLEncoder.encode(signedInUser.getId() + "", "UTF-8");
@@ -88,12 +85,10 @@ public class DiscourseSSOResource {
         int maxLength = urlBase64.length();
         final int STEP = 60;
         String urlBase64Encode = "";
-
         while (length < maxLength) {
             urlBase64Encode += urlBase64.substring(length, length + STEP < maxLength ? length + STEP : maxLength) + "\n";
             length += STEP;
         }
-
         RedirectView redirectView = new RedirectView(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode));
 
         return redirectView;
