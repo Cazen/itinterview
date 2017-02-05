@@ -1,8 +1,7 @@
 package com.cazen.iti.web.rest;
 
 import com.cazen.iti.domain.User;
-import com.cazen.iti.repository.UserRepository;
-import com.cazen.iti.security.SecurityUtils;
+import com.cazen.iti.service.UserService;
 import com.codahale.metrics.annotation.Timed;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
@@ -34,7 +33,7 @@ public class DiscourseSSOResource {
     private final Logger log = LoggerFactory.getLogger(DiscourseSSOResource.class);
 
     @Inject
-    private UserRepository userRepository;
+    private UserService userService;
 
     /**
      * GET  /sso : Return SSO Information.
@@ -71,8 +70,7 @@ public class DiscourseSSOResource {
         }
         String urlDecode = URLDecoder.decode(payload, "UTF-8");
         String nonce = new String(Base64.decodeBase64(urlDecode));
-        //User signedInUser = userService.getUserWithAuthorities();
-        User signedInUser = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
+        User signedInUser = userService.getUserWithAuthorities();
         if (signedInUser == null){
             log.error("signedInUser is null");
             response.getWriter().println("no user founded");
@@ -81,7 +79,7 @@ public class DiscourseSSOResource {
 
         log.error("SSO Called with signedInUser: " + signedInUser.toString());
         String urlEncode = nonce
-            + "&name=" + URLEncoder.encode(signedInUser.getFirstName(), "UTF-8")
+            + "&name=" + URLEncoder.encode(signedInUser.getLogin(), "UTF-8")
             + "&username=" + URLEncoder.encode(signedInUser.getFirstName(), "UTF-8")
             + "&email=" + URLEncoder.encode(signedInUser.getEmail(), "UTF-8")
             + "&external_id=" + URLEncoder.encode(signedInUser.getId() + "", "UTF-8");
