@@ -49,6 +49,55 @@
                     </p>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Your first name"
+                           ng-model="vm.registerAccount.firstName" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/" required>
+                    <div ng-show="form.firstName.$dirty && form.firstName.$invalid">
+                        <p class="help-block"
+                           ng-show="form.firstName.$error.required">
+                            FirstName을 입력해 주세요
+                        </p>
+                        <p class="help-block"
+                           ng-show="form.firstName.$error.minlength">
+                            FirstName을 최소 1글자 이상 입력해 주세요
+                        </p>
+                        <p class="help-block"
+                           ng-show="form.firstName.$error.maxlength">
+                            FirstName은 50글자 이내로 입력해 주세요
+                        </p>
+                        <p class="help-block"
+                           ng-show="form.firstName.$error.pattern">
+                            FirstName은 소문자와 숫자만 사용 가능합니다
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Your last name"
+                           ng-model="vm.registerAccount.lastName" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/" required>
+                    <div ng-show="form.lastName.$dirty && form.lastName.$invalid">
+                        <p class="help-block"
+                           ng-show="form.lastName.$error.required">
+                            LastName을 입력해 주세요
+                        </p>
+                        <p class="help-block"
+                           ng-show="form.lastName.$error.minlength">
+                            LastName을 최소 1글자 이상 입력해 주세요
+                        </p>
+                        <p class="help-block"
+                           ng-show="form.lastName.$error.maxlength">
+                            LastName은 50글자 이내로 입력해 주세요
+                        </p>
+                        <p class="help-block"
+                           ng-show="form.lastName.$error.pattern">
+                            LastName은 소문자와 숫자만 사용 가능합니다
+                        </p>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="control-label" for="email">E-mail</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Your e-mail"
