@@ -62,8 +62,16 @@ public class TryQuestionResource {
         log.debug("REST request to get a page of UpQuestionMasters");
 
         List<CommonCode> category123CommonCodeList = tryQuestionService.getCategory123CommonCodeList();
-        category123CommonCodeList.forEach(commonCode -> commonCode.setHardCodedParentId(commonCode.getParent().getId()));
-        category123CommonCodeList.forEach(commonCode -> commonCode.setHardCodedParentParentId(commonCode.getParent().getParent().getId()));
+        category123CommonCodeList.forEach(commonCode -> {
+            if(commonCode.getParent() != null) {
+                commonCode.setHardCodedParentId(commonCode.getParent().getId());
+            }
+        });
+        category123CommonCodeList.forEach(commonCode -> {
+            if(commonCode.getParent() != null && commonCode.getParent().getParent() != null) {
+                commonCode.setHardCodedParentParentId(commonCode.getParent().getParent().getId());
+            }
+        });
         return new ResponseEntity<>(category123CommonCodeList, HttpStatus.OK);
     }
 
