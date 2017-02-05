@@ -85,10 +85,21 @@ public class DiscourseSSOResource {
         int maxLength = urlBase64.length();
         final int STEP = 60;
         String urlBase64Encode = "";
+        log.error("urlBase64: " + urlBase64);
+        log.error("discourseSSOLoginURL: " + discourseSSOLoginURL);
+
         while (length < maxLength) {
+            log.error("urlBase64Encode: " + urlBase64Encode);
+            log.error("length: " + length + ", STEP: " + STEP + ", maxLength: " + maxLength);
             urlBase64Encode += urlBase64.substring(length, length + STEP < maxLength ? length + STEP : maxLength) + "\n";
+            log.error("urlBase64EncodeAfter: " + urlBase64Encode);
             length += STEP;
         }
+
+        log.error("URLEncoder.encode(urlBase64Encode, UTF-8): " + URLEncoder.encode(urlBase64Encode, "UTF-8"));
+        log.error("sig: " + checksum(secretKey, urlBase64Encode));
+        log.error("discourseSSOLoginURL: " + discourseSSOLoginURL);
+
         RedirectView redirectView = new RedirectView(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode));
 
         return redirectView;
