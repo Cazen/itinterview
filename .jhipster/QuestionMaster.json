@@ -14,10 +14,37 @@
             "otherEntityRelationshipName": "questionMaster"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "status",
+            "relationshipName": "category1",
             "otherEntityName": "commonCode",
-            "otherEntityField": "id"
+            "relationshipType": "many-to-one",
+            "otherEntityField": "cd_id"
+        },
+        {
+            "relationshipName": "category2",
+            "otherEntityName": "commonCode",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "cd_id"
+        },
+        {
+            "relationshipName": "category3",
+            "otherEntityName": "commonCode",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "cd_id"
+        },
+        {
+            "relationshipName": "author",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "LOGIN",
+            "ownerSide": true
+        },
+        {
+            "relationshipName": "questionMasterStatics",
+            "otherEntityName": "questionMasterStatics",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "questionMaster"
         }
     ],
     "fields": [
@@ -34,7 +61,7 @@
             "fieldType": "ZonedDateTime"
         },
         {
-            "fieldName": "author",
+            "fieldName": "status",
             "fieldType": "String"
         }
     ],

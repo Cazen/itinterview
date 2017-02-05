@@ -119,6 +119,18 @@
                                 <span >Up Wrong Answer</span>
                             </a>
                         </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="question-master-statics" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span >Question Master Statics</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="user-statics" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span >User Statics</span>
+                            </a>
+                        </li>
                         <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                     </ul>
                 </li>
@@ -142,7 +154,7 @@
                         <li ui-sref-active="active" ng-switch-when="true">
                             <a ui-sref="password" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-lock"></span>&nbsp;
-                                <span>Password</span>
+                                <span>비밀번호</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" ng-switch-when="true">
@@ -160,13 +172,13 @@
                         <li ui-sref-active="active" ng-switch-when="false">
                             <a href="" ng-click="vm.login()" id="login">
                                 <span class="glyphicon glyphicon-log-in"></span>&nbsp;
-                                <span>Sign in</span>
+                                <span>로그인</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" ng-switch-when="false">
                             <a ui-sref="register" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
-                                <span>Register</span>
+                                <span>회원가입</span>
                             </a>
                         </li>
                     </ul>
@@ -235,3 +247,4 @@
         </div>
     </div>
 </nav>
+<br style="display:block; margin-top:30px; line-height:30px; content: ' ';"></br>

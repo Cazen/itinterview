@@ -8,11 +8,35 @@
     -->
     <changeSet id="20161112173913-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="status_id"
+        <addForeignKeyConstraint baseColumnNames="category1_id"
                                  baseTableName="question_master"
-                                 constraintName="fk_question_master_status_id"
+                                 constraintName="fk_question_master_category1_id"
                                  referencedColumnNames="id"
                                  referencedTableName="common_code"/>
+
+        <addForeignKeyConstraint baseColumnNames="category2_id"
+                                 baseTableName="question_master"
+                                 constraintName="fk_question_master_category2_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="common_code"/>
+
+        <addForeignKeyConstraint baseColumnNames="category3_id"
+                                 baseTableName="question_master"
+                                 constraintName="fk_question_master_category3_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="common_code"/>
+
+        <addForeignKeyConstraint baseColumnNames="author_id"
+                                 baseTableName="question_master"
+                                 constraintName="fk_question_master_author_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="question_master_statics_id"
+                                 baseTableName="question_master"
+                                 constraintName="fk_question_master_question_master_statics_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="question_master_statics"/>
 
     </changeSet>
 </databaseChangeLog>

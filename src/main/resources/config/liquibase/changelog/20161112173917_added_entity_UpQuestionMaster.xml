@@ -48,6 +48,18 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="category1_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="category2_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="category3_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="up_question_master" columnName="c_time" columnDataType="datetime"/>

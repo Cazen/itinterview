@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+
+        <div id="form-container">
+
+            <div class="page-header text-center">
+                <h2>남은시간 : <timer countdown="300" interval="1000" finish-callback="timerFinished()">{{secondUnit}} </timer> </h2>
+
+                <!-- the links to our nested states using relative paths -->
+                <!-- add the active class if the state matches our ui-sref -->
+                <div id="status-buttons" class="text-center">
+                    <a ui-sref-active="active" ui-sref="tryQuestionNew.one"><span>1</span></a>
+                    <a ui-sref-active="active" ui-sref="tryQuestionNew.two"><span>2</span></a>
+                    <a ui-sref-active="active" ui-sref="tryQuestionNew.three"><span>3</span></a>
+                    <a ui-sref-active="active" ui-sref="tryQuestionNew.four"><span>4</span></a>
+                    <a ui-sref-active="active" ui-sref="tryQuestionNew.five"><span>5</span></a>
+                    <a ui-sref-active="active" ui-sref="tryQuestionNew.six"><span>6</span></a>
+                    <a ui-sref-active="active" ui-sref="tryQuestionNew.seven"><span>7</span></a>
+                </div>
+            </div>
+
+            <!-- use ng-submit to catch the form submission and use our Angular function -->
+            <form id="tryQuestionForm" ng-submit="submitTryQuestionForm()">
+                <input type="hidden" required="true" ng-model="formData.generatedId" ng-value="{{vm.questionMasterForUser.generatedId}}" ng-init="formData.generatedId=vm.questionMasterForUser.generatedId"/>
+                <input type="hidden" required="true" ng-model="formData.startTime" ng-value="{{vm.questionMasterForUser.startTime}}" ng-init="formData.startTime=vm.questionMasterForUser.generatedId"/>
+                <!-- our nested state views will be injected here -->
+                <div id="form-views" ui-view>
+                    <section class="panel panel-with-borders">
+                        <div class="panel-heading">
+                            <h3 class="text-center">반갑습니다 {{vm.account.login}} 님</h3>
+                        </div>
+                        <div class="panel-body">
+                            <section class="panel">
+                                <div class="panel-heading text-center">
+                                    <h3>5분동안 7문제를 풀어 Ranking을 확인하세요</h3>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <span>상단의 문제 번호를 눌러 시작합니다</span>
+                                </div>
+                            </section>
+                            <section class="panel">
+                                <div class="panel-heading text-center">
+                                    <h3>최종 점수는 ELO System을 통해 결정됩니다</h3>
+                                </div>
+                                <div class="panel-body text-center">
+                                    <span>문제별 난이도와 풀이시간을 통해 계산됩니다</span>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="panel-footer text-center">
+                            <span>문제 풀이 시 문의사항은 postmaster@itinterview.co.kr 으로 주세요</span>
+                        </div>
+                    </section>
+                </div>
+            </form>
+
+        </div>
+
+        <div align="center" ng-show="formData.answerOne != null && formData.answerTwo != null && formData.answerThree != null &&
+            formData.answerFour != null && formData.answerFive != null && formData.answerSix != null && formData.answerSeven != null">
+            <button type="submit" form="tryQuestionForm" class="btn btn-block btn-info">정답 제출    <span class="glyphicon glyphicon-ok"></span></button>
+        </div>
+
+        <p>
+
+        </p>
+
+        <div>
+          <pre>
+            {{ formData }}
+          </pre>
+        </div>
+    </div>
+</div>

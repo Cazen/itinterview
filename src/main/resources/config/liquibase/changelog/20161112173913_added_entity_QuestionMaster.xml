@@ -32,21 +32,34 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="c_time" type="timestamp">
+            <column name="c_time" type="timestamp" defaultValueDate="${now}">
                 <constraints nullable="true" />
             </column>
             
-            <column name="author" type="varchar(255)">
+            <column name="status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             
-            <column name="status_id" type="bigint">
+            <column name="category1_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
+            <column name="category2_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="category3_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="author_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="question_master_statics_id" type="bigint">
+                <constraints unique="true" nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="question_master" columnName="c_time" columnDataType="datetime"/>
         
     </changeSet>
 </databaseChangeLog>

@@ -1,0 +1,58 @@
+id;title;del_yn;status;category1_id;category2_id;category3_id;author_id;question_master_statics_id
+
+1000;Hive의 Software License는?;N;RUNNING;100;202;1201;3;NULL
+1001;Hive의 특징이 아닌것은?;N;TEST;100;202;1201;3;NULL
+1002;Hive의 장점이 아닌것은?;N;TEST;100;202;1201;3;NULL
+1003;다음 Hive에 관한 설명 중 틀린것은?;N;TEST;100;202;1201;3;NULL
+1004;Hive 구문에 관한 설명 중 옳은것은?;N;TEST;100;202;1201;3;NULL
+1005;다음 Hive에 관한 설명 중 틀린것은?;N;TEST;100;202;1201;3;NULL
+1006;다음 Hive 구문 중 틀린 것은?;N;TEST;100;202;1201;3;NULL
+1007;Hive Partitioning의 장점은?;N;TEST;100;202;1201;3;NULL
+1008;다음 Hive에 관한 설명 중 틀린것은?;N;TEST;100;202;1201;3;NULL
+1009;다음 Hive에 관한 설명 중 틀린것은?;N;TEST;100;202;1201;3;NULL
+1010;Dynamic Partition에 대한 다음 설명 중 틀린것은?;N;TEST;100;202;1201;3;NULL
+1011;DISTRIBUTE BY 구문에 대한 설명으로 옳은 것은?;N;TEST;100;202;1201;3;NULL
+1012;다음 중 Hive Module의 구성 요소가 아닌것은?;N;TEST;100;202;1201;3;NULL
+1013;Hive의 Database & Table Schema를 저장하는 곳의 명칭은?;N;TEST;100;202;1201;3;NULL
+1014;Hive 설정을 저장하는 xml file의 이름은?;N;TEST;100;202;1201;3;NULL
+1015;Hive shell command option 중, File로부터 HQL을 읽어와 실행하게 해주는 Option은?;N;TEST;100;202;1201;3;NULL
+1016;Hive shell command option 중, quoted query string을 실행하게 해주는 Option은?;N;TEST;100;202;1201;3;NULL
+1017;Hive에서 지원하지 않는 Datatype은?;N;TEST;100;202;1201;3;NULL
+1018;CREATE TABLE statement 작성 시, 각 row의 column이 tab(\t)으로 구분되어 있다면 사용해야 할 구문은?;N;TEST;100;202;1201;3;NULL
+1019;TEST Table을 생성하는 DDL 작성 시, 이미 Table이 존재한다면 skip하는 구문은?;N;TEST;100;202;1201;3;NULL
+1020;현재 존재하는 Database의 List를 확인하는 명령어는?;N;TEST;100;202;1201;3;NULL
+1021;Table의 Location와 schema를 확인할 수 있는 명령어는?;N;TEST;100;202;1201;3;NULL
+1022;Managed와 External Table에 대한 설명으로 옳은 것은?;N;TEST;100;202;1201;3;NULL
+1023;Hive Partitioning에 대한 설명으로 옳은 것은?;N;TEST;100;202;1201;3;NULL
+1024;SerDe에 대한 다음 설명 중 틀린 것은?;N;TEST;100;202;1201;3;NULL
+1025;Hive Table에 대한 다음 설명 중 옳은 것은?;N;TEST;100;202;1201;3;NULL
+1026;INSERT statement에 대한 다음 설명 중 틀린 것은?;N;TEST;100;202;1201;3;NULL
+1027;다음 중 Hive에서 사용이 불가능한 구문은?;N;TEST;100;202;1201;3;NULL
+1028;Hive Partition을 생성 시 고려해야 할 사항으로 적합하지 않은 것은?;N;TEST;100;202;1201;3;NULL
+1029;Hive를 strict mode로 설정 시(hive.mapred.mode=strict), 다음 중 틀린 설명은?;N;TEST;100;202;1201;3;NULL
+1030;Hive의 Compression에 대한 다음 설명 중 틀린것은?;N;TEST;100;202;1201;3;NULL
+1031;System.out.println(1+'a')의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1032;System.out.println(-1%2)의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1033;System.out.println(2.0-1.1)의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1034;System.out.println(1^1)의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1035;System.out.println('A' + 'B')의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1036;System.out.println("\n".length())의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1037;System.out.println(Float.NaN == Float.NaN)의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1038;System.out.println(Float.NaN - Float.NaN)의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1039;System.out.println(2 << 1)의 출력결과는?;N;TEST;100;200;1000;3;NULL
+1040;다음 중, Java 언어의 특징이 아닌것은?;N;TEST;100;200;1000;3;NULL
+1041;Java Reflection이란?;N;TEST;100;200;1000;3;NULL
+1042;Java Reflection의 사용 예로 적절한 것은?;N;TEST;100;200;1000;3;NULL
+1043;Java 자료 구조 중, 중복을 제거할 수 있는 자료 구조는?;N;TEST;100;200;1000;3;NULL
+1044;Java Generics에 대한 설명으로 옳은 것은?;N;TEST;100;200;1000;3;NULL
+1045;다음 중 검색이 가장 빠른 자료구조는?;N;TEST;100;200;1000;3;NULL
+1046;다음 설명 중 틀린것은?;N;TEST;100;200;1000;3;NULL
+1047;Java 프로그램에 대한 설명 중 틀린 것은?;N;TEST;100;200;1000;3;NULL
+1048;다음 return에 대한 설명 중 틀린 것은?;N;TEST;100;200;1000;3;NULL
+1049;import문으로 불러오지 않아도 사용이 가능한 Java의 Class는?;N;TEST;100;200;1000;3;NULL
+1050;상속에 대한 설명으로 틀린 것은?;N;TEST;100;200;1000;3;NULL
+1051;Override에 대한 설명 중 옳은 것은?;N;TEST;100;200;1000;3;NULL
+1052;다음 abstract class에 대한 설명 중 틀린 것은?;N;TEST;100;200;1000;3;NULL
+1053;Java에서의 stack과 heap에 대한 설명 중 옳은 것은?;N;TEST;100;200;1000;3;NULL
+1054;Static method에 대한 다음 설명 중 틀린 것은?;N;TEST;100;200;1000;3;NULL
+1055;Exception에 대한 다음 설명 중 옳지 않은 것은?;N;TEST;100;200;1000;3;NULL

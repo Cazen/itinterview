@@ -19,7 +19,7 @@ spring:
             enabled: false
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://104.198.116.192:3306/itinterview?useUnicode=true&characterEncoding=utf8&useSSL=false
+        url: jdbc:mysql://35.187.197.147:3306/itinterview?useUnicode=true&characterEncoding=utf8&useSSL=false
         name:
         username: cazen
         password: magic12#
@@ -44,10 +44,16 @@ spring:
         jcache:
             config: ehcache.xml
     mail:
-        host: localhost
-        port: 25
-        username:
-        password:
+        host: smtp.sparkpostmail.com
+        port: 2525
+        username: SMTP_Injection
+        password: 971aed62553b999269cb823273549b704152cbf6
+        protocol: smtp
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.sparkpostmail.com
     thymeleaf:
         cache: true
 
@@ -77,8 +83,8 @@ jhipster:
             # security key (this key should be unique for your application, and kept secret)
             key: 8356c1a893f3bd58afcdcccaff4e7079ff9e1b3f
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: itinterview@localhost
-        baseUrl: http://my-server-url-to-change # Modify according to your server's URL
+        from: no-reply@itinterview.co.kr
+        baseUrl: http://www.itinterview.co.kr # Modify according to your server's URL
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         graphite:

@@ -46,10 +46,16 @@ spring:
         jcache:
             config: ehcache.xml
     mail:
-        host: localhost
-        port: 25
-        username:
-        password:
+        host: smtp.sparkpostmail.com
+        port: 587
+        username: SMTP_Injection
+        password: 971aed62553b999269cb823273549b704152cbf6
+        protocol: smtp
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.sparkpostmail.com
     messages:
         cache-seconds: 1
     thymeleaf:
@@ -74,7 +80,7 @@ jhipster:
             # security key (this key should be unique for your application, and kept secret)
             key: 8356c1a893f3bd58afcdcccaff4e7079ff9e1b3f
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: itinterview@localhost
+        from: no-reply@itinterview.co.kr
         baseUrl: http://127.0.0.1:8080
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true

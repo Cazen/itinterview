@@ -5,7 +5,7 @@ import com.cazen.iti.domain.UpQuestionMaster;
 import com.cazen.iti.repository.UpQuestionMasterRepository;
 import com.cazen.iti.repository.UpRightAnswerRepository;
 import com.cazen.iti.repository.UpWrongAnswerRepository;
-import com.cazen.iti.service.CommonCodeService;
+import com.cazen.iti.repository.UploadQuestionRepository;
 import com.cazen.iti.service.UploadQustionService;
 import com.cazen.iti.service.UserService;
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ public class UploadQustionServiceImpl implements UploadQustionService {
     private UpWrongAnswerRepository upWrongAnswerRepository;
 
     @Inject
-    private CommonCodeService commonCodeService;
+    private UploadQuestionRepository uploadQuestionRepository;
 
     @Inject
     private UserService userService;
@@ -54,7 +54,7 @@ public class UploadQustionServiceImpl implements UploadQustionService {
         upQuestionMaster.setUser(userService.getUserWithAuthorities());
         upQuestionMaster.setcTime(ZonedDateTime.now());
         upQuestionMaster.setDelYn("N");
-        upQuestionMaster.setStatus(commonCodeService.findByCd_Id(Constants.QSTN_STAT_WAIT).getCdId());
+        upQuestionMaster.setStatus(uploadQuestionRepository.findByCd_Id(Constants.QSTN_STAT_WAIT).getCdId());
 
         upQuestionMaster.getUpRightAnswers().forEach(t -> {
             t.setDelYn("N");

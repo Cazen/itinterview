@@ -1,0 +1,64 @@
+<div>
+    <h2>User Statics</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="user-statics.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new User Statics
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Elo Rating</span></th>
+                    <th><span>User</span></th>
+                    <th><span>Category 3</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="userStatics in vm.userStatics track by userStatics.id">
+                    <td><a ui-sref="user-statics-detail({id:userStatics.id})">{{userStatics.id}}</a></td>
+                    <td>{{userStatics.eloRating}}</td>
+                    <td>
+                        {{userStatics.user.id}}
+                    </td>
+                    <td>
+                        <a ui-sref="common-code-detail({id:userStatics.category3.id})">{{userStatics.category3.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="user-statics-detail({id:userStatics.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="user-statics.edit({id:userStatics.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="user-statics.delete({id:userStatics.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

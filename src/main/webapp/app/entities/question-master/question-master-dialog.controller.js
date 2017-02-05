@@ -5,9 +5,9 @@
         .module('itinterviewApp')
         .controller('QuestionMasterDialogController', QuestionMasterDialogController);
 
-    QuestionMasterDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'QuestionMaster', 'RightAnswer', 'WrongAnswer', 'CommonCode'];
+    QuestionMasterDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'QuestionMaster', 'RightAnswer', 'WrongAnswer', 'CommonCode', 'User', 'QuestionMasterStatics'];
 
-    function QuestionMasterDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, QuestionMaster, RightAnswer, WrongAnswer, CommonCode) {
+    function QuestionMasterDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, QuestionMaster, RightAnswer, WrongAnswer, CommonCode, User, QuestionMasterStatics) {
         var vm = this;
 
         vm.questionMaster = entity;
@@ -18,6 +18,16 @@
         vm.rightanswers = RightAnswer.query();
         vm.wronganswers = WrongAnswer.query();
         vm.commoncodes = CommonCode.query();
+        vm.users = User.query();
+        vm.questionmasterstatics = QuestionMasterStatics.query({filter: 'questionmaster-is-null'});
+        $q.all([vm.questionMaster.$promise, vm.questionmasterstatics.$promise]).then(function() {
+            if (!vm.questionMaster.questionMasterStatics || !vm.questionMaster.questionMasterStatics.id) {
+                return $q.reject();
+            }
+            return QuestionMasterStatics.get({id : vm.questionMaster.questionMasterStatics.id}).$promise;
+        }).then(function(questionMasterStatics) {
+            vm.questionmasterstatics.push(questionMasterStatics);
+        });
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

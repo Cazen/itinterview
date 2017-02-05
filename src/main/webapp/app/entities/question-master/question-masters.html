@@ -22,8 +22,12 @@
                     <th jh-sort-by="title"><span>Title</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="delYn"><span>Del Yn</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="cTime"><span>C Time</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="author"><span>Author</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="status.id"><span>Status</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="status"><span>Status</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="category1.cd_id"><span>Category 1</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="category2.cd_id"><span>Category 2</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="category3.cd_id"><span>Category 3</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="author.LOGIN"><span>Author</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="questionMasterStatics.id"><span>Question Master Statics</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -33,9 +37,21 @@
                     <td>{{questionMaster.title}}</td>
                     <td>{{questionMaster.delYn}}</td>
                     <td>{{questionMaster.cTime | date:'medium'}}</td>
-                    <td>{{questionMaster.author}}</td>
+                    <td>{{questionMaster.status}}</td>
                     <td>
-                        <a ui-sref="common-code-detail({id:questionMaster.status.id})">{{questionMaster.status.id}}</a>
+                        <a ui-sref="common-code-detail({id:questionMaster.category1.id})">{{questionMaster.category1.cd_id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="common-code-detail({id:questionMaster.category2.id})">{{questionMaster.category2.cd_id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="common-code-detail({id:questionMaster.category3.id})">{{questionMaster.category3.cd_id}}</a>
+                    </td>
+                    <td>
+                        {{questionMaster.author.LOGIN}}
+                    </td>
+                    <td>
+                        <a ui-sref="question-master-statics-detail({id:questionMaster.questionMasterStatics.id})">{{questionMaster.questionMasterStatics.id}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

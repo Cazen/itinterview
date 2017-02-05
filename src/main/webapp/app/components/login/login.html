@@ -1,51 +1,87 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
             ng-click="vm.cancel()">&times;</button>
-    <h4 class="modal-title">Sign in</h4>
 </div>
-<div class="modal-body">
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <h1>Sign in</h1>
-        </div>
-        <div class="col-md-8 col-md-offset-2">
-            <div class="alert alert-danger" ng-show="vm.authenticationError">
-                <strong>Failed to sign in!</strong> Please check your credentials and try again.
-            </div>
-        </div>
-        <div class="col-md-6">
-            <form class="form" role="form" ng-submit="vm.login($event)">
-                <div class="form-group">
-                    <label for="username">Login</label>
-                    <input type="text" class="form-control" id="username" placeholder="Your username" ng-model="vm.username">
+<div class="page-content-inner single-page-login-alpha">
+    <!-- Login Alpha Page -->
+    <div class="single-page-block">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="col-md-4 col-md-offset-4">
+                    <h3 class="text-center">
+                        <i class="icmn-enter margin-right-10"></i>
+                        로그인
+                    </h3>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Your password"
-                           ng-model="vm.password">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="alert alert-danger" ng-show="vm.authenticationError">
+                        <strong>로그인에 실패했습니다</strong> ID/PW를 확인해 주세요
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="rememberMe">
-                        <input type="checkbox" id="rememberMe" ng-model="vm.rememberMe" checked>
-                        <span>Remember me</span>
-                    </label>
+
+                <div class="single-page-block-inner">
+                    <div class="single-page-block-form">
+
+                        <br/>
+                        <form class="form" role="form" ng-submit="vm.login($event)">
+                            <div class="form-group">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" placeholder="Your username" ng-model="vm.username">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control password" id="password" placeholder="Your password" ng-model="vm.password">
+                            </div>
+
+                            <div class="form-group">
+                                <a href="javascript: void(0);" class="pull-right link-blue link-underlined">Forgot Password?</a>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="rememberMe" ng-model="vm.rememberMe" checked>
+                                        Remember me
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary width-150">Sign In</button>
+                                <span class="register-link">
+                                    계정이 없다면 <a class="link-blue link-underlined" href="" ng-click="vm.register()">회원가입</a> 해주세요
+                                </span>
+                            </div>
+                        </form>
+                        <div class="form-group">
+                            <div class="social-login">
+                                    <span class="title">
+                                        소셜 계정으로 바로 로그인하세요
+                                    </span>
+                                <div class="social-container">
+
+                                    <jh-social ng-provider="facebook"></jh-social>
+                                    <jh-social ng-provider="linkedin"></jh-social>
+                                    <jh-social ng-provider="github"></jh-social>
+                                    <jh-social ng-provider="facebook"></jh-social>
+
+                                    <!--<a class="btn btn-icon" ng-provider="facebook">
+                                        <i class="icmn-facebook jh-social"></i>
+                                    </a>
+                                    <a href="javascript: void(0);" class="btn btn-icon">
+                                        <i class="icmn-google"></i>
+                                    </a>
+                                    <a href="javascript: void(0);" class="btn btn-icon">
+                                        <i class="icmn-windows"></i>
+                                    </a>
+                                    <a href="javascript: void(0);" class="btn btn-icon">
+                                        <i class="icmn-twitter"></i>
+                                    </a>-->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
-            </form>
-            <p></p>
-            <div class="alert alert-warning">
-                <a class="alert-link" href="" ng-click="vm.requestResetPassword()">Did you forget your password?</a>
             </div>
-            <div class="alert alert-warning">
-                You don't have an account yet? <a class="alert-link" href="" ng-click="vm.register()">Register a new account</a>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <br/>
-            <jh-social ng-provider="facebook"></jh-social><!--
-            <jh-social ng-provider="linkedin"></jh-social>
-            <jh-social ng-provider="twitter"></jh-social>-->
-            <!-- jhipster-needle-add-social-button -->
         </div>
     </div>
+    <!-- End Login Alpha Page -->
 </div>

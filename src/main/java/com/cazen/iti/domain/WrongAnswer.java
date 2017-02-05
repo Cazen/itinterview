@@ -1,5 +1,6 @@
 package com.cazen.iti.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -31,6 +32,8 @@ public class WrongAnswer implements Serializable {
     private CommonCode status;
 
     @ManyToOne
+    @JoinColumn(name = "questionMaster_Id")
+    @JsonBackReference
     private QuestionMaster questionMaster;
 
     public Long getId() {

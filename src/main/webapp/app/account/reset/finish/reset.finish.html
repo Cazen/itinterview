@@ -1,71 +1,71 @@
 <div>
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
-            <h1>Reset password</h1>
+            <h1>패스워드 재설정</h1>
 
             <div class="alert alert-danger" ng-show="vm.keyMissing">
-                <strong>The password reset key is missing.</strong>
+                <strong>패스워드 재설정 키가 없습니다</strong>
             </div>
 
             <div class="alert alert-warning" ng-hide="vm.success || vm.keyMissing">
-                <p>Choose a new password</p>
+                <p>새로운 패스워드를 고르세요</p>
             </div>
 
             <div class="alert alert-danger" ng-show="vm.error">
-                <p>Your password couldn't be reset. Remember a password request is only valid for 24 hours.</p>
+                <p>패스워드를 재설정할 수 없습니다. 재설정은 24시간 내 1번만 가능합니다</p>
             </div>
 
             <div class="alert alert-success" ng-show="vm.success">
-                <p><strong>Your password has been reset.</strong> Please <a class="alert-link" href="" ng-click="vm.login()">sign in</a>.</p>
+                <p><strong>패스워드가 성공적으로 변경되었습니다!</strong> <a class="alert-link" href="" ng-click="vm.login()">로그인</a> 해 주세요.</p>
             </div>
 
             <div class="alert alert-danger" ng-show="vm.doNotMatch">
-                The password and its confirmation do not match!
+                입력하신 패스워드가 서로 다릅니다!
             </div>
 
             <div ng-hide="vm.keyMissing">
                 <form ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.finishReset()" show-validation>
                     <div class="form-group">
-                        <label class="control-label" for="password">New password</label>
+                        <label class="control-label" for="password">패스워드 입력</label>
                         <input type="password" class="form-control" id="password" name="password" placeholder="New password"
                                ng-model="vm.resetAccount.password" ng-minlength=4 ng-maxlength=50 required>
                         <div ng-show="form.password.$dirty && form.password.$invalid">
                             <p class="help-block"
                                ng-show="form.password.$error.required">
-                                Your password is required.
+                                패스워드를 입력해 주세요.
                             </p>
                             <p class="help-block"
                                ng-show="form.password.$error.minlength">
-                                Your password is required to be at least 4 characters.
+                                패스워드는 최소 4글자 이상을 입력해 주세요.
                             </p>
                             <p class="help-block"
                                ng-show="form.password.$error.maxlength">
-                                Your password cannot be longer than 50 characters.
+                                패스워드는 50글자 이내로 입력해 주세요.
                             </p>
                         </div>
                         <password-strength-bar password-to-check="vm.resetAccount.password"></password-strength-bar>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label" for="confirmPassword">New password confirmation</label>
+                        <label class="control-label" for="confirmPassword">패스워드 확인</label>
                         <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm the new password"
                                ng-model="vm.confirmPassword" ng-minlength=4 ng-maxlength=50 required>
                         <div ng-show="form.confirmPassword.$dirty && form.confirmPassword.$invalid">
                             <p class="help-block"
                                ng-show="form.confirmPassword.$error.required">
-                                Your password confirmation is required.
+                                패스워드를 입력해 주세요.
                             </p>
                             <p class="help-block"
                                ng-show="form.confirmPassword.$error.minlength">
-                                Your password confirmation is required to be at least 4 characters.
+                                패스워드는 최소 4글자 이상을 입력해 주세요.
                             </p>
                             <p class="help-block"
                                ng-show="form.confirmPassword.$error.maxlength">
-                                Your password confirmation cannot be longer than 50 characters.
+                                패스워드는 50글자 이내로 입력해 주세요.
                             </p>
                         </div>
                     </div>
-                    <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Reset Password</button>
+                    <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">패스워드 재설정</button>
                 </form>
             </div>
 

@@ -1,0 +1,31 @@
+
+<div>
+    <h2><span>User Statics</span> {{vm.userStatics.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Elo Rating</span></dt>
+        <dd>
+            <span>{{vm.userStatics.eloRating}}</span>
+        </dd>
+        <dt><span>User</span></dt>
+        <dd>
+            {{vm.userStatics.user.id}}
+        </dd>
+        <dt><span>Category 3</span></dt>
+        <dd>
+            <a ui-sref="common-code-detail({id:vm.userStatics.category3.id})">{{vm.userStatics.category3.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="user-statics-detail.edit({id:vm.userStatics.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>

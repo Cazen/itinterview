@@ -1,0 +1,39 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "questionMaster",
+            "otherEntityName": "questionMaster",
+            "relationshipType": "one-to-one",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "questionMasterStatics"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "rightCount",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "wrongCount",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "upVoteCount",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "downVoteCount",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "eloRating",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20170110154825",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "question_master_statics",
+    "pagination": "no"
+}

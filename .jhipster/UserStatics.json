@@ -1,0 +1,29 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipName": "category3",
+            "otherEntityName": "commonCode",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "eloRating",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20170126041347",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "user_statics",
+    "pagination": "no"
+}

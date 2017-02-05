@@ -53,6 +53,15 @@ public class UpQuestionMaster implements Serializable {
     @ManyToOne
     private User user;
 
+    @ManyToOne
+    private CommonCode category1;
+
+    @ManyToOne
+    private CommonCode category2;
+
+    @ManyToOne
+    private CommonCode category3;
+
     public Long getId() {
         return id;
     }
@@ -187,6 +196,45 @@ public class UpQuestionMaster implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public CommonCode getCategory1() {
+        return category1;
+    }
+
+    public UpQuestionMaster category1(CommonCode commonCode) {
+        this.category1 = commonCode;
+        return this;
+    }
+
+    public void setCategory1(CommonCode commonCode) {
+        this.category1 = commonCode;
+    }
+
+    public CommonCode getCategory2() {
+        return category2;
+    }
+
+    public UpQuestionMaster category2(CommonCode commonCode) {
+        this.category2 = commonCode;
+        return this;
+    }
+
+    public void setCategory2(CommonCode commonCode) {
+        this.category2 = commonCode;
+    }
+
+    public CommonCode getCategory3() {
+        return category3;
+    }
+
+    public UpQuestionMaster category3(CommonCode commonCode) {
+        this.category3 = commonCode;
+        return this;
+    }
+
+    public void setCategory3(CommonCode commonCode) {
+        this.category3 = commonCode;
     }
 
     @Override

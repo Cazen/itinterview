@@ -98,7 +98,7 @@
                                 title: null,
                                 delYn: null,
                                 cTime: null,
-                                author: null,
+                                status: null,
                                 id: null
                             };
                         }

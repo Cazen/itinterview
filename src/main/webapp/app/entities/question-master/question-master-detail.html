@@ -16,13 +16,29 @@
         <dd>
             <span>{{vm.questionMaster.cTime | date:'medium'}}</span>
         </dd>
-        <dt><span>Author</span></dt>
-        <dd>
-            <span>{{vm.questionMaster.author}}</span>
-        </dd>
         <dt><span>Status</span></dt>
         <dd>
-            <a ui-sref="common-code-detail({id:vm.questionMaster.status.id})">{{vm.questionMaster.status.id}}</a>
+            <span>{{vm.questionMaster.status}}</span>
+        </dd>
+        <dt><span>Category 1</span></dt>
+        <dd>
+            <a ui-sref="common-code-detail({id:vm.questionMaster.category1.id})">{{vm.questionMaster.category1.cd_id}}</a>
+        </dd>
+        <dt><span>Category 2</span></dt>
+        <dd>
+            <a ui-sref="common-code-detail({id:vm.questionMaster.category2.id})">{{vm.questionMaster.category2.cd_id}}</a>
+        </dd>
+        <dt><span>Category 3</span></dt>
+        <dd>
+            <a ui-sref="common-code-detail({id:vm.questionMaster.category3.id})">{{vm.questionMaster.category3.cd_id}}</a>
+        </dd>
+        <dt><span>Author</span></dt>
+        <dd>
+            {{vm.questionMaster.author.LOGIN}}
+        </dd>
+        <dt><span>Question Master Statics</span></dt>
+        <dd>
+            <a ui-sref="question-master-statics-detail({id:vm.questionMaster.questionMasterStatics.id})">{{vm.questionMaster.questionMasterStatics.id}}</a>
         </dd>
     </dl>
 

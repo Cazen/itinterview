@@ -1,0 +1,64 @@
+<div>
+    <h2>Question Master Statics</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="question-master-statics.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Question Master Statics
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Right Count</span></th>
+                    <th><span>Wrong Count</span></th>
+                    <th><span>Up Vote Count</span></th>
+                    <th><span>Down Vote Count</span></th>
+                    <th><span>Elo Rating</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="questionMasterStatics in vm.questionMasterStatics track by questionMasterStatics.id">
+                    <td><a ui-sref="question-master-statics-detail({id:questionMasterStatics.id})">{{questionMasterStatics.id}}</a></td>
+                    <td>{{questionMasterStatics.rightCount}}</td>
+                    <td>{{questionMasterStatics.wrongCount}}</td>
+                    <td>{{questionMasterStatics.upVoteCount}}</td>
+                    <td>{{questionMasterStatics.downVoteCount}}</td>
+                    <td>{{questionMasterStatics.eloRating}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="question-master-statics-detail({id:questionMasterStatics.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="question-master-statics.edit({id:questionMasterStatics.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="question-master-statics.delete({id:questionMasterStatics.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

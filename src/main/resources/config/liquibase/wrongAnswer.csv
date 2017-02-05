@@ -1,0 +1,224 @@
+option_text;del_yn;status_id;question_master_id
+
+Apache License 1.0;N;2;1000
+Apache License 3.0;N;2;1000
+MIT License;N;2;1000
+Apache Free License;N;2;1000
+BSD License;N;2;1000
+GPL License;N;2;1000
+SQL 형식의 Query를 통해 질의한다;N;2;1001
+Hive 고유의 Command Line Tool을 제공한다;N;2;1001
+Apache Hadoop의 Sub-Project였다;N;2;1001
+Map Reduce로 Job을 관리할 때 보다 유지보수가 간편하다;N;2;1002
+SQL-Like Language를 제공하여 편리한 사용자 경험을 제공한다;N;2;1002
+확장을 위해 UDF, UDTF등을 사용할 수 있다;N;2;1002
+ORC나 Parquet등의 효율화된 Columnar storage format을 이용 가능하다;N;2;1002
+JOIN, Having, SubQuery, Union ALL을 지원한다;N;2;1003
+Nested Structure(Map, Array)를 지원한다;N;2;1003
+Partitioning을 통해 Full Scan을 방지할 수 있다;N;2;1003
+Parallel Option을 통해 Job을 병렬로 수행할 수 있다;N;2;1003
+SORT BY 구문을 통해 정렬 시 Reducer가 반드시 1개만 수행된다;N;2;1004
+Hive의 Group By 문은 반드시 Reducer에서만 실행이 가능하다;N;2;1004
+CREATE 문을 통해 TABLE을 생성 시, Init Check를 하기 위한 Location을 반드시 지정해야 한다;N;2;1004
+EXPLAIN을 Query 앞에 붙여 실행 계획을 확인할 수 있다;N;2;1005
+Execution Engine으로 MapReduce외의 다른 Engine을 선택할 수 있다;N;2;1005
+Hive 실행 계획은 Stage 단위로 분할되어 처리되게 된다;N;2;1005
+ADD JAR ${JarLocation};N;2;1006
+CREATE DATABASE ${databaseName};N;2;1006
+SET hive.map.aggr=true;N;2;1006
+SELECT * FROM tableA LIMIT 5;N;2;1006
+Data를 Partitioning하여 물리적 보안을 강화한다;N;2;1007
+Data를 Partitioning하여 Network 전송 시 보안을 강화한다;N;2;1007
+Data를 정렬된 상태로 유지하여 성능 향상에 도움을 준다;N;2;1007
+Data를 병렬로 Load할 수 있도록 도와준다;N;2;1007
+Multi Insert Statement의 사용이 가능하다(From Insert~ Insert~);N;2;1008
+Dynamic Partition의 사용이 가능하다;N;2;1008
+Static Partition의 사용이 가능하다;N;2;1008
+Parallel Execution을 통해 성능 향상이 가능하다;N;2;1009
+중간 처리 결과를 압축하여 성능 향상이 가능하다;N;2;1009
+Partitioning을 이용하여 성능 향상이 가능하다;N;2;1009
+Vectorization를 이용하여 성능 향상이 가능하다;N;2;1009
+hive.exec.dynamicpartition=true Option을 통해 사용이 가능하다;N;2;1010
+hive.exec.dynamicpartition.mode를 strict로 지정하더라도 Static Partition이 한개 이상 있을 시, Dynamic partition을 지정할 수 있다;N;2;1010
+Dynamic Partition을 기술한 순서대로 key=value 구조로 하위 Directory가 생성된다;N;2;1010
+Partition 지정 시, PARTITION clause 안에 파티션 키가 될 Column name을 기록한다;N;2;1010
+지정한 Column의 값이 같은 것은 동일한 Mapper로 처리가 가능하다;N;2;1011
+지정한 Column의 값이 같은 것은 동일한 SerDe/UDF로 처리가 가능하다;N;2;1011
+지정한 Column의 값이 같은 것은 동일한 Partitioner로 처리가 가능하다;N;2;1011
+JDBC;N;2;1012
+ODBC;N;2;1012
+Thrift Server;N;2;1012
+CLI;N;2;1012
+Beeline;N;2;1013
+Hive CLI;N;2;1013
+RDB;N;2;1013
+Bootstrap;N;2;1013
+HDFS;N;2;1013
+hive-setting.xml;N;2;1014
+hive-settings.xml;N;2;1014
+hive-config.xml;N;2;1014
+hive-keyval.xml;N;2;1014
+hive -d;N;2;1015
+hive -q;N;2;1015
+hive -e;N;2;1015
+hive -l;N;2;1015
+hive -d;N;2;1016
+hive -q;N;2;1016
+hive -f;N;2;1016
+hive -l;N;2;1016
+BOOLEAN;N;2;1017
+TIMESTAMP;N;2;1017
+VARCHAR;N;2;1017
+MAP type;N;2;1017
+LINES TERMINATED BY '\t';N;2;1018
+COLLECTION ITEMS TERMINATED BY '\t';N;2;1018
+COLUMN TERMINATED BY '\t';N;2;1018
+ITEMS TERMINATED BY '\t';N;2;1018
+CREATE TABLE WITH IGNORE TEST;N;2;1019
+CREATE TABLE WITH NO ERROR TEST;N;2;1019
+CREATE TABLE AS IGNORE TEST;N;2;1019
+CREATE TABLE LIKE TEST;N;2;1019
+list databases;N;2;1020
+view databases;N;2;1020
+list all databases;N;2;1020
+all databases;N;2;1020
+show tableName;N;2;1021
+info tableName;N;2;1021
+about tableName;N;2;1021
+location tableName;N;2;1021
+Managed는 HDFS내에 Data가 위치하지만 External은 외부에 위치한다;N;2;1022
+Managed는 Table의 Configuration을 변경가능하지만 External은 그렇지 않다;N;2;1022
+Managed는 Cluster 내부에서 직접 생성한 Table이고, External은 외부에서 만든 Table을 Loading 한 Table이다;N;2;1022
+External Table은 Managed Table로 변경할 수 있지만, Managed Table은 External로 변경할 수 없다;N;2;1022
+Managed Table은 External Table로 변경할 수 있지만, External Table은 Managed로 변경할 수 없다;N;2;1022
+가장 앞 Column의 값을 기반으로 Partitioning 하여 저장한다;N;2;1023
+Dynamic Partition의 경우, SHOW PARTITIONS 명령어의 사용이 불가능하다;N;2;1023
+WHERE 조건절에는 1개 이상의 PARTITION FILTER의 사용이 불가능하다;N;2;1023
+EXTERNAL Table의 경우 Partition 추가가 불가능하다;N;2;1023
+SerDe에게 Properties를 넘겨주기 위해 WITH SERDEPROPERTIES 구문을 사용한다;N;2;1024
+ROW FORMAT SERDE 구문으로 사용이 가능하다;N;2;1024
+Serializer/Deserializer의 약어이다;N;2;1024
+기본적으로 Hive는 LazySimpleSerDe를 사용한다;N;2;1024
+Hive Table의 이름은 변경할 수 없다;N;2;1025
+Database Location 밑에 Hive Table Name으로 Directory가 만들어지고 이 밑에 Data가 저장된다;N;2;1025
+External Table의 경우 기존 존재하는 Partition을 변경할 수 없다;N;2;1025
+Table 내의 Column에는 Comments를 달 수 있지만, Table 자체에는 불가능하다;N;2;1025
+INSERT OVERWRITE 구문을 통해 해당 Partition(or Table)의 Data를 교체할 수 있다;N;2;1026
+INSERT INTO 구문을 사용하여 기존 존재하는 Partition(or Table)에 Data를 추가할 수 있다;N;2;1026
+Multi Insert Statements를 지원한다;N;2;1026
+Dynamic Partition Insert Statements를 지원한다;N;2;1026
+HAVING;N;2;1027
+RLIKE;N;2;1027
+GROUP BY;N;2;1027
+LEFT OUTER JOIN;N;2;1027
+WHERE 절에 주로 걸리는 조건 위주로 Partition을 생성한다;N;2;1028
+Data type에 따라 2단계 혹은 3단계 이상의 Partition을 고려해 보는것도 좋다;N;2;1028
+ETL 작업 시, 일자별 Table을 관리하는 것보다 Partitioning을 사용하는 것이 좋다;N;2;1028
+Dynamic Partition 사용 시, Partition의 최대 갯수를 제한할 수 있다;N;2;1028
+Partitioned Table의 경우 WHERE절에 Partition Filter를 포함해야 한다;N;2;1029
+ORDER BY절을 사용 시 반드시 LIMIT 절을 포함 해야 한다;N;2;1029
+CARTESIAN PRODUCT JOIN을 수행할 수 없다;N;2;1029
+hive.exec.compress.intermediate Option을 통해 중간 파일의 압축 여부를 결정할 수 있다;N;2;1030
+hive.exec.compress.output Option을 통해 중간 파일의 압축 여부를 결정할 수 있다;N;2;1030
+압축속도와 압축률은 대부분 반비례 관계이기 때문에 특성에 맞는 압축 방식을 사용해야 한다;N;2;1030
+snappy 압축방식의 경우 CPU usage가 낮고, 성능이 좋아 중간 파일의 압축에 많이 사용된다;N;2;1030
+1a;N;2;1031
+1'a';N;2;1031
+b;N;2;1031
+2;N;2;1031
+0;N;2;1032
+2;N;2;1032
+1;N;2;1032
+Runtime Error;N;2;1032
+0.1;N;2;1033
+0.10;N;2;1033
+0.0;N;2;1033
+Runtime Error;N;2;1033
+0;N;2;1033
+1;N;2;1034
+-1;N;2;1034
+2;N;2;1034
+Runtime Error;N;2;1034
+Runtime Error;N;2;1035
+AB;N;2;1035
+0;N;2;1035
+C;N;2;1035
+2;N;2;1036
+0;N;2;1036
+-1;N;2;1036
+Runtime Error;N;2;1036
+Runtime Error;N;2;1037
+true;N;2;1037
+NaN;N;2;1037
+0;N;2;1038
+1;N;2;1038
+-1;N;2;1038
+99999999999.099;N;2;1038
+Runtime Error;N;2;1038
+Runtime Error;N;2;1039
+0;N;2;1039
+1;N;2;1039
+2;N;2;1039
+Object Oriented Programming Language 이다;N;2;1040
+Garbage Collection을 지원한다;N;2;1040
+Write once, run anywhere;N;2;1040
+Multi-Thread를 지원한다;N;2;1040
+Collection 내부의 Item을 순차적으로 처리할 수 있도록 하는 방법;N;2;1041
+작성한 Code를 다른 Method에 반영하는 방법;N;2;1041
+다른 Platform으로 이식 시, 코드의 추가 수정 없이 동작하도록 하는 방법;N;2;1041
+test.forEach(t -> System.out.println(t));N;2;1042
+@Override;N;2;1042
+private Test<?> testObjectList;N;2;1042
+public interface InterfaceClass extends AnyClass;N;2;1042
+List;N;2;1043
+Map;N;2;1043
+Array;N;2;1043
+Stack;N;2;1043
+Class의 Name을 바탕으로 Class의 Infomation을 획득하는 것;N;2;1044
+다중 상속을 우회하여 사용할 수 있도록 지원하는 것;N;2;1044
+Native C Library를 사용할 수 있게 하는 것;N;2;1044
+Stop the world 시 발생하는 오차를 보정하는 것;N;2;1044
+Stack;N;2;1045
+ArrayList;N;2;1045
+Vector;N;2;1045
+Set;N;2;1045
+현재 Version의 Java는 Lambda를 지원한다;N;2;1046
+Gabage collection을 자동으로 지원한다;N;2;1046
+James Arthur Gosling은 Java의 창시자 중 한명이다;N;2;1046
+최초 Sun Microsystems 에서 개발되었다;N;2;1046
+Application에는 1개 이상의 Main method가 필요하다;N;2;1047
+단순 입출력의 경우에도 Class 내부에 구현을 명시해야 한다;N;2;1047
+Object-Oriented 방식으로 구현한다;N;2;1047
+변수의 첫 문자를 숫자로 지정할 수 없다;N;2;1047
+null을 return할 수 있다;N;2;1048
+object를 return할 수 있다;N;2;1048
+아무것도 return하지 않을 수 있다;N;2;1048
+기본 자료형을 return할 수 있다;N;2;1048
+java.system;N;2;1049
+java.inout;N;2;1049
+java.default;N;2;1049
+java.include;N;2;1049
+java.awt;N;2;1049
+상속받은 class는 모든 public 변수와 method를 상속한다;N;2;1050
+하위 class는 상위 class를 구체화 한다;N;2;1050
+final class는 상속이 불가능하;N;2;1050
+공통 기능을 상위 class에 구현할 수 있기 때문에 코드가 간결해진다;N;2;1050
+public method를 private로 override할 수 있다;N;2;1051
+Method overloading과 동일한 개념이다;N;2;1051
+Method 인자는 상위 class와 같게 하고 Return Type은 사용자가 정할 수 있다;N;2;1051
+Method 인자는 상위 class와 다를 수 있지만 Return Type은 동일해야 한다;N;2;1052
+method도 abstract로 지정할 수 있다;N;2;1052
+abstract method는 abstract class 내부에만 구현할 수 있다;N;2;1052
+abstract method로 선언된 것은 하위 class에서 모두 구현해야 한다;N;2;1052
+모든 method 호출은 heap에 저장된다;N;2;1053
+모든 local variable은 heap에 저장된다;N;2;1053
+Stack에서 주기적으로 gabage collection이 일어난다;N;2;1053
+원시자료형은 모두 stack에 저장된다;N;2;1053
+Main method는 항상 static으로 지정한다;N;2;1054
+Class를 instance화 하지 않고도 사용이 가능하다;N;2;1054
+Static method에서는 instance variable을 사용할 수 없다;N;2;1054
+Static method의 대표적인 예로 Math 관련 method가 있다;N;2;1054
+Try-catch statement로 감싸 처리한다;N;2;1055
+throws로 method를 call한곳으로 던져 처리한다;N;2;1055
+Exception도 객체이다;N;2;1055
+throws statement에서 여러개의 Exception을 선언할 수 있다;N;2;1055
