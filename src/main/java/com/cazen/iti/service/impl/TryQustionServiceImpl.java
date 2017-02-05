@@ -33,6 +33,7 @@ public class TryQustionServiceImpl implements TryQustionService {
     public List<CommonCode> getCategory123CommonCodeList() {
         log.debug("Request to get category123CommonCode : {}");
         List<CommonCode> category123CommonCodeList = tryQuestionRepository.getCategory123CommonCodeList();
+        log.debug("getCategory123CommonCodeList has been runned: {}", category123CommonCodeList);
         return category123CommonCodeList;
     }
 
