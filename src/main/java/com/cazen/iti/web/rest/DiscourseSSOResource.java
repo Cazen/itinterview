@@ -59,10 +59,12 @@ public class DiscourseSSOResource {
         String payload = request.getParameter("sso");
         String sig = request.getParameter("sig");
         if (payload == null || sig == null) {
+            log.error("payload : {}", payload, ", sig : {}", sig);
             response.getWriter().println("error parameter");
             return new RedirectView("http://itinterview.co.kr/#/register");
         }
         if (!checksum(secretKey, payload).equals(sig)) {
+            log.error("secretKey : {}", secretKey, ", payload : {}", payload, ", sig : {}", sig);
             response.getWriter().println("checksum failed");
             return new RedirectView("http://itinterview.co.kr/#/register");
         }
@@ -70,6 +72,7 @@ public class DiscourseSSOResource {
         String nonce = new String(Base64.decodeBase64(urlDecode));
         User signedInUser = userService.getUserWithAuthorities();
         if (signedInUser == null){
+            log.error("signedInUser is null");
             response.getWriter().println("no user founded");
             return new RedirectView("http://itinterview.co.kr/#/register");
         }
