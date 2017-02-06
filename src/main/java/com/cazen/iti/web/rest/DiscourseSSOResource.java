@@ -1,7 +1,6 @@
 package com.cazen.iti.web.rest;
 
 import com.cazen.iti.domain.User;
-import com.cazen.iti.security.SecurityUtils;
 import com.cazen.iti.service.UserService;
 import com.codahale.metrics.annotation.Timed;
 import org.apache.commons.codec.binary.Base64;
@@ -23,6 +22,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
 
 /**
  * REST controller for managing Discourse(forum) SSO.
@@ -47,7 +47,7 @@ public class DiscourseSSOResource {
     @GetMapping("/sso")
     @Timed
     public RedirectView returnSSOInformation(HttpServletRequest request,
-                                                HttpServletResponse response) throws Exception {
+                                                HttpServletResponse response, Principal principal) throws Exception {
         log.error("REST request getting SSO Information : {}", request);
 
         String secretKey = "cazen_discourse_SSO_ScretKey!@#";
@@ -69,7 +69,7 @@ public class DiscourseSSOResource {
         }
         String urlDecode = URLDecoder.decode(payload, "UTF-8");
         String nonce = new String(Base64.decodeBase64(urlDecode));
-        log.error("Cazen SecurityUtils.getCurrentUserLogin() in discourse = " + SecurityUtils.getCurrentUserLogin());
+        log.error("Cazen SecurityUtils.getCurrentUserLogin() in discourse = " + principal.getName());
         User signedInUser = userService.getUserWithAuthorities();
         if (signedInUser == null){
             response.getWriter().println("no user founded");
