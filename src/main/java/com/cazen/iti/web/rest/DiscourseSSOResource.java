@@ -8,6 +8,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
@@ -45,7 +47,7 @@ public class DiscourseSSOResource {
      */
     @GetMapping("/sso")
     @Timed
-    public RedirectView returnSSOInformation(@RequestParam(value = "sso") String payload, @RequestParam(value = "sig") String sig) throws Exception {
+    public ResponseEntity<Void> returnSSOInformation(@RequestParam(value = "sso") String payload, @RequestParam(value = "sig") String sig) throws Exception {
 
         String secretKey = "cazen_discourse_SSO_ScretKey!@#";
         String discourseURL = "http://discourse.itinterview.co.kr";
@@ -56,11 +58,13 @@ public class DiscourseSSOResource {
 
         if (payload == null || sig == null) {
             //response.getWriter().println("error parameter");
-            return new RedirectView("http://itinterview.co.kr/#/register");
+            return ResponseEntity.created(new URI("http://itinterview.co.kr/#/register")).build();
+            //return new RedirectView("http://itinterview.co.kr/#/register");
         }
         if (!checksum(secretKey, payload).equals(sig)) {
             //response.getWriter().println("checksum failed");
-            return new RedirectView("http://itinterview.co.kr/#/register");
+            return ResponseEntity.created(new URI("http://itinterview.co.kr/#/register")).build();
+            //return new RedirectView("http://itinterview.co.kr/#/register");
         }
         String urlDecode = URLDecoder.decode(payload, "UTF-8");
         String nonce = new String(Base64.decodeBase64(urlDecode));
@@ -68,7 +72,8 @@ public class DiscourseSSOResource {
         User signedInUser = userService.getUserWithAuthorities();
         if (signedInUser == null){
             //response.getWriter().println("no user founded");
-            return new RedirectView("http://itinterview.co.kr/#/register");
+            return ResponseEntity.created(new URI("http://itinterview.co.kr/#/register")).build();
+            //return new RedirectView("http://itinterview.co.kr/#/register");
         }
 
         log.error("SSO Called with signedInUser: " + signedInUser.toString());
@@ -87,8 +92,8 @@ public class DiscourseSSOResource {
             length += STEP;
         }
         RedirectView redirectView = new RedirectView(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode));
-
-        return redirectView;
+        return ResponseEntity.created(new URI(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode))).build();
+        //return redirectView;
     }
 
     String checksum(String macKey, String macData) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
