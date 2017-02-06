@@ -1,6 +1,7 @@
 package com.cazen.iti.web.rest;
 
 import com.cazen.iti.domain.User;
+import com.cazen.iti.security.SecurityUtils;
 import com.cazen.iti.service.UserService;
 import com.codahale.metrics.annotation.Timed;
 import org.apache.commons.codec.binary.Base64;
@@ -68,6 +69,7 @@ public class DiscourseSSOResource {
         }
         String urlDecode = URLDecoder.decode(payload, "UTF-8");
         String nonce = new String(Base64.decodeBase64(urlDecode));
+        log.error("Cazen SecurityUtils.getCurrentUserLogin() in discourse = " + SecurityUtils.getCurrentUserLogin());
         User signedInUser = userService.getUserWithAuthorities();
         if (signedInUser == null){
             response.getWriter().println("no user founded");
