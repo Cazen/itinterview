@@ -46,7 +46,7 @@ public class DiscourseSSOResource {
      */
     @GetMapping("/sso")
     @Timed
-    protected RedirectView returnSSOInformation(HttpServletRequest request,
+    public RedirectView returnSSOInformation(HttpServletRequest request,
                                                 HttpServletResponse response) throws Exception {
         log.error("REST request getting SSO Information : {}", request);
 

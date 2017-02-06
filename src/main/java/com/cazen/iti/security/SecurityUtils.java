@@ -26,7 +26,6 @@ public final class SecurityUtils {
             if (authentication.getPrincipal() instanceof UserDetails) {
                 UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
                 userName = springSecurityUser.getUsername();
-                System.out.println("Cazen springSecurityUser.getUsername() = " + springSecurityUser.getUsername());
             } else if (authentication.getPrincipal() instanceof String) {
                 userName = (String) authentication.getPrincipal();
                 System.out.println("Cazen authentication.getPrincipal() = " + authentication.getPrincipal());
