@@ -16,10 +16,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import javax.inject.Inject;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Service class for managing users.
@@ -201,6 +204,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public User getUserWithAuthorities() {
         Optional<User> optionalUser = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
+        log.error("Cazen optionalUser = " + optionalUser.toString());
         User user = null;
         if (optionalUser.isPresent()) {
           user = optionalUser.get();
