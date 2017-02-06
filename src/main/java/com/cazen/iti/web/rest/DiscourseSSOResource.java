@@ -1,6 +1,7 @@
 package com.cazen.iti.web.rest;
 
 import com.cazen.iti.domain.User;
+import com.cazen.iti.security.SecurityUtils;
 import com.cazen.iti.service.UserService;
 import com.codahale.metrics.annotation.Timed;
 import org.apache.commons.codec.binary.Base64;
@@ -9,20 +10,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.Principal;
 
 /**
  * REST controller for managing Discourse(forum) SSO.
@@ -39,16 +38,14 @@ public class DiscourseSSOResource {
     /**
      * GET  /sso : Return SSO Information.
      *
-     * @param request  the HttpServletRequest
-     * @param response the HttpServletResponse
+     * @param payload  the HttpServletRequest
+     * @param sig the HttpServletResponse
      * @return ModelAndView with SSO information
      * @throws Exception fucking exception
      */
     @GetMapping("/sso")
     @Timed
-    public RedirectView returnSSOInformation(HttpServletRequest request,
-                                                HttpServletResponse response, Principal principal) throws Exception {
-        log.error("REST request getting SSO Information : {}", request);
+    public RedirectView returnSSOInformation(@RequestParam(value = "sso") String payload, @RequestParam(value = "sig") String sig) throws Exception {
 
         String secretKey = "cazen_discourse_SSO_ScretKey!@#";
         String discourseURL = "http://discourse.itinterview.co.kr";
@@ -57,22 +54,20 @@ public class DiscourseSSOResource {
         }
         String discourseSSOLoginURL = discourseURL + "/session/sso_login?sso=";
 
-        String payload = request.getParameter("sso");
-        String sig = request.getParameter("sig");
         if (payload == null || sig == null) {
-            response.getWriter().println("error parameter");
+            //response.getWriter().println("error parameter");
             return new RedirectView("http://itinterview.co.kr/#/register");
         }
         if (!checksum(secretKey, payload).equals(sig)) {
-            response.getWriter().println("checksum failed");
+            //response.getWriter().println("checksum failed");
             return new RedirectView("http://itinterview.co.kr/#/register");
         }
         String urlDecode = URLDecoder.decode(payload, "UTF-8");
         String nonce = new String(Base64.decodeBase64(urlDecode));
-        log.error("Cazen SecurityUtils.getCurrentUserLogin() in discourse = " + principal.getName());
+        log.error("Cazen SecurityUtils.getCurrentUserLogin() in discourse = " + SecurityUtils.getCurrentUserLogin());
         User signedInUser = userService.getUserWithAuthorities();
         if (signedInUser == null){
-            response.getWriter().println("no user founded");
+            //response.getWriter().println("no user founded");
             return new RedirectView("http://itinterview.co.kr/#/register");
         }
 
