@@ -47,7 +47,7 @@ public class DiscourseSSOResource {
      */
     @GetMapping("/sso")
     @Timed
-    public ResponseEntity<Void> returnSSOInformation(@RequestParam(value = "sso") String payload, @RequestParam(value = "sig") String sig) throws Exception {
+    public RedirectView returnSSOInformation(@RequestParam(value = "sso") String payload, @RequestParam(value = "sig") String sig) throws Exception {
 
         String secretKey = "cazen_discourse_SSO_ScretKey!@#";
         String discourseURL = "http://discourse.itinterview.co.kr";
@@ -57,23 +57,17 @@ public class DiscourseSSOResource {
         String discourseSSOLoginURL = discourseURL + "/session/sso_login?sso=";
 
         if (payload == null || sig == null) {
-            //response.getWriter().println("error parameter");
-            return ResponseEntity.created(new URI("http://itinterview.co.kr/#/register")).build();
-            //return new RedirectView("http://itinterview.co.kr/#/register");
+            return new RedirectView("http://itinterview.co.kr/#/register");
         }
         if (!checksum(secretKey, payload).equals(sig)) {
-            //response.getWriter().println("checksum failed");
-            return ResponseEntity.created(new URI("http://itinterview.co.kr/#/register")).build();
-            //return new RedirectView("http://itinterview.co.kr/#/register");
+            return new RedirectView("http://itinterview.co.kr/#/register");
         }
         String urlDecode = URLDecoder.decode(payload, "UTF-8");
         String nonce = new String(Base64.decodeBase64(urlDecode));
         log.error("Cazen SecurityUtils.getCurrentUserLogin() in discourse = " + SecurityUtils.getCurrentUserLogin());
         User signedInUser = getSignedInUser();
         if (signedInUser == null){
-            //response.getWriter().println("no user founded");
-            return ResponseEntity.created(new URI("http://itinterview.co.kr/#/register")).build();
-            //return new RedirectView("http://itinterview.co.kr/#/register");
+            return new RedirectView("http://itinterview.co.kr/#/register");
         }
 
         log.error("SSO Called with signedInUser: " + signedInUser.toString());
@@ -92,8 +86,7 @@ public class DiscourseSSOResource {
             length += STEP;
         }
         RedirectView redirectView = new RedirectView(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode));
-        return ResponseEntity.created(new URI(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode))).build();
-        //return redirectView;
+        return redirectView;
     }
 
     private User getSignedInUser() {
