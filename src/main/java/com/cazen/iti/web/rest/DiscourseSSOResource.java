@@ -8,11 +8,11 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -34,7 +34,8 @@ public class DiscourseSSOResource {
 
     @Inject
     private UserService userService;
-
+    @Inject
+    private SecurityUtils securityUtils;
     /**
      * GET  /sso : Return SSO Information.
      *
@@ -45,7 +46,7 @@ public class DiscourseSSOResource {
      */
     @GetMapping("/sso")
     @Timed
-    public RedirectView returnSSOInformation(@RequestParam(value = "sso") String payload, @RequestParam(value = "sig") String sig) throws Exception {
+    public ResponseEntity<Void> returnSSOInformation(@RequestParam(value = "sso") String payload, @RequestParam(value = "sig") String sig) throws Exception {
 
         String secretKey = "cazen_discourse_SSO_ScretKey!@#";
         String discourseURL = "http://discourse.itinterview.co.kr";
@@ -55,17 +56,21 @@ public class DiscourseSSOResource {
         String discourseSSOLoginURL = discourseURL + "/session/sso_login?sso=";
 
         if (payload == null || sig == null) {
-            return new RedirectView("http://itinterview.co.kr/#/register");
+            return ResponseEntity.ok().header("Location", "http://itinterview.co.kr/#/register").build();
         }
         if (!checksum(secretKey, payload).equals(sig)) {
-            return new RedirectView("http://itinterview.co.kr/#/register");
+            return ResponseEntity.ok().header("Location", "http://itinterview.co.kr/#/register").build();
         }
         String urlDecode = URLDecoder.decode(payload, "UTF-8");
         String nonce = new String(Base64.decodeBase64(urlDecode));
+
         log.error("Cazen SecurityUtils.getCurrentUserLogin() in discourse = " + SecurityUtils.getCurrentUserLogin());
-        User signedInUser = getSignedInUser();
-        if (signedInUser == null){
-            return new RedirectView("http://itinterview.co.kr/#/register");
+
+        User signedInUser;
+        if(SecurityUtils.isAuthenticated()) {
+            signedInUser = userService.getUserWithAuthorities();
+        } else {
+            return ResponseEntity.ok().header("Location", "http://itinterview.co.kr/#/register").build();
         }
 
         log.error("SSO Called with signedInUser: " + signedInUser.toString());
@@ -83,13 +88,12 @@ public class DiscourseSSOResource {
             urlBase64Encode += urlBase64.substring(length, length + STEP < maxLength ? length + STEP : maxLength) + "\n";
             length += STEP;
         }
-        RedirectView redirectView = new RedirectView(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode));
-        return redirectView;
+        //RedirectView redirectView = new RedirectView(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode));
+        return ResponseEntity.ok().header("Location", discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode)).build();
+        //return ResponseEntity.created(new URI("http://itinterview.co.kr/#/register")).build();
+        //return redirectView;
     }
 
-    private User getSignedInUser() {
-        return userService.getUserWithAuthorities();
-    }
 
     private String checksum(String macKey, String macData) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
         Mac mac = Mac.getInstance("HmacSHA256");
