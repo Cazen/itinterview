@@ -34,8 +34,7 @@ public class DiscourseSSOResource {
 
     @Inject
     private UserService userService;
-    @Inject
-    private SecurityUtils securityUtils;
+
     /**
      * GET  /sso : Return SSO Information.
      *
