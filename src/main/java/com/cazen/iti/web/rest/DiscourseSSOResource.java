@@ -69,7 +69,7 @@ public class DiscourseSSOResource {
         String urlDecode = URLDecoder.decode(payload, "UTF-8");
         String nonce = new String(Base64.decodeBase64(urlDecode));
         log.error("Cazen SecurityUtils.getCurrentUserLogin() in discourse = " + SecurityUtils.getCurrentUserLogin());
-        User signedInUser = userService.getUserWithAuthorities();
+        User signedInUser = getSignedInUser();
         if (signedInUser == null){
             //response.getWriter().println("no user founded");
             return ResponseEntity.created(new URI("http://itinterview.co.kr/#/register")).build();
@@ -96,7 +96,11 @@ public class DiscourseSSOResource {
         //return redirectView;
     }
 
-    String checksum(String macKey, String macData) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
+    private User getSignedInUser() {
+        return userService.getUserWithAuthorities();
+    }
+
+    private String checksum(String macKey, String macData) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
         Mac mac = Mac.getInstance("HmacSHA256");
         byte[] keyBytes = macKey.getBytes("UTF-8");
         byte[] dataBytes = macData.getBytes("UTF-8");
