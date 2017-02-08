@@ -8,6 +8,8 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,6 +70,7 @@ public class DiscourseSSOResource {
 
         User signedInUser;
         if(SecurityUtils.isAuthenticated()) {
+            log.error("Authenticated");
             signedInUser = userService.getUserWithAuthorities();
         } else {
             return ResponseEntity.ok().location(new URI("http://itinterview.co.kr/#/register")).build();
@@ -89,7 +92,12 @@ public class DiscourseSSOResource {
             length += STEP;
         }
         //RedirectView redirectView = new RedirectView(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode));
-        return ResponseEntity.ok().location(new URI(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode))).build();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(new URI(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode)));
+        return new ResponseEntity<>(httpHeaders, HttpStatus.MOVED_PERMANENTLY);
+
+
+        //return ResponseEntity.ok().location(new URI(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode))).build();
         //return ResponseEntity.created(new URI("http://itinterview.co.kr/#/register")).build();
         //return redirectView;
     }
