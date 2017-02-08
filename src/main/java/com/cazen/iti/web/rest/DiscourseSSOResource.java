@@ -58,9 +58,11 @@ public class DiscourseSSOResource {
         String discourseSSOLoginURL = discourseURL + "/session/sso_login?sso=";
 
         if (payload == null || sig == null) {
+            log.error("1");
             return ResponseEntity.ok().location(new URI("http://itinterview.co.kr/#/register")).build();
         }
         if (!checksum(secretKey, payload).equals(sig)) {
+            log.error("2");
             return ResponseEntity.ok().location(new URI("http://itinterview.co.kr/#/register")).build();
         }
         String urlDecode = URLDecoder.decode(payload, "UTF-8");
@@ -73,6 +75,7 @@ public class DiscourseSSOResource {
             log.error("Authenticated");
             signedInUser = userService.getUserWithAuthorities();
         } else {
+            log.error("3");
             return ResponseEntity.ok().location(new URI("http://itinterview.co.kr/#/register")).build();
         }
 
@@ -94,6 +97,7 @@ public class DiscourseSSOResource {
         //RedirectView redirectView = new RedirectView(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode));
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(new URI(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode)));
+        log.error("4");
         return new ResponseEntity<>(httpHeaders, HttpStatus.MOVED_PERMANENTLY);
 
 
