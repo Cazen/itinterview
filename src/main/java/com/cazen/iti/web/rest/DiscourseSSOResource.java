@@ -18,6 +18,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
@@ -55,10 +56,10 @@ public class DiscourseSSOResource {
         String discourseSSOLoginURL = discourseURL + "/session/sso_login?sso=";
 
         if (payload == null || sig == null) {
-            return ResponseEntity.ok().header("Location", "http://itinterview.co.kr/#/register").build();
+            return ResponseEntity.ok().location(new URI("http://itinterview.co.kr/#/register")).build();
         }
         if (!checksum(secretKey, payload).equals(sig)) {
-            return ResponseEntity.ok().header("Location", "http://itinterview.co.kr/#/register").build();
+            return ResponseEntity.ok().location(new URI("http://itinterview.co.kr/#/register")).build();
         }
         String urlDecode = URLDecoder.decode(payload, "UTF-8");
         String nonce = new String(Base64.decodeBase64(urlDecode));
@@ -69,7 +70,7 @@ public class DiscourseSSOResource {
         if(SecurityUtils.isAuthenticated()) {
             signedInUser = userService.getUserWithAuthorities();
         } else {
-            return ResponseEntity.ok().header("Location", "http://itinterview.co.kr/#/register").build();
+            return ResponseEntity.ok().location(new URI("http://itinterview.co.kr/#/register")).build();
         }
 
         log.error("SSO Called with signedInUser: " + signedInUser.toString());
@@ -88,7 +89,7 @@ public class DiscourseSSOResource {
             length += STEP;
         }
         //RedirectView redirectView = new RedirectView(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode));
-        return ResponseEntity.ok().header("Location", discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode)).build();
+        return ResponseEntity.ok().location(new URI(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode))).build();
         //return ResponseEntity.created(new URI("http://itinterview.co.kr/#/register")).build();
         //return redirectView;
     }
