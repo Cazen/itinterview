@@ -52,6 +52,8 @@ public class DiscourseSSOResource {
 
         String secretKey = "cazen_discourse_SSO_ScretKey!@#";
         String discourseURL = "http://discourse.itinterview.co.kr";
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(new URI("http://itinterview.co.kr/#/register"));
         if (secretKey == null || secretKey.isEmpty() || discourseURL == null || discourseURL.isEmpty()) {
             return null;
         }
@@ -59,11 +61,11 @@ public class DiscourseSSOResource {
 
         if (payload == null || sig == null) {
             log.error("1");
-            return ResponseEntity.ok().location(new URI("http://itinterview.co.kr/#/register")).build();
+            return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
         }
         if (!checksum(secretKey, payload).equals(sig)) {
             log.error("2");
-            return ResponseEntity.ok().location(new URI("http://itinterview.co.kr/#/register")).build();
+            return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
         }
         String urlDecode = URLDecoder.decode(payload, "UTF-8");
         String nonce = new String(Base64.decodeBase64(urlDecode));
@@ -76,7 +78,7 @@ public class DiscourseSSOResource {
             signedInUser = userService.getUserWithAuthorities();
         } else {
             log.error("3");
-            return ResponseEntity.ok().location(new URI("http://itinterview.co.kr/#/register")).build();
+            return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
         }
 
         log.error("SSO Called with signedInUser: " + signedInUser.toString());
@@ -95,10 +97,9 @@ public class DiscourseSSOResource {
             length += STEP;
         }
         //RedirectView redirectView = new RedirectView(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode));
-        HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(new URI(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode)));
         log.error("4");
-        return new ResponseEntity<>(httpHeaders, HttpStatus.MOVED_PERMANENTLY);
+        return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
 
 
         //return ResponseEntity.ok().location(new URI(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode))).build();
