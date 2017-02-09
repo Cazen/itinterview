@@ -48,6 +48,14 @@ public class DiscourseSSOResource {
      */
     @GetMapping("/sso")
     @Timed
+    public ResponseEntity<Void> getSSOInformation(@RequestParam(value = "sso") String payload, @RequestParam(value = "sig") String sig) throws Exception {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(new URI("http://itinterview.co.kr/#/ssoLanding"));
+        return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
+    }
+
+    @GetMapping("/goDiscourse")
+    @Timed
     public ResponseEntity<Void> returnSSOInformation(@RequestParam(value = "sso") String payload, @RequestParam(value = "sig") String sig) throws Exception {
 
         String secretKey = "cazen_discourse_SSO_ScretKey!@#";

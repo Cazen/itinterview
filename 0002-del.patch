@@ -1,0 +1,403 @@
+From 9487c1cf0d65e8b857c62a83fd7a655762a3c9f9 Mon Sep 17 00:00:00 2001
+From: "cazen.lee" <cazen.lee@samsung.com>
+Date: Thu, 2 Feb 2017 16:44:19 +0900
+Subject: [PATCH 2/2] del
+
+---
+ 0001-elo.patch | 188 ---------------------------------------------------------
+ 001.patch      | 188 ---------------------------------------------------------
+ 2 files changed, 376 deletions(-)
+ delete mode 100644 0001-elo.patch
+ delete mode 100644 001.patch
+
+diff --git a/0001-elo.patch b/0001-elo.patch
+deleted file mode 100644
+index 6bbfc0d..0000000
+--- a/0001-elo.patch
++++ /dev/null
+@@ -1,188 +0,0 @@
+-From b767eff74e4d3fbfb4b4b87219b7307cc2ff86d5 Mon Sep 17 00:00:00 2001
+-From: "cazen.lee" <cazen.lee@samsung.com>
+-Date: Thu, 26 Jan 2017 14:41:50 +0900
+-Subject: [PATCH] elo
+-
+----
+- .../iti/repository/UserStaticsRepository.java      |  3 ++
+- .../com/cazen/iti/service/util/EloRatingUtil.java  | 38 ++++++++++++++++++
+- .../cazen/iti/web/rest/TryQuestionResource.java    | 45 ++++++++++++++++++----
+- 3 files changed, 78 insertions(+), 8 deletions(-)
+- create mode 100644 src/main/java/com/cazen/iti/service/util/EloRatingUtil.java
+-
+-diff --git a/src/main/java/com/cazen/iti/repository/UserStaticsRepository.java b/src/main/java/com/cazen/iti/repository/UserStaticsRepository.java
+-index b7c2093..c929233 100644
+---- a/src/main/java/com/cazen/iti/repository/UserStaticsRepository.java
+-+++ b/src/main/java/com/cazen/iti/repository/UserStaticsRepository.java
+-@@ -15,4 +15,7 @@ public interface UserStaticsRepository extends JpaRepository<UserStatics,Long> {
+-     @Query("select userStatics from UserStatics userStatics where userStatics.user.login = ?#{principal.username}")
+-     List<UserStatics> findByUserIsCurrentUser();
+- 
+-+    @Query("select userStatics from UserStatics userStatics where userStatics.CATEGORY3_ID = ?1")
+-+    UserStatics findByCategory3Id(long id);
+-+
+- }
+-diff --git a/src/main/java/com/cazen/iti/service/util/EloRatingUtil.java b/src/main/java/com/cazen/iti/service/util/EloRatingUtil.java
+-new file mode 100644
+-index 0000000..3072ec0
+---- /dev/null
+-+++ b/src/main/java/com/cazen/iti/service/util/EloRatingUtil.java
+-@@ -0,0 +1,38 @@
+-+package com.cazen.iti.service.util;
+-+
+-+import com.cazen.iti.domain.SubmitTryQuestionForUser;
+-+import org.apache.commons.codec.binary.Base64;
+-+import org.springframework.stereotype.Service;
+-+
+-+import javax.crypto.BadPaddingException;
+-+import javax.crypto.Cipher;
+-+import javax.crypto.IllegalBlockSizeException;
+-+import javax.crypto.NoSuchPaddingException;
+-+import javax.crypto.spec.IvParameterSpec;
+-+import javax.crypto.spec.SecretKeySpec;
+-+import java.io.UnsupportedEncodingException;
+-+import java.security.InvalidAlgorithmParameterException;
+-+import java.security.InvalidKeyException;
+-+import java.security.Key;
+-+import java.security.NoSuchAlgorithmException;
+-+
+-+/**
+-+ * Utility class for caculating ELO points
+-+ */
+-+@Service
+-+public class EloRatingUtil {
+-+
+-+    public int calcELO(int myElo, int opponentsElo, boolean trueMeansWin) {
+-+        double kFactor = 15.0;
+-+        double expectedScore = getExpectRating(myElo, opponentsElo);
+-+        if (trueMeansWin) {
+-+            return myElo + (int) (kFactor * (1 - expectedScore));
+-+        }
+-+
+-+        return myElo + (int) (kFactor * (-expectedScore));
+-+    }
+-+
+-+    private double getExpectRating(int myElo, int opponentsElo) {
+-+        return 1.0 / (1.0 + Math.pow(10.0, ((double) (opponentsElo - myElo) / 400.0)));
+-+    }
+-+}
+-diff --git a/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java b/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
+-index 9ab27bd..2b8c558 100644
+---- a/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
+-+++ b/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
+-@@ -1,13 +1,12 @@
+- package com.cazen.iti.web.rest;
+- 
+- import com.cazen.iti.domain.*;
+--import com.cazen.iti.repository.QuestionMasterRepository;
+--import com.cazen.iti.repository.QuestionMasterStaticsRepository;
+--import com.cazen.iti.repository.RightAnswerRepository;
+--import com.cazen.iti.repository.WrongAnswerRepository;
+-+import com.cazen.iti.repository.*;
+- import com.cazen.iti.service.CommonCodeService;
+- import com.cazen.iti.service.TryQustionService;
+-+import com.cazen.iti.service.UserService;
+- import com.cazen.iti.service.util.AES256Util;
+-+import com.cazen.iti.service.util.EloRatingUtil;
+- import com.cazen.iti.web.rest.util.HeaderUtil;
+- import com.codahale.metrics.annotation.Timed;
+- import org.slf4j.Logger;
+-@@ -35,6 +34,8 @@ public class TryQuestionResource {
+-     @Inject
+-     private CommonCodeService commonCodeService;
+-     @Inject
+-+    private UserService userService;
+-+    @Inject
+-     private QuestionMasterRepository questionMasterRepository;
+-     @Inject
+-     private RightAnswerRepository rightAnswerRepository;
+-@@ -43,6 +44,10 @@ public class TryQuestionResource {
+-     @Inject
+-     private QuestionMasterStaticsRepository questionMasterStaticsRepository;
+-     @Inject
+-+    private UserStaticsRepository userStaticsRepository;
+-+    @Inject
+-+    private EloRatingUtil eloRatingUtil;
+-+    @Inject
+-     private AES256Util aes256Util;
+- 
+-     /**
+-@@ -128,8 +133,6 @@ public class TryQuestionResource {
+-         List<QuestionMaster> questionMasterList = new ArrayList<>();
+-         questionMasterForUser.setQuestionMasterList(questionMasterList);
+- 
+--        QuestionMasterStatics questionMasterStatics;
+--
+-         List<Long> questionMasterIdList = new ArrayList<>();
+-         questionMasterIdList.add(Long.parseLong(decryptedSubmitEntity.getQuestionOne()));
+-         questionMasterIdList.add(Long.parseLong(decryptedSubmitEntity.getQuestionTwo()));
+-@@ -151,6 +154,12 @@ public class TryQuestionResource {
+-         //Will be replace to apply ELO rating
+-         int tryErningPoint = 0;
+-         int tryRightCount = 0;
+-+
+-+        long currentCategoryId =  questionMasterRepository.findOne(questionMasterIdList.get(0)).getCategory3().getId();
+-+        UserStatics userStaticsInThisCategory = userStaticsRepository.findByCategory3Id(currentCategoryId);
+-+        int myCategoryElo = userStaticsInThisCategory.getEloRating();
+-+
+-+        QuestionMasterStatics questionMasterStatics;
+-         for(int i = 0 ; i < 7 ; i++) {
+-             QuestionMaster questionMaster = questionMasterRepository.findOne(questionMasterIdList.get(i));
+-             questionMaster.setWrongAnswers(null);
+-@@ -164,6 +173,7 @@ public class TryQuestionResource {
+-                 questionMasterStatics.setRightCount(0);
+-                 questionMasterStatics.setUpVoteCount(0);
+-                 questionMasterStatics.setWrongCount(0);
+-+                questionMasterStatics.setEloRating(1500);
+- 
+-                 questionMaster.setQuestionMasterStatics(questionMasterStatics);
+-                 questionMasterRepository.saveAndFlush(questionMaster);
+-@@ -174,12 +184,20 @@ public class TryQuestionResource {
+-             if ("W".equals(rightWrongList.get(i).split("_")[1])) {
+-                 int wrongCount = questionMasterStatics.getWrongCount();
+-                 questionMasterStatics.setWrongCount(++wrongCount);
+--                tryErningPoint--;
+-+                questionMasterStatics.setEloRating(eloRatingUtil.calcELO(questionMasterStatics.getEloRating(), myCategoryElo, true));
+-+                int beforeElo = myCategoryElo;
+-+                int afterElo = eloRatingUtil.calcELO(myCategoryElo, questionMasterStatics.getEloRating(), false);
+-+                userStaticsInThisCategory.setEloRating(afterElo);
+-+                tryErningPoint = afterElo - beforeElo;
+-                 questionMaster.setSelectedAnswerString(wrongAnswerRepository.findOne(Long.parseLong(rightWrongList.get(i).split("_")[2])).getOptionText());
+-             } else if ("R".equals(rightWrongList.get(i).split("_")[1])) {
+-                 int rightCount = questionMasterStatics.getRightCount();
+-                 questionMasterStatics.setRightCount(++rightCount);
+--                tryErningPoint++;
+-+                questionMasterStatics.setEloRating(eloRatingUtil.calcELO(questionMasterStatics.getEloRating(), myCategoryElo, false));
+-+                int beforeElo = myCategoryElo;
+-+                int afterElo = eloRatingUtil.calcELO(myCategoryElo, questionMasterStatics.getEloRating(), true);
+-+                userStaticsInThisCategory.setEloRating(afterElo);
+-+                tryErningPoint = afterElo - beforeElo;
+-                 tryRightCount++;
+-                 questionMaster.setSelectedAnswerString(rightAnswerRepository.findOne(Long.parseLong(rightWrongList.get(i).split("_")[2])).getOptionText());
+-             }
+-@@ -194,11 +212,22 @@ public class TryQuestionResource {
+-             questionMasterForUser.setQuestionMasterList(tempQMList);
+-         }
+- 
+-+        userStaticsRepository.saveAndFlush(userStaticsInThisCategory);
+-         questionMasterForUser.setRightCount(tryRightCount);
+-         questionMasterForUser.setErningPoint(tryErningPoint);
+-         return questionMasterForUser;
+-     }
+- 
+-+    private int getEloFromUserStaticsList(List<UserStatics> userStaticsList, long category3Id) {
+-+        for(int i = 0 ; i < userStaticsList.size() ; i++) {
+-+            UserStatics userStatics = userStaticsList.get(i);
+-+            if(userStatics.getCategory3().getId() == category3Id) {
+-+                return userStatics.getEloRating();
+-+            }
+-+        }
+-+        return 1500;
+-+    }
+-+
+-     private QuestionMasterForUser assembleQuestionMasterForUserForTryPages(List<Long> questionMasterIdList) {
+-         QuestionMasterForUser questionMasterForUser = new QuestionMasterForUser();
+-         ArrayList<QuestionMaster> questionMasterList = new ArrayList<>();
+--- 
+-2.5.0.windows.1
+-
+diff --git a/001.patch b/001.patch
+deleted file mode 100644
+index ed9b883..0000000
+--- a/001.patch
++++ /dev/null
+@@ -1,188 +0,0 @@
+-From b767eff74e4d3fbfb4b4b87219b7307cc2ff86d5 Mon Sep 17 00:00:00 2001
+-From: "cazen.lee" <cazen.lee@samsung.com>
+-Date: Thu, 26 Jan 2017 14:41:50 +0900
+-Subject: [PATCH] elo
+-
+----
+- .../iti/repository/UserStaticsRepository.java      |  3 ++
+- .../com/cazen/iti/service/util/EloRatingUtil.java  | 38 ++++++++++++++++++
+- .../cazen/iti/web/rest/TryQuestionResource.java    | 45 ++++++++++++++++++----
+- 3 files changed, 78 insertions(+), 8 deletions(-)
+- create mode 100644 src/main/java/com/cazen/iti/service/util/EloRatingUtil.java
+-
+-diff --git a/src/main/java/com/cazen/iti/repository/UserStaticsRepository.java b/src/main/java/com/cazen/iti/repository/UserStaticsRepository.java
+-index b7c2093..c929233 100644
+---- a/src/main/java/com/cazen/iti/repository/UserStaticsRepository.java
+-+++ b/src/main/java/com/cazen/iti/repository/UserStaticsRepository.java
+-@@ -15,4 +15,7 @@ public interface UserStaticsRepository extends JpaRepository<UserStatics,Long> {
+-     @Query("select userStatics from UserStatics userStatics where userStatics.user.login = ?#{principal.username}")
+-     List<UserStatics> findByUserIsCurrentUser();
+-
+-+    @Query("select userStatics from UserStatics userStatics where userStatics.CATEGORY3_ID = ?1")
+-+    UserStatics findByCategory3Id(long id);
+-+
+- }
+-diff --git a/src/main/java/com/cazen/iti/service/util/EloRatingUtil.java b/src/main/java/com/cazen/iti/service/util/EloRatingUtil.java
+-new file mode 100644
+-index 0000000..3072ec0
+---- /dev/null
+-+++ b/src/main/java/com/cazen/iti/service/util/EloRatingUtil.java
+-@@ -0,0 +1,38 @@
+-+package com.cazen.iti.service.util;
+-+
+-+import com.cazen.iti.domain.SubmitTryQuestionForUser;
+-+import org.apache.commons.codec.binary.Base64;
+-+import org.springframework.stereotype.Service;
+-+
+-+import javax.crypto.BadPaddingException;
+-+import javax.crypto.Cipher;
+-+import javax.crypto.IllegalBlockSizeException;
+-+import javax.crypto.NoSuchPaddingException;
+-+import javax.crypto.spec.IvParameterSpec;
+-+import javax.crypto.spec.SecretKeySpec;
+-+import java.io.UnsupportedEncodingException;
+-+import java.security.InvalidAlgorithmParameterException;
+-+import java.security.InvalidKeyException;
+-+import java.security.Key;
+-+import java.security.NoSuchAlgorithmException;
+-+
+-+/**
+-+ * Utility class for caculating ELO points
+-+ */
+-+@Service
+-+public class EloRatingUtil {
+-+
+-+    public int calcELO(int myElo, int opponentsElo, boolean trueMeansWin) {
+-+        double kFactor = 15.0;
+-+        double expectedScore = getExpectRating(myElo, opponentsElo);
+-+        if (trueMeansWin) {
+-+            return myElo + (int) (kFactor * (1 - expectedScore));
+-+        }
+-+
+-+        return myElo + (int) (kFactor * (-expectedScore));
+-+    }
+-+
+-+    private double getExpectRating(int myElo, int opponentsElo) {
+-+        return 1.0 / (1.0 + Math.pow(10.0, ((double) (opponentsElo - myElo) / 400.0)));
+-+    }
+-+}
+-diff --git a/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java b/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
+-index 9ab27bd..2b8c558 100644
+---- a/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
+-+++ b/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
+-@@ -1,13 +1,12 @@
+- package com.cazen.iti.web.rest;
+-
+- import com.cazen.iti.domain.*;
+--import com.cazen.iti.repository.QuestionMasterRepository;
+--import com.cazen.iti.repository.QuestionMasterStaticsRepository;
+--import com.cazen.iti.repository.RightAnswerRepository;
+--import com.cazen.iti.repository.WrongAnswerRepository;
+-+import com.cazen.iti.repository.*;
+- import com.cazen.iti.service.CommonCodeService;
+- import com.cazen.iti.service.TryQustionService;
+-+import com.cazen.iti.service.UserService;
+- import com.cazen.iti.service.util.AES256Util;
+-+import com.cazen.iti.service.util.EloRatingUtil;
+- import com.cazen.iti.web.rest.util.HeaderUtil;
+- import com.codahale.metrics.annotation.Timed;
+- import org.slf4j.Logger;
+-@@ -35,6 +34,8 @@ public class TryQuestionResource {
+-     @Inject
+-     private CommonCodeService commonCodeService;
+-     @Inject
+-+    private UserService userService;
+-+    @Inject
+-     private QuestionMasterRepository questionMasterRepository;
+-     @Inject
+-     private RightAnswerRepository rightAnswerRepository;
+-@@ -43,6 +44,10 @@ public class TryQuestionResource {
+-     @Inject
+-     private QuestionMasterStaticsRepository questionMasterStaticsRepository;
+-     @Inject
+-+    private UserStaticsRepository userStaticsRepository;
+-+    @Inject
+-+    private EloRatingUtil eloRatingUtil;
+-+    @Inject
+-     private AES256Util aes256Util;
+-
+-     /**
+-@@ -128,8 +133,6 @@ public class TryQuestionResource {
+-         List<QuestionMaster> questionMasterList = new ArrayList<>();
+-         questionMasterForUser.setQuestionMasterList(questionMasterList);
+-
+--        QuestionMasterStatics questionMasterStatics;
+--
+-         List<Long> questionMasterIdList = new ArrayList<>();
+-         questionMasterIdList.add(Long.parseLong(decryptedSubmitEntity.getQuestionOne()));
+-         questionMasterIdList.add(Long.parseLong(decryptedSubmitEntity.getQuestionTwo()));
+-@@ -151,6 +154,12 @@ public class TryQuestionResource {
+-         //Will be replace to apply ELO rating
+-         int tryErningPoint = 0;
+-         int tryRightCount = 0;
+-+
+-+        long currentCategoryId =  questionMasterRepository.findOne(questionMasterIdList.get(0)).getCategory3().getId();
+-+        UserStatics userStaticsInThisCategory = userStaticsRepository.findByCategory3Id(currentCategoryId);
+-+        int myCategoryElo = userStaticsInThisCategory.getEloRating();
+-+
+-+        QuestionMasterStatics questionMasterStatics;
+-         for(int i = 0 ; i < 7 ; i++) {
+-             QuestionMaster questionMaster = questionMasterRepository.findOne(questionMasterIdList.get(i));
+-             questionMaster.setWrongAnswers(null);
+-@@ -164,6 +173,7 @@ public class TryQuestionResource {
+-                 questionMasterStatics.setRightCount(0);
+-                 questionMasterStatics.setUpVoteCount(0);
+-                 questionMasterStatics.setWrongCount(0);
+-+                questionMasterStatics.setEloRating(1500);
+-
+-                 questionMaster.setQuestionMasterStatics(questionMasterStatics);
+-                 questionMasterRepository.saveAndFlush(questionMaster);
+-@@ -174,12 +184,20 @@ public class TryQuestionResource {
+-             if ("W".equals(rightWrongList.get(i).split("_")[1])) {
+-                 int wrongCount = questionMasterStatics.getWrongCount();
+-                 questionMasterStatics.setWrongCount(++wrongCount);
+--                tryErningPoint--;
+-+                questionMasterStatics.setEloRating(eloRatingUtil.calcELO(questionMasterStatics.getEloRating(), myCategoryElo, true));
+-+                int beforeElo = myCategoryElo;
+-+                int afterElo = eloRatingUtil.calcELO(myCategoryElo, questionMasterStatics.getEloRating(), false);
+-+                userStaticsInThisCategory.setEloRating(afterElo);
+-+                tryErningPoint = afterElo - beforeElo;
+-                 questionMaster.setSelectedAnswerString(wrongAnswerRepository.findOne(Long.parseLong(rightWrongList.get(i).split("_")[2])).getOptionText());
+-             } else if ("R".equals(rightWrongList.get(i).split("_")[1])) {
+-                 int rightCount = questionMasterStatics.getRightCount();
+-                 questionMasterStatics.setRightCount(++rightCount);
+--                tryErningPoint++;
+-+                questionMasterStatics.setEloRating(eloRatingUtil.calcELO(questionMasterStatics.getEloRating(), myCategoryElo, false));
+-+                int beforeElo = myCategoryElo;
+-+                int afterElo = eloRatingUtil.calcELO(myCategoryElo, questionMasterStatics.getEloRating(), true);
+-+                userStaticsInThisCategory.setEloRating(afterElo);
+-+                tryErningPoint = afterElo - beforeElo;
+-                 tryRightCount++;
+-                 questionMaster.setSelectedAnswerString(rightAnswerRepository.findOne(Long.parseLong(rightWrongList.get(i).split("_")[2])).getOptionText());
+-             }
+-@@ -194,11 +212,22 @@ public class TryQuestionResource {
+-             questionMasterForUser.setQuestionMasterList(tempQMList);
+-         }
+-
+-+        userStaticsRepository.saveAndFlush(userStaticsInThisCategory);
+-         questionMasterForUser.setRightCount(tryRightCount);
+-         questionMasterForUser.setErningPoint(tryErningPoint);
+-         return questionMasterForUser;
+-     }
+-
+-+    private int getEloFromUserStaticsList(List<UserStatics> userStaticsList, long category3Id) {
+-+        for(int i = 0 ; i < userStaticsList.size() ; i++) {
+-+            UserStatics userStatics = userStaticsList.get(i);
+-+            if(userStatics.getCategory3().getId() == category3Id) {
+-+                return userStatics.getEloRating();
+-+            }
+-+        }
+-+        return 1500;
+-+    }
+-+
+-     private QuestionMasterForUser assembleQuestionMasterForUserForTryPages(List<Long> questionMasterIdList) {
+-         QuestionMasterForUser questionMasterForUser = new QuestionMasterForUser();
+-         ArrayList<QuestionMaster> questionMasterList = new ArrayList<>();
+---
+-2.5.0.windows.1
+-
+-- 
+2.5.0.windows.1
+

@@ -1,0 +1,916 @@
+From 883520ac600dfc35cfb3827c0fe7b2b8ae69635f Mon Sep 17 00:00:00 2001
+From: "cazen.lee" <cazen.lee@samsung.com>
+Date: Thu, 2 Feb 2017 16:22:44 +0900
+Subject: [PATCH 1/2] using korean
+
+---
+ 0001-elo.patch                                     | 188 +++++++++++++++++++++
+ .../com/cazen/iti/service/util/EloRatingUtil.java  |   5 +
+ .../cazen/iti/web/rest/TryQuestionResource.java    |  65 ++++---
+ src/main/resources/config/application-dev.yml      |  16 +-
+ src/main/resources/config/application-prod.yml     |  18 +-
+ src/main/webapp/app/account/activate/activate.html |   6 +-
+ src/main/webapp/app/account/password/password.html |  24 +--
+ src/main/webapp/app/account/register/register.html |  38 ++---
+ .../app/account/reset/finish/reset.finish.html     |  30 ++--
+ .../app/account/reset/request/reset.request.html   |  16 +-
+ src/main/webapp/app/account/sessions/sessions.html |   8 +-
+ src/main/webapp/app/account/settings/settings.html |  27 +--
+ 12 files changed, 322 insertions(+), 119 deletions(-)
+ create mode 100644 0001-elo.patch
+
+diff --git a/0001-elo.patch b/0001-elo.patch
+new file mode 100644
+index 0000000..6bbfc0d
+--- /dev/null
++++ b/0001-elo.patch
+@@ -0,0 +1,188 @@
++From b767eff74e4d3fbfb4b4b87219b7307cc2ff86d5 Mon Sep 17 00:00:00 2001
++From: "cazen.lee" <cazen.lee@samsung.com>
++Date: Thu, 26 Jan 2017 14:41:50 +0900
++Subject: [PATCH] elo
++
++---
++ .../iti/repository/UserStaticsRepository.java      |  3 ++
++ .../com/cazen/iti/service/util/EloRatingUtil.java  | 38 ++++++++++++++++++
++ .../cazen/iti/web/rest/TryQuestionResource.java    | 45 ++++++++++++++++++----
++ 3 files changed, 78 insertions(+), 8 deletions(-)
++ create mode 100644 src/main/java/com/cazen/iti/service/util/EloRatingUtil.java
++
++diff --git a/src/main/java/com/cazen/iti/repository/UserStaticsRepository.java b/src/main/java/com/cazen/iti/repository/UserStaticsRepository.java
++index b7c2093..c929233 100644
++--- a/src/main/java/com/cazen/iti/repository/UserStaticsRepository.java
+++++ b/src/main/java/com/cazen/iti/repository/UserStaticsRepository.java
++@@ -15,4 +15,7 @@ public interface UserStaticsRepository extends JpaRepository<UserStatics,Long> {
++     @Query("select userStatics from UserStatics userStatics where userStatics.user.login = ?#{principal.username}")
++     List<UserStatics> findByUserIsCurrentUser();
++ 
+++    @Query("select userStatics from UserStatics userStatics where userStatics.CATEGORY3_ID = ?1")
+++    UserStatics findByCategory3Id(long id);
+++
++ }
++diff --git a/src/main/java/com/cazen/iti/service/util/EloRatingUtil.java b/src/main/java/com/cazen/iti/service/util/EloRatingUtil.java
++new file mode 100644
++index 0000000..3072ec0
++--- /dev/null
+++++ b/src/main/java/com/cazen/iti/service/util/EloRatingUtil.java
++@@ -0,0 +1,38 @@
+++package com.cazen.iti.service.util;
+++
+++import com.cazen.iti.domain.SubmitTryQuestionForUser;
+++import org.apache.commons.codec.binary.Base64;
+++import org.springframework.stereotype.Service;
+++
+++import javax.crypto.BadPaddingException;
+++import javax.crypto.Cipher;
+++import javax.crypto.IllegalBlockSizeException;
+++import javax.crypto.NoSuchPaddingException;
+++import javax.crypto.spec.IvParameterSpec;
+++import javax.crypto.spec.SecretKeySpec;
+++import java.io.UnsupportedEncodingException;
+++import java.security.InvalidAlgorithmParameterException;
+++import java.security.InvalidKeyException;
+++import java.security.Key;
+++import java.security.NoSuchAlgorithmException;
+++
+++/**
+++ * Utility class for caculating ELO points
+++ */
+++@Service
+++public class EloRatingUtil {
+++
+++    public int calcELO(int myElo, int opponentsElo, boolean trueMeansWin) {
+++        double kFactor = 15.0;
+++        double expectedScore = getExpectRating(myElo, opponentsElo);
+++        if (trueMeansWin) {
+++            return myElo + (int) (kFactor * (1 - expectedScore));
+++        }
+++
+++        return myElo + (int) (kFactor * (-expectedScore));
+++    }
+++
+++    private double getExpectRating(int myElo, int opponentsElo) {
+++        return 1.0 / (1.0 + Math.pow(10.0, ((double) (opponentsElo - myElo) / 400.0)));
+++    }
+++}
++diff --git a/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java b/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
++index 9ab27bd..2b8c558 100644
++--- a/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
+++++ b/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
++@@ -1,13 +1,12 @@
++ package com.cazen.iti.web.rest;
++ 
++ import com.cazen.iti.domain.*;
++-import com.cazen.iti.repository.QuestionMasterRepository;
++-import com.cazen.iti.repository.QuestionMasterStaticsRepository;
++-import com.cazen.iti.repository.RightAnswerRepository;
++-import com.cazen.iti.repository.WrongAnswerRepository;
+++import com.cazen.iti.repository.*;
++ import com.cazen.iti.service.CommonCodeService;
++ import com.cazen.iti.service.TryQustionService;
+++import com.cazen.iti.service.UserService;
++ import com.cazen.iti.service.util.AES256Util;
+++import com.cazen.iti.service.util.EloRatingUtil;
++ import com.cazen.iti.web.rest.util.HeaderUtil;
++ import com.codahale.metrics.annotation.Timed;
++ import org.slf4j.Logger;
++@@ -35,6 +34,8 @@ public class TryQuestionResource {
++     @Inject
++     private CommonCodeService commonCodeService;
++     @Inject
+++    private UserService userService;
+++    @Inject
++     private QuestionMasterRepository questionMasterRepository;
++     @Inject
++     private RightAnswerRepository rightAnswerRepository;
++@@ -43,6 +44,10 @@ public class TryQuestionResource {
++     @Inject
++     private QuestionMasterStaticsRepository questionMasterStaticsRepository;
++     @Inject
+++    private UserStaticsRepository userStaticsRepository;
+++    @Inject
+++    private EloRatingUtil eloRatingUtil;
+++    @Inject
++     private AES256Util aes256Util;
++ 
++     /**
++@@ -128,8 +133,6 @@ public class TryQuestionResource {
++         List<QuestionMaster> questionMasterList = new ArrayList<>();
++         questionMasterForUser.setQuestionMasterList(questionMasterList);
++ 
++-        QuestionMasterStatics questionMasterStatics;
++-
++         List<Long> questionMasterIdList = new ArrayList<>();
++         questionMasterIdList.add(Long.parseLong(decryptedSubmitEntity.getQuestionOne()));
++         questionMasterIdList.add(Long.parseLong(decryptedSubmitEntity.getQuestionTwo()));
++@@ -151,6 +154,12 @@ public class TryQuestionResource {
++         //Will be replace to apply ELO rating
++         int tryErningPoint = 0;
++         int tryRightCount = 0;
+++
+++        long currentCategoryId =  questionMasterRepository.findOne(questionMasterIdList.get(0)).getCategory3().getId();
+++        UserStatics userStaticsInThisCategory = userStaticsRepository.findByCategory3Id(currentCategoryId);
+++        int myCategoryElo = userStaticsInThisCategory.getEloRating();
+++
+++        QuestionMasterStatics questionMasterStatics;
++         for(int i = 0 ; i < 7 ; i++) {
++             QuestionMaster questionMaster = questionMasterRepository.findOne(questionMasterIdList.get(i));
++             questionMaster.setWrongAnswers(null);
++@@ -164,6 +173,7 @@ public class TryQuestionResource {
++                 questionMasterStatics.setRightCount(0);
++                 questionMasterStatics.setUpVoteCount(0);
++                 questionMasterStatics.setWrongCount(0);
+++                questionMasterStatics.setEloRating(1500);
++ 
++                 questionMaster.setQuestionMasterStatics(questionMasterStatics);
++                 questionMasterRepository.saveAndFlush(questionMaster);
++@@ -174,12 +184,20 @@ public class TryQuestionResource {
++             if ("W".equals(rightWrongList.get(i).split("_")[1])) {
++                 int wrongCount = questionMasterStatics.getWrongCount();
++                 questionMasterStatics.setWrongCount(++wrongCount);
++-                tryErningPoint--;
+++                questionMasterStatics.setEloRating(eloRatingUtil.calcELO(questionMasterStatics.getEloRating(), myCategoryElo, true));
+++                int beforeElo = myCategoryElo;
+++                int afterElo = eloRatingUtil.calcELO(myCategoryElo, questionMasterStatics.getEloRating(), false);
+++                userStaticsInThisCategory.setEloRating(afterElo);
+++                tryErningPoint = afterElo - beforeElo;
++                 questionMaster.setSelectedAnswerString(wrongAnswerRepository.findOne(Long.parseLong(rightWrongList.get(i).split("_")[2])).getOptionText());
++             } else if ("R".equals(rightWrongList.get(i).split("_")[1])) {
++                 int rightCount = questionMasterStatics.getRightCount();
++                 questionMasterStatics.setRightCount(++rightCount);
++-                tryErningPoint++;
+++                questionMasterStatics.setEloRating(eloRatingUtil.calcELO(questionMasterStatics.getEloRating(), myCategoryElo, false));
+++                int beforeElo = myCategoryElo;
+++                int afterElo = eloRatingUtil.calcELO(myCategoryElo, questionMasterStatics.getEloRating(), true);
+++                userStaticsInThisCategory.setEloRating(afterElo);
+++                tryErningPoint = afterElo - beforeElo;
++                 tryRightCount++;
++                 questionMaster.setSelectedAnswerString(rightAnswerRepository.findOne(Long.parseLong(rightWrongList.get(i).split("_")[2])).getOptionText());
++             }
++@@ -194,11 +212,22 @@ public class TryQuestionResource {
++             questionMasterForUser.setQuestionMasterList(tempQMList);
++         }
++ 
+++        userStaticsRepository.saveAndFlush(userStaticsInThisCategory);
++         questionMasterForUser.setRightCount(tryRightCount);
++         questionMasterForUser.setErningPoint(tryErningPoint);
++         return questionMasterForUser;
++     }
++ 
+++    private int getEloFromUserStaticsList(List<UserStatics> userStaticsList, long category3Id) {
+++        for(int i = 0 ; i < userStaticsList.size() ; i++) {
+++            UserStatics userStatics = userStaticsList.get(i);
+++            if(userStatics.getCategory3().getId() == category3Id) {
+++                return userStatics.getEloRating();
+++            }
+++        }
+++        return 1500;
+++    }
+++
++     private QuestionMasterForUser assembleQuestionMasterForUserForTryPages(List<Long> questionMasterIdList) {
++         QuestionMasterForUser questionMasterForUser = new QuestionMasterForUser();
++         ArrayList<QuestionMaster> questionMasterList = new ArrayList<>();
++-- 
++2.5.0.windows.1
++
+diff --git a/src/main/java/com/cazen/iti/service/util/EloRatingUtil.java b/src/main/java/com/cazen/iti/service/util/EloRatingUtil.java
+index 3072ec0..e109536 100644
+--- a/src/main/java/com/cazen/iti/service/util/EloRatingUtil.java
++++ b/src/main/java/com/cazen/iti/service/util/EloRatingUtil.java
+@@ -32,7 +32,12 @@ public class EloRatingUtil {
+         return myElo + (int) (kFactor * (-expectedScore));
+     }
+ 
++    public double calcELOWinPercentage(int myElo, int opponentsElo) {
++        return Math.pow(10, (double)myElo/400)/(Math.pow(10, (double)myElo /400) + Math.pow(10, (double)opponentsElo /400));
++    }
++
+     private double getExpectRating(int myElo, int opponentsElo) {
+         return 1.0 / (1.0 + Math.pow(10.0, ((double) (opponentsElo - myElo) / 400.0)));
+     }
++
+ }
+diff --git a/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java b/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
+index 8154e89..d685a85 100644
+--- a/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
++++ b/src/main/java/com/cazen/iti/web/rest/TryQuestionResource.java
+@@ -22,8 +22,8 @@ import java.time.ZonedDateTime;
+ import java.util.*;
+ 
+ /**
+- *  * * REST controller for managing UploadQuestionMaster.
+- *   */
++ * * * REST controller for managing UploadQuestionMaster.
++ */
+ @RestController
+ @RequestMapping("/api/question")
+ public class TryQuestionResource {
+@@ -51,11 +51,11 @@ public class TryQuestionResource {
+     private AES256Util aes256Util;
+ 
+     /**
+- *      * * GET  /tryQuestion : get all category 123 Code.
+- *           * *
+- *                * * @return the ResponseEntity with status 200 (OK) and the list of upQuestionMasters in body
+- *                     * * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
+- *                          */
++     * * * GET  /tryQuestion : get all category 123 Code.
++     * * *
++     * * * @return the ResponseEntity with status 200 (OK) and the list of upQuestionMasters in body
++     * * * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
++     */
+     @GetMapping("/tryquestion")
+     @Timed
+     public ResponseEntity<List<CommonCode>> getAllUpQuestionMasters() throws URISyntaxException {
+@@ -68,12 +68,12 @@ public class TryQuestionResource {
+     }
+ 
+     /**
+- *      * * POST  /tryquestionnew : Create a new QuestionList and return to solving pages.
+- *           * *
+- *                * * @param category3SelectboxVal selected category3Id
+- *                     * * @return the ResponseEntity with status 201 (Created) and with body the new QuestionMasterList, or with status 400 (Bad Request) if the category3Selectbox does not exists
+- *                          * * @throws URISyntaxException if the Location URI syntax is incorrect
+- *                               */
++     * * * POST  /tryquestionnew : Create a new QuestionList and return to solving pages.
++     * * *
++     * * * @param category3SelectboxVal selected category3Id
++     * * * @return the ResponseEntity with status 201 (Created) and with body the new QuestionMasterList, or with status 400 (Bad Request) if the category3Selectbox does not exists
++     * * * @throws URISyntaxException if the Location URI syntax is incorrect
++     */
+     @PostMapping("/tryquestionnew")
+     @Timed
+     public ResponseEntity<QuestionMasterForUser> getQuestionListbyCategory3(@RequestBody Map<String, String> category3SelectboxVal) throws URISyntaxException {
+@@ -91,12 +91,12 @@ public class TryQuestionResource {
+     }
+ 
+     /**
+- *      * * POST  /tryQuestionAnswer : Submit a answer and return a result
+- *           * *
+- *                * * @param category3SelectboxVal selected category3Id
+- *                     * * @return the ResponseEntity with status 201 (Created) and with body the new QuestionMasterList, or with status 400 (Bad Request) if the category3Selectbox does not exists
+- *                          * * @throws URISyntaxException if the Location URI syntax is incorrect
+- *                               */
++     * * * POST  /tryQuestionAnswer : Submit a answer and return a result
++     * * *
++     * * * @param category3SelectboxVal selected category3Id
++     * * * @return the ResponseEntity with status 201 (Created) and with body the new QuestionMasterList, or with status 400 (Bad Request) if the category3Selectbox does not exists
++     * * * @throws URISyntaxException if the Location URI syntax is incorrect
++     */
+     @PostMapping("/tryQuestionAnswer")
+     @Timed
+     public ResponseEntity<QuestionMasterForUser> submitTryQuestion(@RequestBody SubmitTryQuestionForUser submitTryQuestionForUser) throws URISyntaxException {
+@@ -107,17 +107,17 @@ public class TryQuestionResource {
+             String[] generatedId = decryptedSubmitEntity.getGeneratedId().split("_");
+ 
+             /*Compare submitTime - startTime > 5min 5sec then raise exception*/
+-            ZonedDateTime startTime = ZonedDateTime.of(Integer.parseInt(generatedId[0]), Integer.parseInt(generatedId[1]), Integer.parseInt(generatedId[2]), Integer.parseInt(generatedId[3])
+-                , Integer.parseInt(generatedId[4]), Integer.parseInt(generatedId[5]), Integer.parseInt(generatedId[6]), ZoneId.systemDefault());
++            ZonedDateTime startTime = ZonedDateTime
++                .of(Integer.parseInt(generatedId[0]), Integer.parseInt(generatedId[1]), Integer.parseInt(generatedId[2]), Integer.parseInt(generatedId[3]),
++                    Integer.parseInt(generatedId[4]), Integer.parseInt(generatedId[5]), Integer.parseInt(generatedId[6]), ZoneId.systemDefault());
+             startTime = startTime.plusMinutes(5).plusSeconds(5);
+             ZonedDateTime now = ZonedDateTime.now().withNano(0);
+ 
+-            if(startTime.isBefore(now)) {
++            if (startTime.isBefore(now)) {
+                 log.error("Time Limit exceed: ", startTime);
+                 return new ResponseEntity<>(new QuestionMasterForUser(), HttpStatus.BAD_REQUEST);
+             }
+ 
+-
+             questionMasterForUser = setQuestionMasterStaticsAndGetQMForUser(decryptedSubmitEntity);
+ 
+         } catch (Exception e) {
+@@ -151,23 +151,21 @@ public class TryQuestionResource {
+         rightWrongList.add(decryptedSubmitEntity.getAnswerSix());
+         rightWrongList.add(decryptedSubmitEntity.getAnswerSeven());
+ 
+-        int tryErningPoint = 0;
+-        int tryRightCount = 0;
+-
+-        CommonCode currentCategory =  questionMasterRepository.findOne(questionMasterIdList.get(0)).getCategory3();
++        CommonCode currentCategory = questionMasterRepository.findOne(questionMasterIdList.get(0)).getCategory3();
+         UserStatics userStaticsInThisCategory = userStaticsRepository.findByCategory3Id(currentCategory.getId());
+-        if(userStaticsInThisCategory == null) {
++        if (userStaticsInThisCategory == null) {
+             UserStatics userStatics = new UserStatics();
+             userStatics.setEloRating(1500);
+             userStatics.setCategory3(currentCategory);
+             userStatics.setUser(userService.getUserWithAuthorities());
+             userStaticsInThisCategory = userStatics;
+         }
+-        
+-
+ 
+         QuestionMasterStatics questionMasterStatics;
+-        for(int i = 0 ; i < 7 ; i++) {
++        int tryErningPoint = 0;
++        int tryRightCount = 0;
++
++        for (int i = 0; i < 7; i++) {
+             QuestionMaster questionMaster = questionMasterRepository.findOne(questionMasterIdList.get(i));
+             int myCategoryElo = userStaticsInThisCategory.getEloRating();
+             questionMaster.setWrongAnswers(null);
+@@ -224,9 +222,9 @@ public class TryQuestionResource {
+     }
+ 
+     private int getEloFromUserStaticsList(List<UserStatics> userStaticsList, long category3Id) {
+-        for(int i = 0 ; i < userStaticsList.size() ; i++) {
++        for (int i = 0; i < userStaticsList.size(); i++) {
+             UserStatics userStatics = userStaticsList.get(i);
+-            if(userStatics.getCategory3().getId() == category3Id) {
++            if (userStatics.getCategory3().getId() == category3Id) {
+                 return userStatics.getEloRating();
+             }
+         }
+@@ -292,7 +290,6 @@ public class TryQuestionResource {
+             questionMaster.setStatus(null);
+ 
+             questionMasterList.add(questionMaster);
+-
+         });
+ 
+         questionMasterForUser.setQuestionMasterList(questionMasterList);
+diff --git a/src/main/resources/config/application-dev.yml b/src/main/resources/config/application-dev.yml
+index b684dea..d58cf3d 100644
+--- a/src/main/resources/config/application-dev.yml
++++ b/src/main/resources/config/application-dev.yml
+@@ -46,10 +46,16 @@ spring:
+         jcache:
+             config: ehcache.xml
+     mail:
+-        host: localhost
+-        port: 25
+-        username:
+-        password:
++        host: smtp.sparkpostmail.com
++        port: 587
++        username: SMTP_Injection
++        password: 971aed62553b999269cb823273549b704152cbf6
++        protocol: smtp
++        tls: true
++        properties.mail.smtp:
++            auth: true
++            starttls.enable: true
++            ssl.trust: smtp.sparkpostmail.com
+     messages:
+         cache-seconds: 1
+     thymeleaf:
+@@ -74,7 +80,7 @@ jhipster:
+             # security key (this key should be unique for your application, and kept secret)
+             key: 8356c1a893f3bd58afcdcccaff4e7079ff9e1b3f
+     mail: # specific JHipster mail property, for standard properties see MailProperties
+-        from: itinterview@localhost
++        from: no-reply@itinterview.co.kr
+         baseUrl: http://127.0.0.1:8080
+     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
+         jmx.enabled: true
+diff --git a/src/main/resources/config/application-prod.yml b/src/main/resources/config/application-prod.yml
+index d22181a..5c21b6e 100644
+--- a/src/main/resources/config/application-prod.yml
++++ b/src/main/resources/config/application-prod.yml
+@@ -44,10 +44,16 @@ spring:
+         jcache:
+             config: ehcache.xml
+     mail:
+-        host: localhost
+-        port: 25
+-        username:
+-        password:
++        host: smtp.sparkpostmail.com
++        port: 587
++        username: SMTP_Injection
++        password: 971aed62553b999269cb823273549b704152cbf6
++        protocol: smtp
++        tls: true
++        properties.mail.smtp:
++            auth: true
++            starttls.enable: true
++            ssl.trust: smtp.sparkpostmail.com
+     thymeleaf:
+         cache: true
+ 
+@@ -77,8 +83,8 @@ jhipster:
+             # security key (this key should be unique for your application, and kept secret)
+             key: 8356c1a893f3bd58afcdcccaff4e7079ff9e1b3f
+     mail: # specific JHipster mail property, for standard properties see MailProperties
+-        from: itinterview@localhost
+-        baseUrl: http://my-server-url-to-change # Modify according to your server's URL
++        from: no-reply@itinterview.co.kr
++        baseUrl: http://www.itinterview.co.kr # Modify according to your server's URL
+     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
+         jmx.enabled: true
+         graphite:
+diff --git a/src/main/webapp/app/account/activate/activate.html b/src/main/webapp/app/account/activate/activate.html
+index d35b822..127a6fe 100644
+--- a/src/main/webapp/app/account/activate/activate.html
++++ b/src/main/webapp/app/account/activate/activate.html
+@@ -1,14 +1,14 @@
+ <div>
+     <div class="row">
+         <div class="col-md-8 col-md-offset-2">
+-            <h1>Activation</h1>
++            <h1>계정 활성화</h1>
+ 
+             <div class="alert alert-success" ng-show="vm.success">
+-                <strong>Your user has been activated.</strong> Please <a class="alert-link" href="" ng-click="vm.login()">sign in</a>.
++                <strong>사용자 계정 활성화가 완료되었습니다.</strong> <a class="alert-link" href="" ng-click="vm.login()"> 로그인</a> 해 주세요.
+             </div>
+ 
+             <div class="alert alert-danger" ng-show="vm.error">
+-                <strong>Your user could not be activated.</strong> Please use the registration form to sign up.
++                <strong>사용자 계정을 활성화 할 수 없습니다</strong>회원 가입을 진행해 주세요
+             </div>
+ 
+         </div>
+diff --git a/src/main/webapp/app/account/password/password.html b/src/main/webapp/app/account/password/password.html
+index 01494ba..77b2711 100644
+--- a/src/main/webapp/app/account/password/password.html
++++ b/src/main/webapp/app/account/password/password.html
+@@ -1,57 +1,57 @@
+ <div>
+     <div class="row">
+         <div class="col-md-8 col-md-offset-2">
+-            <h2>Password for [<b>{{vm.account.login}}</b>]</h2>
++            <h2>[<b>{{vm.account.login}}</b>] 님의 패스워드를 변경합니다</h2>
+ 
+             <div class="alert alert-success" ng-show="vm.success">
+-                <strong>Password changed!</strong>
++                <strong>패스워드가 성공적으로 변경되었습니다!</strong>
+             </div>
+             <div class="alert alert-danger" ng-show="vm.error" >
+-                <strong>An error has occurred!</strong> The password could not be changed.
++                <strong>오류가 발생했습니다!</strong> 패스워드를 변경할 수 없습니다.
+             </div>
+ 
+             <div class="alert alert-danger" ng-show="vm.doNotMatch">
+-                The password and its confirmation do not match!
++                입력하신 패스워드가 서로 다릅니다!
+             </div>
+ 
+             <form name="form" role="form" novalidate ng-submit="vm.changePassword()" show-validation>
+ 
+                 <div class="form-group">
+-                    <label class="control-label" for="password">New password</label>
++                    <label class="control-label" for="password">패스워드 입력</label>
+                     <input type="password" class="form-control" id="password" name="password" placeholder="New password"
+                            ng-model="vm.password" ng-minlength=4 ng-maxlength=50 required>
+                     <div ng-show="form.password.$dirty && form.password.$invalid">
+                         <p class="help-block"
+                            ng-show="form.password.$error.required">
+-                            Your password is required.
++                            패스워드를 입력해 주세요.
+                         </p>
+                         <p class="help-block"
+                            ng-show="form.password.$error.minlength">
+-                            Your password is required to be at least 4 characters.
++                            패스워드는 최소 4글자 이상을 입력해 주세요.
+                         </p>
+                         <p class="help-block"
+                            ng-show="form.password.$error.maxlength">
+-                            Your password cannot be longer than 50 characters.
++                            패스워드는 50글자 이내로 입력해 주세요.
+                         </p>
+                     </div>
+                     <password-strength-bar password-to-check="vm.password"></password-strength-bar>
+                 </div>
+                 <div class="form-group">
+-                    <label class="control-label" for="confirmPassword">New password confirmation</label>
++                    <label class="control-label" for="confirmPassword">패스워드 확인</label>
+                     <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm the new password"
+                            ng-model="vm.confirmPassword" ng-minlength=4 ng-maxlength=50 required>
+                     <div ng-show="form.confirmPassword.$dirty && form.confirmPassword.$invalid">
+                         <p class="help-block"
+                            ng-show="form.confirmPassword.$error.required">
+-                            Your confirmation password is required.
++                            패스워드를 입력해 주세요.
+                         </p>
+                         <p class="help-block"
+                            ng-show="form.confirmPassword.$error.minlength">
+-                            Your confirmation password is required to be at least 4 characters.
++                            패스워드는 최소 4글자 이상을 입력해 주세요.
+                         </p>
+                         <p class="help-block"
+                            ng-show="form.confirmPassword.$error.maxlength">
+-                            Your confirmation password cannot be longer than 50 characters.
++                            패스워드는 50글자 이내로 입력해 주세요.
+                         </p>
+                     </div>
+                 </div>
+diff --git a/src/main/webapp/app/account/register/register.html b/src/main/webapp/app/account/register/register.html
+index 00f2dc1..8be828c 100644
+--- a/src/main/webapp/app/account/register/register.html
++++ b/src/main/webapp/app/account/register/register.html
+@@ -4,23 +4,23 @@
+             <h1>회원가입</h1>
+ 
+             <div class="alert alert-success" ng-show="vm.success">
+-                <strong>Registration saved!</strong> Please check your email for confirmation.
++                <strong>회원 가입 요청이 완료되었습니다!</strong> E-mail을 확인해 주세요.
+             </div>
+ 
+             <div class="alert alert-danger" ng-show="vm.error">
+-                <strong>Registration failed!</strong> Please try again later.
++                <strong>회원 가입이 실패했습니다!</strong> 나중에 다시 시도해 주세요.
+             </div>
+ 
+             <div class="alert alert-danger" ng-show="vm.errorUserExists">
+-                <strong>Login name already registered!</strong> Please choose another one.
++                <strong>이미 사용중인 UserName입니다!</strong> 다른 UserName을 선택해 주세요.
+             </div>
+ 
+             <div class="alert alert-danger" ng-show="vm.errorEmailExists">
+-                <strong>E-mail is already in use!</strong> Please choose another one.
++                <strong>이미 사용중인 E-mail입니다!</strong> 다른 E-mail을 선택해 주세요.
+             </div>
+ 
+             <div class="alert alert-danger" ng-show="vm.doNotMatch">
+-                The password and its confirmation do not match!
++                비밀번호가 서로 다릅니다 다시 확인해 주세요!
+             </div>
+         </div>
+         <div class="col-md-4 col-md-offset-2">
+@@ -33,19 +33,19 @@
+                     <div ng-show="form.login.$dirty && form.login.$invalid">
+                         <p class="help-block"
+                                ng-show="form.login.$error.required">
+-                            Your username is required.
++                            UserName을 입력해 주세요
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.login.$error.minlength">
+-                            Your username is required to be at least 1 character.
++                            UserName을 최소 1글자 이상 입력해 주세요
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.login.$error.maxlength">
+-                            Your username cannot be longer than 50 characters.
++                            UserName은 50글자 이내로 입력해 주세요
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.login.$error.pattern">
+-                            Your username can only contain lower-case letters and digits.
++                            UserName은 소문자와 숫자만 사용 가능합니다
+                     </p>
+                     </div>
+                 </div>
+@@ -56,19 +56,19 @@
+                     <div ng-show="form.email.$dirty && form.email.$invalid">
+                         <p class="help-block"
+                                ng-show="form.email.$error.required">
+-                            Your e-mail is required.
++                            E-mail을 입력해 주세요
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.email.$error.email">
+-                            Your e-mail is invalid.
++                            E-mail 주소가 형식에 맞지 않습니다
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.email.$error.minlength">
+-                            Your e-mail is required to be at least 5 characters.
++                            E-mail은 최소 5글자 이상을 입력해 주세요
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.email.$error.maxlength">
+-                            Your e-mail cannot be longer than 100 characters.
++                            E-mail은 100글자 이내로 입력해 주세요
+                         </p>
+                     </div>
+                 </div>
+@@ -79,15 +79,15 @@
+                     <div ng-show="form.password.$dirty && form.password.$invalid">
+                         <p class="help-block"
+                                ng-show="form.password.$error.required">
+-                            Your password is required.
++                            패스워드를 입력해 주세요
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.password.$error.minlength">
+-                            Your password is required to be at least 4 characters.
++                            패스워드는 최소 4글자 이상을 입력해 주세요
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.password.$error.maxlength">
+-                            Your password cannot be longer than 50 characters.
++                            패스워드는 50글자 이내로 입력해 주세요
+                         </p>
+                     </div>
+                     <password-strength-bar password-to-check="vm.registerAccount.password"></password-strength-bar>
+@@ -99,15 +99,15 @@
+                     <div ng-show="form.confirmPassword.$dirty && form.confirmPassword.$invalid">
+                         <p class="help-block"
+                                ng-show="form.confirmPassword.$error.required">
+-                            Your confirmation password is required.
++                            패스워드를 확인해 주세요
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.confirmPassword.$error.minlength">
+-                            Your confirmation password is required to be at least 4 characters.
++                            패스워드는 최소 4글자 이상을 입력해 주세요
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.confirmPassword.$error.maxlength">
+-                            Your confirmation password cannot be longer than 50 characters.
++                            패스워드는 50글자 이내로 입력해 주세요
+                         </p>
+                     </div>
+                 </div>
+diff --git a/src/main/webapp/app/account/reset/finish/reset.finish.html b/src/main/webapp/app/account/reset/finish/reset.finish.html
+index 94a628c..2cc68d5 100644
+--- a/src/main/webapp/app/account/reset/finish/reset.finish.html
++++ b/src/main/webapp/app/account/reset/finish/reset.finish.html
+@@ -1,71 +1,71 @@
+ <div>
+     <div class="row">
+         <div class="col-md-4 col-md-offset-4">
+-            <h1>Reset password</h1>
++            <h1>패스워드 재설정</h1>
+ 
+             <div class="alert alert-danger" ng-show="vm.keyMissing">
+-                <strong>The password reset key is missing.</strong>
++                <strong>패스워드 재설정 키가 없습니다</strong>
+             </div>
+ 
+             <div class="alert alert-warning" ng-hide="vm.success || vm.keyMissing">
+-                <p>Choose a new password</p>
++                <p>새로운 패스워드를 고르세요</p>
+             </div>
+ 
+             <div class="alert alert-danger" ng-show="vm.error">
+-                <p>Your password couldn't be reset. Remember a password request is only valid for 24 hours.</p>
++                <p>패스워드를 재설정할 수 없습니다. 재설정은 24시간 내 1번만 가능합니다</p>
+             </div>
+ 
+             <div class="alert alert-success" ng-show="vm.success">
+-                <p><strong>Your password has been reset.</strong> Please <a class="alert-link" href="" ng-click="vm.login()">sign in</a>.</p>
++                <p><strong>패스워드가 성공적으로 변경되었습니다!</strong> <a class="alert-link" href="" ng-click="vm.login()">로그인</a> 해 주세요.</p>
+             </div>
+ 
+             <div class="alert alert-danger" ng-show="vm.doNotMatch">
+-                The password and its confirmation do not match!
++                입력하신 패스워드가 서로 다릅니다!
+             </div>
+ 
+             <div ng-hide="vm.keyMissing">
+                 <form ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.finishReset()" show-validation>
+                     <div class="form-group">
+-                        <label class="control-label" for="password">New password</label>
++                        <label class="control-label" for="password">패스워드 입력</label>
+                         <input type="password" class="form-control" id="password" name="password" placeholder="New password"
+                                ng-model="vm.resetAccount.password" ng-minlength=4 ng-maxlength=50 required>
+                         <div ng-show="form.password.$dirty && form.password.$invalid">
+                             <p class="help-block"
+                                ng-show="form.password.$error.required">
+-                                Your password is required.
++                                패스워드를 입력해 주세요.
+                             </p>
+                             <p class="help-block"
+                                ng-show="form.password.$error.minlength">
+-                                Your password is required to be at least 4 characters.
++                                패스워드는 최소 4글자 이상을 입력해 주세요.
+                             </p>
+                             <p class="help-block"
+                                ng-show="form.password.$error.maxlength">
+-                                Your password cannot be longer than 50 characters.
++                                패스워드는 50글자 이내로 입력해 주세요.
+                             </p>
+                         </div>
+                         <password-strength-bar password-to-check="vm.resetAccount.password"></password-strength-bar>
+                     </div>
+ 
+                     <div class="form-group">
+-                        <label class="control-label" for="confirmPassword">New password confirmation</label>
++                        <label class="control-label" for="confirmPassword">패스워드 확인</label>
+                         <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm the new password"
+                                ng-model="vm.confirmPassword" ng-minlength=4 ng-maxlength=50 required>
+                         <div ng-show="form.confirmPassword.$dirty && form.confirmPassword.$invalid">
+                             <p class="help-block"
+                                ng-show="form.confirmPassword.$error.required">
+-                                Your password confirmation is required.
++                                패스워드를 입력해 주세요.
+                             </p>
+                             <p class="help-block"
+                                ng-show="form.confirmPassword.$error.minlength">
+-                                Your password confirmation is required to be at least 4 characters.
++                                패스워드는 최소 4글자 이상을 입력해 주세요.
+                             </p>
+                             <p class="help-block"
+                                ng-show="form.confirmPassword.$error.maxlength">
+-                                Your password confirmation cannot be longer than 50 characters.
++                                패스워드는 50글자 이내로 입력해 주세요.
+                             </p>
+                         </div>
+                     </div>
+-                    <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Reset Password</button>
++                    <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">패스워드 재설정</button>
+                 </form>
+             </div>
+ 
+diff --git a/src/main/webapp/app/account/reset/request/reset.request.html b/src/main/webapp/app/account/reset/request/reset.request.html
+index 3d50088..2e59294 100644
+--- a/src/main/webapp/app/account/reset/request/reset.request.html
++++ b/src/main/webapp/app/account/reset/request/reset.request.html
+@@ -1,18 +1,18 @@
+ <div>
+     <div class="row">
+         <div class="col-md-8 col-md-offset-2">
+-            <h1>Reset your password</h1>
++            <h1>패스워드 재설정</h1>
+ 
+             <div class="alert alert-danger" ng-show="vm.errorEmailNotExists">
+-                <strong>E-Mail address isn't registered!</strong> Please check and try again.
++                <strong>E-mail이 등록되지 않았습니다!</strong> 확인하시고 다시 시도해 주세요
+             </div>
+ 
+             <div class="alert alert-warning" ng-hide="vm.success">
+-                <p>Enter the e-mail address you used to register.</p>
++                <p>회원가입 시 등록한 E-mail 주소를 입력해 주세요</p>
+             </div>
+ 
+             <div class="alert alert-success" ng-show="vm.success == 'OK'">
+-                <p>Check your e-mails for details on how to reset your password.</p>
++                <p>비밀번호 변경 메일을 발송하였습니다 E-mail을 확인해 주세요</p>
+             </div>
+ 
+             <form ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.requestReset()" show-validation>
+@@ -23,19 +23,19 @@
+                     <div ng-show="form.email.$dirty && form.email.$invalid">
+                         <p class="help-block"
+                            ng-show="form.email.$error.required">
+-                            Your e-mail is required.
++                            E-mail 주소가 필요합니다.
+                         </p>
+                         <p class="help-block"
+                            ng-show="form.email.$error.email">
+-                            Your e-mail is invalid.
++                            E-mail 주소 형식이 잘못되었습니다.
+                         </p>
+                         <p class="help-block"
+                            ng-show="form.email.$error.minlength">
+-                            Your e-mail is required to be at least 5 characters.
++                            E-mail은 최소 5글자 이상을 입력해 주세요
+                         </p>
+                         <p class="help-block"
+                            ng-show="form.email.$error.maxlength">
+-                            Your e-mail cannot be longer than 100 characters.
++                            E-mail은 100글자 이내로 입력해 주세요
+                         </p>
+                     </div>
+                 </div>
+diff --git a/src/main/webapp/app/account/sessions/sessions.html b/src/main/webapp/app/account/sessions/sessions.html
+index 4654aaf..8a66e3d 100644
+--- a/src/main/webapp/app/account/sessions/sessions.html
++++ b/src/main/webapp/app/account/sessions/sessions.html
+@@ -1,11 +1,11 @@
+ <div>
+-    <h2>Active sessions for [<b>{{vm.account.login}}</b>]</h2>
++    <h2> [<b>{{vm.account.login}} 님이 사용중인 세션 정보</b>]</h2>
+ 
+     <div class="alert alert-success" ng-show="vm.success">
+-        <strong>Session invalidated!</strong>
++        <strong>세션이 무효화 되었습니다!</strong>
+     </div>
+     <div class="alert alert-danger" ng-show="vm.error">
+-        <strong>An error has occured!</strong> The session could not be invalidated.
++        <strong>오류가 발생했습니다!</strong> 세션을 무효화 할 수 없습니다
+     </div>
+ 
+     <div class="table-responsive">
+@@ -27,7 +27,7 @@
+                         <button type="submit"
+                                 class="btn btn-primary"
+                                 ng-click="vm.invalidate(session.series)">
+-                                 Invalidate
++                                 무효화
+                         </button>
+                     </td>
+                 </tr>
+diff --git a/src/main/webapp/app/account/settings/settings.html b/src/main/webapp/app/account/settings/settings.html
+index 8eb0d3a..8968105 100644
+--- a/src/main/webapp/app/account/settings/settings.html
++++ b/src/main/webapp/app/account/settings/settings.html
+@@ -1,13 +1,14 @@
+ <div>
+     <div class="row">
+         <div class="col-md-8 col-md-offset-2">
+-            <h2>User settings for [<b>{{vm.settingsAccount.login}}</b>]</h2>
++            <h2>[<b>{{vm.settingsAccount.login}}</b>] 님의 사용자 정보를 변경합니다</h2>
++            <h3>Discourse 게시판의 정보는 따로 변경하셔야 합니다</h3>
+ 
+             <div class="alert alert-success" ng-show="vm.success">
+-                <strong>Settings saved!</strong>
++                <strong>성공적으로 저장되었습니다!</strong>
+             </div>
+ 
+-           <jhi-alert-error></jhi-alert-error>
++           <jhi-alert-error>오류가 발생했습니다 관리자에게 문의해 주세요</jhi-alert-error>
+ 
+             <form name="form" role="form" novalidate ng-submit="vm.save()" show-validation>
+ 
+@@ -18,15 +19,15 @@
+                     <div ng-show="form.firstName.$dirty && form.firstName.$invalid">
+                         <p class="help-block"
+                                ng-show="form.firstName.$error.required">
+-                            Your first name is required.
++                            First name을 입력해 주세요
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.firstName.$error.minlength">
+-                            Your first name is required to be at least 1 character.
++                            First name은 최소 1문자 이상 필요합니다
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.firstName.$error.maxlength">
+-                            Your first name cannot be longer than 50 characters.
++                            First name은 50문자 이내로 작성해 주세요
+                         </p>
+                     </div>
+                 </div>
+@@ -37,15 +38,15 @@
+                     <div ng-show="form.lastName.$dirty && form.lastName.$invalid">
+                         <p class="help-block"
+                                ng-show="form.lastName.$error.required">
+-                            Your last name is required.
++                            Last name을 입력해 주세요
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.lastName.$error.minlength">
+-                            Your last name is required to be at least 1 character.
++                            Last name은 최소 1글자 이상 필요합니다
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.lastName.$error.maxlength">
+-                            Your last name cannot be longer than 50 characters.
++                            Last name은 50문자 이내로 작성해 주세요
+                         </p>
+                     </div>
+                 </div>
+@@ -56,19 +57,19 @@
+                     <div ng-show="form.email.$dirty && form.email.$invalid">
+                         <p class="help-block"
+                                ng-show="form.email.$error.required">
+-                            Your e-mail is required.
++                            E-mail을 입력해 주세요
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.email.$error.email">
+-                            Your e-mail is invalid.
++                            E-mail 정보가 잘못되었습니다
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.email.$error.minlength">
+-                            Your e-mail is required to be at least 5 characters.
++                            E-mail은 최소 5문자 이상 입력이 필요합니다
+                         </p>
+                         <p class="help-block"
+                                ng-show="form.email.$error.maxlength">
+-                            Your e-mail cannot be longer than 100 characters.
++                            E-mail은 100문자 이내로 작성해 주세요
+                         </p>
+                     </div>
+                 </div>
+-- 
+2.5.0.windows.1
+
