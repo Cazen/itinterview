@@ -27,8 +27,8 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * REST controller for managing Discourse(forum) SSO.
- */
+ *  * REST controller for managing Discourse(forum) SSO.
+ *   */
 @RestController
 @RequestMapping("/discourse")
 public class DiscourseSSOResource {
@@ -39,13 +39,13 @@ public class DiscourseSSOResource {
     private UserService userService;
 
     /**
-     * GET  /sso : Return SSO Information.
-     *
-     * @param payload  the HttpServletRequest
-     * @param sig the HttpServletResponse
-     * @return ModelAndView with SSO information
-     * @throws Exception fucking exception
-     */
+ *      * GET  /sso : Return SSO Information.
+ *           *
+ *                * @param payload  the HttpServletRequest
+ *                     * @param sig the HttpServletResponse
+ *                          * @return ModelAndView with SSO information
+ *                               * @throws Exception fucking exception
+ *                                    */
     @GetMapping("/sso")
     @Timed
     public ResponseEntity<Void> getSSOInformation(@RequestParam(value = "sso") String payload, @RequestParam(value = "sig") String sig) throws Exception {
@@ -104,17 +104,10 @@ public class DiscourseSSOResource {
             urlBase64Encode += urlBase64.substring(length, length + STEP < maxLength ? length + STEP : maxLength) + "\n";
             length += STEP;
         }
-        //RedirectView redirectView = new RedirectView(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode));
         httpHeaders.setLocation(new URI(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode)));
         log.error("4");
         return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
-
-
-        //return ResponseEntity.ok().location(new URI(discourseSSOLoginURL + URLEncoder.encode(urlBase64Encode, "UTF-8") + "&sig=" +  checksum(secretKey, urlBase64Encode))).build();
-        //return ResponseEntity.created(new URI("http://itinterview.co.kr/#/register")).build();
-        //return redirectView;
     }
-
 
     private String checksum(String macKey, String macData) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
         Mac mac = Mac.getInstance("HmacSHA256");
@@ -128,3 +121,4 @@ public class DiscourseSSOResource {
     }
 
 }
+
